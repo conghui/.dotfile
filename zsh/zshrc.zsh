@@ -16,10 +16,12 @@ plugins=(common-aliases \
          osx
          )
 
+ZSH_THEME="terminalparty"
 source $ZSH/oh-my-zsh.sh
 
 # Load nested configs
-for f in $(find -L ${HOME}/.dotfile/zsh -name \*.zsh | grep -v zshrc.zsh | grep -v install_zsh.zsh); do
+for f in $(find -L ${HOME}/.dotfile/zsh -name \*.zsh | \
+  grep -v zshrc.zsh | grep -v install_zsh.zsh); do
   source $f
 done
 
