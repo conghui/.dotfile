@@ -1,0 +1,17 @@
+[user]
+  name = Conghui He
+  email = heconghui@gmail.com
+[color]
+  branch = auto
+  diff = auto
+  interative = auto
+  status = auto
+  ui = auto
+[core]
+  pager = less -r
+	excludesfile = ~/.gitexcludes
+	editor = vim
+
+; vim: ft=gitconfig
+[push]
+	default = matching
