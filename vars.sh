@@ -21,11 +21,18 @@ SUVERSION="40"
 export CWPROOT=${HOME}/vroot/src/cwp_su_all_${SUVERSION}
 export PATH=${CWPROOT}/bin:${PATH}
 
-# intel toolkits
-INTELROOT=${HOME}/vroot/opt/intel
-INTELCOMPILERVAR=${INTELROOT}/bin/compilervars.sh
+# intel compiler toolkits
+ICCROOT=${HOME}/vroot/opt/composerxe
+INTELCOMPILERVAR=${ICCROOT}/bin/compilervars.sh
 if [[ -f $INTELCOMPILERVAR ]]; then
   source $INTELCOMPILERVAR intel64
+fi
+
+# intel mpi
+IMPIROOT=${HOME}/vroot/opt/impi
+INTELMPIVAR=${IMPIROOT}/bin64/mpivars.sh
+if [[ -f $INTELMPIVAR ]]; then
+  source $INTELMPIVAR
 fi
 
 # for madagascar
