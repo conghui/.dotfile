@@ -5,8 +5,6 @@ LINKFILES="\
   vars.sh aliases.sh
   "
 
-BASEDIR=$(dirname $0)
-
 for f in $LINKFILES; do
   DEST=`readlink -f $f`
   FROM=${HOME}/.${f}

@@ -5,10 +5,17 @@ setopt CORRECT
 
 # use oh-my-zsh
 ZSH=$HOME/.oh-my-zsh
-#plugins=(command-not-found common-aliases per-directory-history \
-#         screen web-search yum wd git gitfast git-extras github)
-plugins=(command-not-found common-aliases \
-         screen web-search yum wd git gitfast git-extras github)
+plugins=(common-aliases \
+         screen \
+         git\
+         colored-man \
+         copydir copyfile \
+         autojump \
+         dirhistory \
+         rsync \
+         osx
+         )
+
 source $ZSH/oh-my-zsh.sh
 
 # Load nested configs
