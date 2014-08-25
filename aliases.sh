@@ -1,6 +1,13 @@
 alias e="vim" # 'e' is short for 'editor'
 
-alias ls="ls --color=auto "
+if [[ "$OSTYPE" == "linux-gnu" ]]; then
+  alias ls="ls --color=auto "
+elif [[ "$OSTYPE" == "darwin"* ]]; then
+  export CLICOLOR=1
+  export LSCOLOR="ExGxBxDxCxEgEdxbxgxcxd"
+  alias ls="ls -G "
+fi
+
 alias sl='ls'
 alias ll="ls -l"
 alias l='ls -lS'
