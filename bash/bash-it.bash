@@ -1,13 +1,13 @@
 #!/bin/bash
 
-plugins="base dirs git ssh todo"
-aliases="general git vim todo.txt-cli"
-completion="bash-it defaults git ssh todo"
+plugins="base dirs git ssh"
+aliases="general git vim"
+completion="bash-it defaults git ssh"
 
 # create an directory for enabled plugins/aliases/completion
-plugins_dir="~/.bash_it/plugins/enabled"
-aliases_dir="~/.bash_it/aliases/enabled"
-completion_dir="~/.bash_it/completion/enabled"
+plugins_dir="${HOME}/.bash_it/plugins/enabled"
+aliases_dir="${HOME}/.bash_it/aliases/enabled"
+completion_dir="${HOME}/.bash_it/completion/enabled"
 
 rm -rf $plugins_dir; mkdir -p $plugins_dir
 rm -rf $aliases_dir; mkdir -p $aliases_dir
@@ -20,6 +20,7 @@ for p in $plugins; do
   linkdest=${HOME}/.bash_it/plugins/available/${pname}
   linkfrom=${HOME}/.bash_it/plugins/enabled/${pname}
   if [[ -f $linkdest ]]; then
+    echo "linking $linkfrom to $linkdest"
     ln -sf $linkdest $linkfrom
   fi
 done
@@ -30,6 +31,7 @@ for p in $aliases; do
   linkdest=${HOME}/.bash_it/aliases/available/${pname}
   linkfrom=${HOME}/.bash_it/aliases/enabled/${pname}
   if [[ -f $linkdest ]]; then
+    echo "linking $linkfrom to $linkdest"
     ln -sf $linkdest $linkfrom
   fi
 done
@@ -39,8 +41,8 @@ for p in $completion; do
   pname=${p}.completion.bash
   linkdest=${HOME}/.bash_it/completion/available/${pname}
   linkfrom=${HOME}/.bash_it/completion/enabled/${pname}
-  #echo $linkdest $linkfrom
   if [[ -f $linkdest ]]; then
+    echo "linking $linkfrom to $linkdest"
     ln -sf $linkdest $linkfrom
   fi
 done

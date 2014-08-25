@@ -9,7 +9,21 @@ echo "it will be overwritten by ~/.dotfile/bash/bash-it.bash"
 echo "you can enable what you want in ~/.dotfile/bash/bashrc.bash"
 echo 
 
-~/.bash_it/install.sh
+if [[ -f ${HOME}/.bash_profile ]]; then
+  mv ${HOME}/.bash_profile ${HOME}/.bash_profile.bk
+fi
+
+bash_install="${HOME}/.bash_it/install.sh"
+if [[ -f $bash_install ]]; then
+  $bash_install
+else
+  echo "install script doesn't exist"
+  exit 1
+fi
+
+# enable aliases, plugins, completions
+bashitscript="${HOME}/.dotfile/bash/bash-it.bash"
+[[ -f ${bashitscript} ]] && source ${bashitscript}
 
 # make link for bashrc
 rm -f ~/.bash_profile 
