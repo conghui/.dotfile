@@ -16,7 +16,6 @@ plugins=(common-aliases \
          osx
          )
 
-ZSH_THEME="terminalparty"
 source $ZSH/oh-my-zsh.sh
 
 # Load nested configs

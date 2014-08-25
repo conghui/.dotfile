@@ -10,7 +10,7 @@ alias ..='cd ..'
 alias ...='cd ../..'
 alias cd..='cd ..'
 
-alias ssh='ssh -X'
+alias sshx='ssh -X'
 
 alias pbcopy='xclip -selection clipboard'
 
@@ -21,11 +21,6 @@ alias h='history | grep $1'
 alias go='gnome-open'
 
 # alias only for zsh
-alias mv='nocorrect mv'
-alias cp='nocorrect cp'
-alias mkdir='nocorrect mkdir'
-
-alias find="noglob find"
 alias zshconfig="vim ~/.zshrc"
 alias valgrind="valgrind --leak-check=full"
 

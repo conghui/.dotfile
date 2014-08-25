@@ -5,7 +5,7 @@ export BASH_IT=$HOME/.bash_it
 
 # Lock and Load a custom theme file
 # location /.bash_it/themes/
-export BASH_IT_THEME='bobby'
+export BASH_IT_THEME='standard'
 
 # Load nested configs
 for f in $(find -L ${HOME}/.dotfile/bash -name \*.bash | \
