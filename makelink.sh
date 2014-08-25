@@ -1,12 +1,18 @@
 #!/bin/bash
 
+# please run this script in the directory that contain this script
+#
+
 LINKFILES="\
   gdbinit gitconfig gitexcludes \
   vars.sh aliases.sh
   "
 
 for f in $LINKFILES; do
-  DEST=`readlink -f $f`
+  DEST="`pwd`/$f"
   FROM=${HOME}/.${f}
-  ln -sf ${DEST} ${FROM}
+  if [[ -f $DEST ]]; then
+    echo "linking $FROM to $DEST"
+    ln -sf ${DEST} ${FROM}
+  fi
 done
