@@ -43,14 +43,13 @@ if [[ -f $MADAGASCARENV ]]; then
   source $MADAGASCARENV
 fi
 
-# export PATH, MANPATH, INFOPATH for texlive 2012
-export PATH=/usr/local/texlive/2012/bin/x86_64-linux:$PATH
-export MANPATH=/usr/local/texlive/2012/texmf/doc/man:$MANPATH
-export INFOPATH=/usr/local/texlive/2012/texmf/doc/info:$INFOPATH
-
 # preceed personal path before system path
 # it is better placed at the last line
 export PATH=${PATH}:/usr/sbin/
 export PATH=$HOME/vroot/bin:${PATH}
+
+# add manpath
+export MANPATH=${HOME}/vroot/man/:$MANPATH
+export MANPATH=${HOME}/vroot/share/man/:$MANPATH
 
 # vim: ft=zsh
