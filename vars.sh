@@ -52,4 +52,7 @@ export PATH=$HOME/vroot/bin:${PATH}
 export MANPATH=${HOME}/vroot/man/:$MANPATH
 export MANPATH=${HOME}/vroot/share/man/:$MANPATH
 
+# autojump
+[[ -s ${HOME}/.autojump/etc/profile.d/autojump.sh ]] && \
+  source ${HOME}/.autojump/etc/profile.d/autojump.sh
 # vim: ft=zsh
