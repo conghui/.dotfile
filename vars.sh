@@ -5,9 +5,9 @@ GREP_OPTIONS='--color=auto'
 GREP_COLOR='3;33'
 
 # for python
-PYTHONROOT=${HOME}/vroot/local/Python
-export PATH=${PYTHONROOT}/bin:${PATH}
-export LD_LIBRARY_PATH=${PYTHONROOT}/lib:${LD_LIBRARY_PATH}
+PYTHONPATH=${HOME}/vroot/local/Python
+export PATH=${PYTHONPATH}/bin:${PATH}
+export LD_LIBRARY_PATH=${PYTHONPATH}/lib:${LD_LIBRARY_PATH}
 
 # CUDA
 CUDAROOT=${HOME}/vroot/local/cuda
