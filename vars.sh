@@ -42,8 +42,8 @@ if [[ -f $INTELMPIVAR ]]; then
 fi
 
 # mpich
-MPICH_ROOT=${HOME}/vroot/local/mpich
-export PATH=${MPICH_ROOT}/bin:${PATH}
+MPI_ROOT=${HOME}/vroot/local/mpi
+export PATH=${MPI_ROOT}/bin:${PATH}
 
 # for madagascar
 MADAGASCAR_ROOT=${HOME}/vroot/local/madagascar
@@ -51,6 +51,10 @@ MADAGASCARENV=${MADAGASCAR_ROOT}/share/madagascar/etc/env.sh
 if [[ -f $MADAGASCARENV ]]; then
   source $MADAGASCARENV
 fi
+
+# boost
+BOOST_ROOT=${HOME}/vroot/local/boost
+export LD_LIBRARY_PATH=${BOOST_ROOT}/lib:${LD_LIBRARY_PATH}
 
 # nodejs
 NODEJS_ROOT=${HOME}/vroot/local/node

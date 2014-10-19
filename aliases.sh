@@ -32,4 +32,6 @@ alias go='gnome-open'
 alias zshconfig="vim ~/.zshrc"
 alias valgrind="valgrind --leak-check=full"
 
+alias nsight='nsight &'
+
 # vim: ft=zsh
