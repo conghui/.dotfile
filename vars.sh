@@ -4,40 +4,58 @@ PAGER="less"
 GREP_OPTIONS='--color=auto'
 GREP_COLOR='3;33'
 
-# for python
-PYTHONROOT=${HOME}/vroot/local/Python
-export PATH=${PYTHONROOT}/bin:${PATH}
-export LD_LIBRARY_PATH=${PYTHONROOT}/lib:${LD_LIBRARY_PATH}
+# python
+PYTHON_ROOT=${HOME}/vroot/local/Python
+export PATH=${PYTHON_ROOT}/bin:${PATH}
+export LD_LIBRARY_PATH=${PYTHON_ROOT}/lib:${LD_LIBRARY_PATH}
+
+# ruby
+RUBY_ROOT=${HOME}/vroot/local/ruby
+export PATH=${RUBY_ROOT}/bin:${PATH}
+export LD_LIBRARY_PATH=${RUBY_ROOT}/lib:${LD_LIBRARY_PATH}
+
+# scons
+SCONS_ROOT=${HOME}/vroot/local/scons
+export PATH=${SCONS_ROOT}/bin:${PATH}
 
 # CUDA
-CUDAROOT=${HOME}/vroot/local/cuda
-export PATH=${CUDAROOT}/bin:${PATH}
-export LD_LIBRARY_PATH=${CUDAROOT}/lib64:${LD_LIBRARY_PATH}
+CUDA_ROOT=${HOME}/vroot/local/cuda
+export PATH=${CUDA_ROOT}/bin:${PATH}
+export LD_LIBRARY_PATH=${CUDA_ROOT}/lib64:${LD_LIBRARY_PATH}
 
 # cwp_su
-export CWPROOT=${HOME}/vroot/src/cwp_su_all
-export PATH=${CWPROOT}/bin:${PATH}
+export CWP_ROOT=${HOME}/vroot/src/cwp_su_all
+export PATH=${CWP_ROOT}/bin:${PATH}
 
 # intel compiler toolkits
-ICCROOT=${HOME}/vroot/opt/composerxe
-INTELCOMPILERVAR=${ICCROOT}/bin/compilervars.sh
+COMPOSERXE_ROOT=${HOME}/vroot/opt/composerxe
+INTELCOMPILERVAR=${COMPOSERXE_ROOT}/bin/compilervars.sh
 if [[ -f $INTELCOMPILERVAR ]]; then
   source $INTELCOMPILERVAR intel64
 fi
 
 # intel mpi
-IMPIROOT=${HOME}/vroot/opt/impi
-INTELMPIVAR=${IMPIROOT}/bin64/mpivars.sh
+IMPI_ROOT=${HOME}/vroot/opt/impi
+INTELMPIVAR=${IMPI_ROOT}/bin64/mpivars.sh
 if [[ -f $INTELMPIVAR ]]; then
   source $INTELMPIVAR
 fi
 
+# mpich
+MPICH_ROOT=${HOME}/vroot/local/mpich
+export PATH=${MPICH_ROOT}/bin:${PATH}
+
 # for madagascar
-MADAGASCARROOT=${HOME}/vroot/local/madagascar
-MADAGASCARENV=${MADAGASCARROOT}/share/madagascar/etc/env.sh
+MADAGASCAR_ROOT=${HOME}/vroot/local/madagascar
+MADAGASCARENV=${MADAGASCAR_ROOT}/share/madagascar/etc/env.sh
 if [[ -f $MADAGASCARENV ]]; then
   source $MADAGASCARENV
 fi
+
+# nodejs
+NODEJS_ROOT=${HOME}/vroot/local/node
+export PATH=${NODEJS_ROOT}/bin:${PATH}
+export LD_LIBRARY_PATH=${NODEJS_ROOT}/lib:${LD_LIBRARY_PATH}
 
 # preceed personal path before system path
 # it is better placed at the last line
@@ -51,4 +69,5 @@ export MANPATH=${HOME}/vroot/share/man/:$MANPATH
 # autojump
 [[ -s ${HOME}/.autojump/etc/profile.d/autojump.sh ]] && \
   source ${HOME}/.autojump/etc/profile.d/autojump.sh
+
 # vim: ft=zsh
