@@ -24,8 +24,8 @@ export PATH=${CUDA_ROOT}/bin:${PATH}
 export LD_LIBRARY_PATH=${CUDA_ROOT}/lib64:${LD_LIBRARY_PATH}
 
 # cwp_su
-export CWP_ROOT=${HOME}/vroot/src/cwp_su_all
-export PATH=${CWP_ROOT}/bin:${PATH}
+export CWPROOT=${HOME}/vroot/local/cwp_su_all
+export PATH=${CWPROOT}/bin:${PATH}
 
 # intel compiler toolkits
 COMPOSERXE_ROOT=${HOME}/vroot/opt/composerxe
