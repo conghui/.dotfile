@@ -171,6 +171,9 @@ prepend_bin_man ${INSTALL_ROOT}/hydra
 # tmuxinator # {{{
 [[ -f $DOTFILE_BUNDLE_ROOT/tmuxinator/tmuxinator.zsh ]] && source $DOTFILE_BUNDLE_ROOT/tmuxinator/tmuxinator.zsh
 # }}}
+# p4v#{{{
+prepend_PATH ${INSTALL_ROOT}/p4v/bin
+#}}}
 # quartus#{{{
 prepend_PATH /opt/altera/13.1/quartus/bin
 #}}}
