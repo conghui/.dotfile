@@ -4,6 +4,13 @@ PAGER="less"
 GREP_OPTIONS='--color=auto'
 GREP_COLOR='3;33'
 
+# for madagascar
+MADAGASCAR_ROOT=${HOME}/vroot/local/madagascar
+MADAGASCARENV=${MADAGASCAR_ROOT}/share/madagascar/etc/env.sh
+if [[ -f $MADAGASCARENV ]]; then
+  source $MADAGASCARENV
+fi
+
 # python
 PYTHON_ROOT=${HOME}/vroot/local/Python
 export PATH=${PYTHON_ROOT}/bin:${PATH}
@@ -27,6 +34,10 @@ export LD_LIBRARY_PATH=${CUDA_ROOT}/lib64:${LD_LIBRARY_PATH}
 export CWPROOT=${HOME}/vroot/local/cwp_su_all
 export PATH=${CWPROOT}/bin:${PATH}
 
+# valgrind
+VALGRIND_ROOT=${HOME}/vroot/local/valgrind
+export PATH=${VALGRIND_ROOT}/bin:${PATH}
+
 # intel compiler toolkits
 COMPOSERXE_ROOT=${HOME}/vroot/opt/composerxe
 INTELCOMPILERVAR=${COMPOSERXE_ROOT}/bin/compilervars.sh
@@ -41,16 +52,12 @@ if [[ -f $INTELMPIVAR ]]; then
   source $INTELMPIVAR
 fi
 
-# mpich
+
+# mpi
 MPI_ROOT=${HOME}/vroot/local/mpi
 export PATH=${MPI_ROOT}/bin:${PATH}
+export MANPATH=${MPI_ROOT}/share/man/:${MANPATH}
 
-# for madagascar
-MADAGASCAR_ROOT=${HOME}/vroot/local/madagascar
-MADAGASCARENV=${MADAGASCAR_ROOT}/share/madagascar/etc/env.sh
-if [[ -f $MADAGASCARENV ]]; then
-  source $MADAGASCARENV
-fi
 
 # boost
 BOOST_ROOT=${HOME}/vroot/local/boost
