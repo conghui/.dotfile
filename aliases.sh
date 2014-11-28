@@ -10,8 +10,8 @@ fi
 
 alias e="vim"
 alias sl='ls'
-alias ll="ls -l"
-alias l='ls -lS'
+alias ll="ls -lrt"
+alias l='ll'
 alias la='l -aS'
 
 alias ..='cd ..'

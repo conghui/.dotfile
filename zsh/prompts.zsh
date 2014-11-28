@@ -4,7 +4,7 @@ function build-prompt() {
         *) statcolor="%{$fg[red]%}"   ;;
     esac 
 
-    echo "%{$fg[cyan]%}%2c $statcolor▸%{$reset_color%} "
+    echo "%{$fg[cyan]%}%2c $statcolor>%{$reset_color%} "
 }
 
 function build-right-prompt() {
