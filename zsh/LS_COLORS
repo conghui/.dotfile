@@ -33,7 +33,7 @@ CAPABILITY            38;5;17
 CHR                   38;5;113;1
 DIR                   38;5;33
 DOOR                  38;5;127
-EXEC                  38;5;166;4
+EXEC                  38;5;220;1 # last '1' stands for bold
 FIFO                  38;5;126
 FILE                  38;5;253
 LINK                  38;5;44
@@ -53,14 +53,15 @@ STICKY_OTHER_WRITABLE 48;5;235;38;5;139;3
 .PL                   38;5;160
 .asm                  38;5;240;1
 .awk                  38;5;148;1
-.bash                 38;5;173
+.bash                 38;5;117
 .bat                  38;5;108
 .c                    38;5;148
 .cfg                  1
 .coffee               38;5;94;1
 .conf                 1
-.cpp                  38;5;148;1
-.cxx                  38;5;148;1
+.cpp                  38;5;148
+.cxx                  38;5;148
+.cu                   38;5;148
 .cs                   38;5;74;1
 .css                  38;5;91
 .csv                  38;5;78
@@ -76,6 +77,7 @@ STICKY_OTHER_WRITABLE 48;5;235;38;5;139;3
 .go                   38;5;36;1
 .h                    38;5;197
 .hxx                  38;5;197
+.hpp                  38;5;197
 .hs                   38;5;155;1
 .htm                  38;5;125;1
 .html                 38;5;125;1
@@ -93,16 +95,15 @@ STICKY_OTHER_WRITABLE 48;5;235;38;5;139;3
 .lua                  38;5;34;1
 .map                  38;5;58;3
 .markdown             38;5;184
-.md                   38;5;184
+.md                   38;5;82
 .mf                   38;5;220;3
 .mfasl                38;5;73
 .mi                   38;5;124
-.mkd                  38;5;184
+.mkd                  38;5;82
 .mtx                  38;5;36;3
 .nfo                  38;5;220
 .o                    38;5;240
 .lo                   38;5;240
-.pacnew               38;5;33
 .patch                48;5;197;38;5;232;1
 .pc                   38;5;100
 .pfa                  38;5;43
@@ -112,13 +113,14 @@ STICKY_OTHER_WRITABLE 48;5;235;38;5;139;3
 .pm                   38;5;197;1
 .pod                  38;5;172;1
 .py                   38;5;41
+.pyc                  38;5;3
 .rb                   38;5;192
 .rdf                  38;5;144
 .rst                  38;5;67
 .ru                   38;5;142
 .sed                  38;5;130;1
 .sfv                  38;5;197
-.sh                   38;5;113
+.sh                   38;5;117
 .signature            38;5;206
 .sql                  38;5;222
 .srt                  38;5;116
@@ -132,13 +134,13 @@ STICKY_OTHER_WRITABLE 48;5;235;38;5;139;3
 .tfm                  38;5;64
 .tfnt                 38;5;140
 .theme                38;5;109
-.txt                  38;5;192
+.txt                  38;5;7
 .urlview              38;5;85
 .vim                  1
 .viminfo              38;5;240;1
 .xml                  38;5;199
 .yml                  38;5;208
-.zsh                  38;5;173
+.zsh                  38;5;117
 
 # Build stuff
 .1                    38;5;196;1
@@ -187,7 +189,6 @@ STICKY_OTHER_WRITABLE 48;5;235;38;5;139;3
 .nes                  38;5;160
 .rom                  38;5;59;1
 .sav                  38;5;220
-.sms                  38;5;33
 .st                   38;5;208;1
 #}}}
 # images                                                                     {{{
@@ -271,7 +272,7 @@ STICKY_OTHER_WRITABLE 48;5;235;38;5;139;3
 .a                    38;5;46
 .la                   38;5;46
 .arj                  38;5;41
-.bz2                  38;5;41
+.bz2                  38;5;34
 .ipk                  38;5;117
 .jad                  38;5;50
 .jar                  38;5;51
@@ -392,12 +393,12 @@ STICKY_OTHER_WRITABLE 48;5;235;38;5;139;3
 .r97                  38;5;241
 .r98                  38;5;242
 .r99                  38;5;243
-.rar                  38;5;106;1
-.tar                  38;5;118
+.rar                  38;5;34
+.tar                  38;5;34
 .tar.gz               38;5;34
-.tgz                  38;5;35;1
-.xz                   38;5;118
-.zip                  38;5;41
+.tgz                  38;5;34
+.xz                   38;5;34
+.zip                  38;5;34
 #}}}
 # really compressed archives, but mostly used for documents, comics (and     {{{
 # documentation on MS Windows)                                               
