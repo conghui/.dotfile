@@ -1,4 +1,5 @@
 EDITOR=vim
+TERM="xterm-256color"
 PAGER="less"
 
 GREP_OPTIONS='--color=auto'

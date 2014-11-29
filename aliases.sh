@@ -12,10 +12,7 @@ alias e="vim"
 alias sl='ls'
 alias ll="ls -lrt"
 alias l='ll'
-alias la='l -aS'
 
-alias ..='cd ..'
-alias ...='cd ../..'
 alias cd..='cd ..'
 
 alias sshx='ssh -X'
