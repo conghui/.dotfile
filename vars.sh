@@ -45,6 +45,13 @@ if [[ -f $INTELCOMPILERVAR ]]; then
   source $INTELCOMPILERVAR intel64
 fi
 
+# intel fortran compiler toolkits
+IFORT_ROOT=${HOME}/vroot/opt/l_fcompxe
+INTELCOMPILERVAR=${IFORT_ROOT}/bin/compilervars.sh
+if [[ -f $INTELCOMPILERVAR ]]; then
+  source $INTELCOMPILERVAR intel64
+fi
+
 # intel mpi
 IMPI_ROOT=${HOME}/vroot/opt/impi
 INTELMPIVAR=${IMPI_ROOT}/bin64/mpivars.sh
@@ -67,6 +74,18 @@ export LD_LIBRARY_PATH=${BOOST_ROOT}/lib:${LD_LIBRARY_PATH}
 NODEJS_ROOT=${HOME}/vroot/local/node
 export PATH=${NODEJS_ROOT}/bin:${PATH}
 export LD_LIBRARY_PATH=${NODEJS_ROOT}/lib:${LD_LIBRARY_PATH}
+
+# maxcompiler
+MAXCOMPILER_ROOT=${HOME}/vroot/local/maxcompiler
+MAXCOMPILER_SETTING=${MAXCOMPILER_ROOT}/settings.sh
+if [[ -f $MAXCOMPILER_SETTING ]]; then
+  source $MAXCOMPILER_SETTING
+fi
+
+# texlive
+TEXLIVE_ROOT=${HOME}/vroot/local/texlive
+export PATH=${TEXLIVE_ROOT}/bin/x86_64-linux:${PATH}
+export MANPATH=${TEXLIVE_ROOT}/texmf/doc/man:${MANPATH}
 
 # preceed personal path before system path
 # it is better placed at the last line
