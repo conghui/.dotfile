@@ -12,6 +12,7 @@
 	excludesfile = ~/.gitexcludes
 	editor = vim
 
-; vim: ft=gitconfig
 [push]
 	default = matching
+
+; vim: ft=gitconfig
