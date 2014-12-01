@@ -88,6 +88,9 @@ TEXLIVE_ROOT=${HOME}/vroot/local/texlive
 export PATH=${TEXLIVE_ROOT}/bin/x86_64-linux:${PATH}
 export MANPATH=${TEXLIVE_ROOT}/texmf/doc/man:${MANPATH}
 
+# opencv
+OPENCV_ROOT=${HOME}/vroot/local/opencv
+export LD_LIBRARY_PATH=${OPENCV_ROOT}/lib:${LD_LIBRARY_PATH}
 # preceed personal path before system path
 # it is better placed at the last line
 export PATH=${PATH}:/usr/sbin/
