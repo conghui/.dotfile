@@ -3,4 +3,6 @@
 packageName=${PWD##*/}          
 prefix=${INSTALL_ROOT}/${packageName}
 
-python2.7 ./setup.py install --prefix=${prefix}
+./configure --prefix=${prefix} && \
+  make -j12 && \
+  make install

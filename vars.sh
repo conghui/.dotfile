@@ -60,48 +60,61 @@ function source_if_exist()
 EDITOR=vim
 TERM="xterm-256color"
 PAGER="less"
+export INSTALL_ROOT=${HOME}/softs/install/
 
-# for madagascar
-source_if_exist ${HOME}/vroot/local/madagascar/share/madagascar/etc/env.sh
+# vim
+prepend_bin_shareman ${INSTALL_ROOT}/vim
+
+# madagascar
+source_if_exist ${INSTALL_ROOT}/madagascar/share/madagascar/etc/env.sh
 
 # python
-prepend_bin_lib_shareman ${HOME}/vroot/local/Python
+prepend_bin_lib_shareman ${INSTALL_ROOT}/Python
 
 # ruby
-prepend_bin_lib_shareman ${HOME}/vroot/local/ruby
+prepend_bin_lib_shareman ${INSTALL_ROOT}/ruby
 
 # scons
-prepend_bin_man ${HOME}/vroot/local/scons
+prepend_bin_man ${INSTALL_ROOT}/scons
 
 # CUDA
-prepend_bin_lib64 ${HOME}/vroot/local/cuda
+prepend_bin_lib64 ${INSTALL_ROOT}/cuda
 
 # cwp_su
-export CWPROOT=${HOME}/vroot/local/cwp_su_all
+export CWPROOT=${INSTALL_ROOT}/cwp_su_all
 prepend_PATH ${CWPROOT}/bin
 
 # intel root directory
-INTEL_ROOT=${HOME}/vroot/opt/intel
+INTEL_ROOT=${INSTALL_ROOT}/intel
 source_if_exist ${INTEL_ROOT}/composerxe/bin/compilervars.sh intel64
 source_if_exist ${INTEL_ROOT}/impi/bin64/mpivars.sh
 source_if_exist ${INTEL_ROOT}/vtune_amplifier_xe/amplxe-vars.sh &> /dev/null
 
 # mpi
-prepend_bin_shareman ${HOME}/vroot/local/mpi
+prepend_bin_shareman ${INSTALL_ROOT}/mpi
 
 # boost
-prepend_LD_LIBRARY_PATH ${HOME}/vroot/local/boost
+prepend_LD_LIBRARY_PATH ${INSTALL_ROOT}/boost
 
 # maxcompiler
-source_if_exist ${HOME}/vroot/local/maxcompiler/settings.sh
+source_if_exist ${INSTALL_ROOT}/maxcompiler/settings.sh
 
 # texlive
-TEXLIVE_ROOT=${HOME}/vroot/local/texlive
+TEXLIVE_ROOT=${INSTALL_ROOT}/texlive
 prepend_PATH    ${TEXLIVE_ROOT}/bin/x86_64-linux
 prepend_MANPATH ${TEXLIVE_ROOT}/texmf/doc/man
 
 # opencv
-prepend_LD_LIBRARY_PATH ${HOME}/vroot/local/opencv/lib
+prepend_LD_LIBRARY_PATH ${INSTALL_ROOT}/opencv/lib
+
+# git
+prepend_bin_man ${INSTALL_ROOT}/git
+
+# cmake
+prepend_PATH ${INSTALL_ROOT}/cmake/bin
+
+# ~/softs/bin
+prepend_PATH ${INSTALL_ROOT}/../bin
 
 # sbin
 prepend_PATH /usr/sbin/
