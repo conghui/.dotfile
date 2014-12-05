@@ -91,7 +91,7 @@ source_if_exist ${INTEL_ROOT}/impi/bin64/mpivars.sh
 source_if_exist ${INTEL_ROOT}/vtune_amplifier_xe/amplxe-vars.sh &> /dev/null
 
 # mpi
-prepend_bin_shareman ${INSTALL_ROOT}/mpi
+prepend_bin_lib_shareman ${INSTALL_ROOT}/mpi
 
 # boost
 prepend_LD_LIBRARY_PATH ${INSTALL_ROOT}/boost/lib
