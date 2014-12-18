@@ -88,7 +88,8 @@ prepend_PATH ${CWPROOT}/bin
 INTEL_ROOT=${INSTALL_ROOT}/intel
 source_if_exist ${INTEL_ROOT}/composerxe/bin/compilervars.sh intel64
 source_if_exist ${INTEL_ROOT}/impi/bin64/mpivars.sh
-source_if_exist ${INTEL_ROOT}/vtune_amplifier_xe/amplxe-vars.sh &> /dev/null
+source_if_exist ${INTEL_ROOT}/vtune_amplifier_xe/amplxe-vars.sh quiet
+source_if_exist ${INTEL_ROOT}/inspector_xe/inspxe-vars.sh quiet
 
 # mpi
 prepend_bin_lib_shareman ${INSTALL_ROOT}/mpi
@@ -109,6 +110,8 @@ prepend_LD_LIBRARY_PATH ${INSTALL_ROOT}/opencv/lib
 
 # git
 prepend_bin_man ${INSTALL_ROOT}/git
+
+prepend_bin_man ${INSTALL_ROOT}/valgrind
 
 # cmake
 prepend_PATH ${INSTALL_ROOT}/cmake/bin
