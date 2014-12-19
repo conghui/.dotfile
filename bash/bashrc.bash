@@ -8,7 +8,7 @@ export BASH_IT=$HOME/.bash_it
 export BASH_IT_THEME='standard'
 
 # Load nested configs
-for f in $(find -L ${HOME}/.dotfile/bash -name \*.bash | \
+for f in $(find ${HOME}/.dotfile/bash -name \*.bash | \
   grep -v bashrc.bash | grep -v bash-it.bash); do
   source $f
 done
