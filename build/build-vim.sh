@@ -10,6 +10,7 @@ prefix=${INSTALL_ROOT}/${packageName}
   --prefix=${prefix} && \
   make -j8 && make install
 
+cd ${INSTALL_ROOT}
 linkName=${INSTALL_ROOT}/vim
-[[ -f ${linkName} ]] && rm -f ${linkName}
-ln -s ${prefix} ${linkName}
+rm -f ${linkName}
+ln -s ${packageName} ${linkName}

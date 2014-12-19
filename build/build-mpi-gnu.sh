@@ -1,7 +1,7 @@
 #!/bin/bash
 
-packageName=${PWD##*/}
-prefix=${INSTALL_ROOT}/${packageName}-gnu
+packageName=${PWD##*/}-gnu
+prefix=${INSTALL_ROOT}/${packageName}
 
 ./configure --prefix=${prefix} CC=gcc CXX=g++ FC=gfortran \
   --enable-g=dbg,mem,meminit \
@@ -9,6 +9,7 @@ prefix=${INSTALL_ROOT}/${packageName}-gnu
   make -j12 && \
   make install
 
+cd ${INSTALL_ROOT}
 linkName=${INSTALL_ROOT}/mpi
-[[ -f ${linkName} ]] && rm -f ${linkName}
-ln -s ${prefix} ${linkName}
+rm -f ${linkName}
+ln -s ${packageName} ${linkName}

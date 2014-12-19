@@ -7,6 +7,7 @@ prefix=${INSTALL_ROOT}/${packageName}
   make -j12 && \
   make install
 
-linkName=${prefix%%-*}
-[[ -f ${linkName} ]] && rm -f ${linkName}
-ln -s ${prefix} ${linkName}
+cd ${INSTALL_ROOT}
+linkName=${packageName%%-*}
+rm -f ${linkName}
+ln -s ${packageName} ${linkName}
