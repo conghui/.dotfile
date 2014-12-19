@@ -1,11 +1,9 @@
 #!/bin/bash
 
 packageName=${PWD##*/}
-prefix=${INSTALL_ROOT}/${packageName}
+./bootstrap.sh --prefix=${INSTALL_ROOT}/${packageName}
 
-./configure --prefix=${prefix} && \
-  make -j12 && \
-  make install
+./b2 install variant=release link=shared
 
 linkName=${prefix%%-*}
 [[ -f ${linkName} ]] && rm -f ${linkName}

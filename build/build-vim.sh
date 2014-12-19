@@ -9,3 +9,7 @@ prefix=${INSTALL_ROOT}/${packageName}
   --enable-cscope \
   --prefix=${prefix} && \
   make -j8 && make install
+
+linkName=${INSTALL_ROOT}/vim
+[[ -f ${linkName} ]] && rm -f ${linkName}
+ln -s ${prefix} ${linkName}

@@ -8,3 +8,7 @@ prefix=${INSTALL_ROOT}/${packageName}-gnu
   CPPFLAGS=-I${INSTALL_ROOT}/valgrind/include && \
   make -j12 && \
   make install
+
+linkName=${INSTALL_ROOT}/mpi
+[[ -f ${linkName} ]] && rm -f ${linkName}
+ln -s ${prefix} ${linkName}
