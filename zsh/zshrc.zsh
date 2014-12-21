@@ -22,8 +22,9 @@ plugins=(common-aliases \
          extract \
          history \
          safe-paste \
-         gnu-utils \
-         osx
+         osx \
+         brew \
+         textmate
          )
 
 DISABLE_AUTO_UPDATE=true # for zsh
