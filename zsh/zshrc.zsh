@@ -11,6 +11,9 @@ fi
 
 # use oh-my-zsh
 ZSH=$HOME/.oh-my-zsh
+ZSHDIR=${HOME}/.dotfile/zsh
+DISABLE_AUTO_UPDATE=true # for zsh
+
 plugins=(common-aliases \
          screen \
          git \
@@ -27,12 +30,9 @@ plugins=(common-aliases \
          textmate
          )
 
-DISABLE_AUTO_UPDATE=true # for zsh
-source ${ZSH}/oh-my-zsh.sh
-
-ZSHDIR=${HOME}/.dotfile/zsh
-source ${ZSHDIR}/aliases.zsh
 source ${ZSHDIR}/vars.zsh
+source ${ZSH}/oh-my-zsh.sh
+source ${ZSHDIR}/aliases.zsh
 source ${ZSHDIR}/zsh-syntax-highlighting-filetypes.zsh
 source ${ZSHDIR}/prompts.zsh
 

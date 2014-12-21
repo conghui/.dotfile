@@ -132,6 +132,9 @@ prepend_PATH ${INSTALL_ROOT}/../bin
 # autojump
 prepend_PATH ${INSTALL_ROOT}/autojump/bin
 
+# tmux
+prepend_PATH ${INSTALL_ROOT}/tmux/bin
+
 # sbin
 prepend_PATH /usr/sbin/
 
