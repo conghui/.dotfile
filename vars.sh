@@ -129,13 +129,12 @@ prepend_PATH ${INSTALL_ROOT}/cmake/bin
 # ~/softs/bin
 prepend_PATH ${INSTALL_ROOT}/../bin
 
+# autojump
+prepend_PATH ${INSTALL_ROOT}/autojump/bin
+
 # sbin
 prepend_PATH /usr/sbin/
 
 setup_osx
-
-# autojump
-[[ -s ${HOME}/.autojump/etc/profile.d/autojump.sh ]] && \
-  source ${HOME}/.autojump/etc/profile.d/autojump.sh
 
 # vim: ft=zsh

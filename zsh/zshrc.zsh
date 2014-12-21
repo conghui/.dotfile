@@ -3,11 +3,17 @@ bindkey -e # emacs style key bindings
 local WORDCHARS=${WORDCHARS//\//}
 setopt CORRECT
 
+# declare pbcopy in Linux
+if [[ "$OSTYPE" == "linux-gnu" ]]; then
+  alias pbcopy='xclip -selection clipboard'
+  alias pbpaste='xclip -selection clipboard -o'
+fi
+
 # use oh-my-zsh
 ZSH=$HOME/.oh-my-zsh
 plugins=(common-aliases \
          screen \
-         git\
+         git \
          colored-man \
          copydir copyfile \
          autojump \
@@ -16,14 +22,13 @@ plugins=(common-aliases \
          osx
          )
 
-source $ZSH/oh-my-zsh.sh
+source ${ZSH}/oh-my-zsh.sh
 
 ZSHDIR=${HOME}/.dotfile/zsh
-# Load nested configs
-for f in $(find ${ZSHDIR} -name \*.zsh | \
-  grep -v zshrc.zsh | grep -v install_zsh.zsh); do
-  source $f
-done
+source ${ZSHDIR}/aliases.zsh
+source ${ZSHDIR}/vars.zsh
+source ${ZSHDIR}/zsh-syntax-highlighting-filetypes.zsh
+source ${ZSHDIR}/prompts.zsh
 
 # change color of `ls`
 command -v gdircolors >/dev/null 2>&1 && eval $( gdircolors -b ${ZSHDIR}/LS_COLORS)
