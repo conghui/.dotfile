@@ -39,4 +39,3 @@ source ${ZSHDIR}/prompts.zsh
 # change color of `ls`
 command -v gdircolors >/dev/null 2>&1 && eval $( gdircolors -b ${ZSHDIR}/LS_COLORS)
 command -v  dircolors >/dev/null 2>&1 && eval $( dircolors  -b ${ZSHDIR}/LS_COLORS)
-

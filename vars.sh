@@ -68,7 +68,8 @@ function setup_osx()
 ########################## End of function definition #####################
 
 EDITOR=vim
-TERM="xterm-256color"
+TERM="screen-256color" # use xterm-256color before
+
 PAGER="less"
 export INSTALL_ROOT=${HOME}/softs/install/
 

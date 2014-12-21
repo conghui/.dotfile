@@ -5,7 +5,7 @@
 
 LINKFILES="\
   gdbinit gitconfig gitexcludes \
-  vars.sh aliases.sh tmux.cfg
+  vars.sh aliases.sh tmux.conf
   "
 
 for f in $LINKFILES; do
