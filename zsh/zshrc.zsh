@@ -19,6 +19,10 @@ plugins=(common-aliases \
          autojump \
          dirhistory \
          rsync \
+         extract \
+         history \
+         safe-paste \
+         gnu-utils \
          osx
          )
 

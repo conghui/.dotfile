@@ -16,9 +16,6 @@ alias ll="ls -lrt"
 alias cd..='cd ..'
 alias sshx='ssh -X'
 
-# in this manner, a nice command:  h <searchterm>
-alias h='history | grep $1'
-
 alias valgrind="valgrind --leak-check=full"
 alias nsight='nsight &'
 
