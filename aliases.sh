@@ -4,6 +4,7 @@ if [[ "$OSTYPE" == "linux-gnu" ]]; then
 elif [[ "$OSTYPE" == "darwin"* ]]; then
   alias go='open'
   alias top='top -s1 -o cpu -R -F'
+  alias vim='mvim -v'
 fi
 
 # keep some command originally
