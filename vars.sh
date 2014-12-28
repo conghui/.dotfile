@@ -138,6 +138,9 @@ prepend_PATH ${INSTALL_ROOT}/tmux/bin
 # sbin
 prepend_PATH /usr/sbin/
 
+# /usr/local/bin
+prepend_PATH /usr/local/bin
+
 setup_osx
 
 # vim: ft=zsh
