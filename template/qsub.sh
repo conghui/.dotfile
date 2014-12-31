@@ -1,7 +1,7 @@
 #!/bin/sh
 
 ### Set the job name
-#PBS -N esfwi
+#PBS -N youJobName
  
 ### Declare myprogram non-rerunable
 #PBS -r n 
@@ -20,7 +20,7 @@
 #PBS -q batch
  
 ### the number nodes you want to use and number of processes per node
-#PBS -l nodes=1:ppn=1
+#PBS -l nodes=1:ppn=8
  
 ### maximum of wall time and cpu time
 #PBS -l walltime=9999:00:00
