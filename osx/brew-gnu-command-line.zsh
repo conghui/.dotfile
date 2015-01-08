@@ -3,8 +3,6 @@
 brew tap homebrew/dupes
 
 brew install zsh
-#brew install vim --override-system-vi
-brew install macvim --override-system-vim --custom-system-icons
 brew install coreutils
 brew install binutils
 brew install diffutils
@@ -22,6 +20,8 @@ brew install screen
 brew install watch
 brew install wdiff --with-gettext
 brew install wget
+brew install tmux
+brew install vim 
 
 brew install bash
 brew install gpatch
@@ -32,7 +32,6 @@ brew install file-formula
 brew install git
 brew install less
 brew install openssh --with-brewed-openssl
-brew install python --with-brewed-openssl
 brew install rsync
 brew install svn
 brew install unzip
