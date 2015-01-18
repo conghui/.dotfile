@@ -27,6 +27,11 @@ brew install bash
 brew install gpatch
 brew install m4
 brew install make
+brew install cmake
+brew install tree
+brew install ruby
+brew install brew-gem
+brew install bwm-ng
 
 brew install file-formula
 brew install git
