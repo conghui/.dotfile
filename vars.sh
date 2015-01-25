@@ -132,11 +132,17 @@ prepend_PATH ${INSTALL_ROOT}/autojump/bin
 # tmux
 prepend_PATH ${INSTALL_ROOT}/tmux/bin
 
+# gnuplot
+prepend_bin_shareman ${INSTALL_ROOT}/gnuplot
+
 # sbin
 prepend_PATH /usr/sbin/
 
 # /usr/local/bin
 prepend_PATH /usr/local/bin
+
+# ${HOME}/.local/bin
+prepend_PATH ${HOME}/.local/bin
 
 setup_osx
 

@@ -25,6 +25,8 @@ plugins=(common-aliases \
          extract \
          history \
          safe-paste \
+         ruby \
+         gem \
          osx \
          brew \
          textmate
