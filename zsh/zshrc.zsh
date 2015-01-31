@@ -12,9 +12,7 @@ fi
 ZSHDIR=${HOME}/.dotfile/zsh
 
 # Source Prezto.
-source ${ZSHDIR}/prezto/init.zsh
-source ${ZSHDIR}/preztorc.zsh
-
+source ${ZSHDIR}/zprezto/init.zsh
 source ${ZSHDIR}/vars.sh
 source ${ZSHDIR}/filetype.zsh
 source ${ZSHDIR}/fasd.zsh
