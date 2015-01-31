@@ -31,6 +31,7 @@ alias grep='grep --color=auto'
 # for git
 alias git='noglob git'
 alias gst='git status'
+alias gd='git diff'
 
 alias valgrind="valgrind --leak-check=full"
 alias nsight='nsight &'

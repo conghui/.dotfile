@@ -15,6 +15,7 @@ function link_file()
 
 link_file `pwd`/gdb/gdbinit      ${HOME}/.gdbinit
 link_file `pwd`/git/gitconfig    ${HOME}/.gitconfig
+link_file `pwd`/vim              ${HOME}/.vim
 link_file `pwd`/vim/vimrc        ${HOME}/.vimrc
 link_file `pwd`/tmux/tmux.conf   ${HOME}/.tmux.conf
 link_file `pwd`/zsh/aliases.sh   ${HOME}/.aliases.sh
