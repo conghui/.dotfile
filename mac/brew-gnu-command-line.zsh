@@ -32,6 +32,7 @@ brew install tree
 brew install ruby
 brew install brew-gem
 brew install bwm-ng
+brew install scons
 
 brew install file-formula
 brew install git

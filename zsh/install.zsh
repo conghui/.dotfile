@@ -1,6 +1,7 @@
 #!/bin/zsh
 
-(cd ..; ./makelink.sh)
+# clone prezto repo
+git clone --recursive https://github.com/sorin-ionescu/prezto.git 
 
 # make links to setup zsh
 FROM=${HOME}/.zshrc

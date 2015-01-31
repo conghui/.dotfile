@@ -1,3 +1,6 @@
+export DOTFILE_ROOT=${HOME}/.dotfile
+source ${DOTFILE_ROOT}/zsh/aliases.sh
+
 function prepend_PATH()
 {
   export PATH=${@}:${PATH}
@@ -143,6 +146,11 @@ prepend_PATH /usr/local/bin
 
 # ${HOME}/.local/bin
 prepend_PATH ${HOME}/.local/bin
+
+# ${HOME}/.dotfile/bin
+prepend_PATH ${HOME}/.dotfile/bin
+
+prepend_MANPATH /usr/local/man
 
 setup_osx
 

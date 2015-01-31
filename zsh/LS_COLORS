@@ -136,7 +136,7 @@ STICKY_OTHER_WRITABLE 48;5;235;38;5;139;3
 .theme                38;5;109
 .txt                  38;5;7
 .urlview              38;5;85
-.vim                  1
+.vim                  0
 .viminfo              38;5;240;1
 .xml                  38;5;199
 .yml                  38;5;208

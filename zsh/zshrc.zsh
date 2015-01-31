@@ -9,33 +9,15 @@ if [[ "$OSTYPE" == "linux-gnu" ]]; then
   alias pbpaste='xclip -selection clipboard -o'
 fi
 
-# use oh-my-zsh
-ZSH=$HOME/.oh-my-zsh
 ZSHDIR=${HOME}/.dotfile/zsh
-DISABLE_AUTO_UPDATE=true # for zsh
 
-plugins=(common-aliases \
-         screen \
-         git \
-         colored-man \
-         copydir copyfile \
-         autojump \
-         dirhistory \
-         rsync \
-         extract \
-         history \
-         safe-paste \
-         ruby \
-         gem \
-         osx \
-         brew \
-         textmate
-         )
+# Source Prezto.
+source ${ZSHDIR}/prezto/init.zsh
+source ${ZSHDIR}/preztorc.zsh
 
-source ${ZSHDIR}/vars.zsh
-source ${ZSH}/oh-my-zsh.sh
-source ${ZSHDIR}/aliases.zsh
-source ${ZSHDIR}/zsh-syntax-highlighting-filetypes.zsh
+source ${ZSHDIR}/vars.sh
+source ${ZSHDIR}/filetype.zsh
+source ${ZSHDIR}/fasd.zsh
 source ${ZSHDIR}/prompts.zsh
 
 # change color of `ls`

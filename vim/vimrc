@@ -1,0 +1,336 @@
+" ========================================
+" Vim plugin configuration
+" ========================================
+set nocompatible              " be iMproved, required
+
+" Filetype off is required by vundle
+filetype off                  " required
+
+" set the runtime path to include Vundle and initialize
+set rtp+=~/.vim/bundle/Vundle.vim
+call vundle#begin()
+
+" let Vundle manage Vundle, required
+Plugin 'gmarik/Vundle.vim'
+Plugin 'L9'
+Plugin 'godlygeek/tabular'
+Plugin 'junegunn/vim-easy-align'
+Plugin 'fholgado/minibufexpl.vim'
+Plugin 'FuzzyFinder'
+Plugin 'DoxygenToolkit.vim'
+Plugin 'jcf/vim-latex'
+Plugin 'SirVer/ultisnips'
+Plugin 'honza/vim-snippets'
+Plugin 'derekwyatt/vim-fswitch'
+Plugin 'Valloric/YouCompleteMe'
+Plugin 'Lokaltog/vim-easymotion'
+Plugin 'nacitar/terminalkeys.vim'
+Plugin 'altercation/vim-colors-solarized'
+Plugin 'tpope/vim-commentary'
+Plugin 'sjl/gundo.vim'
+Plugin 'tpope/vim-markdown'
+
+" All of your Plugins must be added before the following line
+call vundle#end()            " required
+
+"                           General Options:
+"-------------------------------------------------------------------
+set nocompatible
+let mapleader = ","
+let g:mapleader = ","
+filetype plugin on       		" Enable filetype plugin
+filetype indent on
+syntax on               		" Enable syntax hl
+filetype on
+set ambiwidth=double
+language message en_US.UTF-8
+set autoread                	" Auto read when a file is changed from the outside
+set noerrorbells                " No sound on errors
+set novisualbell                " No sound on errors
+set mouse=a                 	" Enable mouse
+set backspace=eol,start,indent 	" Set backspace config
+set history=70              	" The lines of history VIM has to remember
+set completeopt=menu,menuone,longest
+set complete-=i					" Not to include headers?
+set fillchars=vert:\|,fold:-
+set formatoptions+=c  " auto-wrap comments using textwith, inserting the current comment leader automatically
+set formatoptions+=w  " Trailing white space indicates a paragraph continues in the next line.
+                      " A line that ends in a non-white character ends a paragraph.
+
+set guioptions+=eg
+set guioptions-=l               " No left-hand scrollbar
+set guioptions-=L               " No left-hand scrollbar always
+set guioptions-=r               " No right-hand scrollbar
+set guioptions-=R               " No right-hand scrollbar always
+set guioptions-=b               " No bottom scrollbar
+set guioptions-=m               " No menubar
+set guioptions-=T               " No toolbar(T)
+set guioptions-=t               " Not include tearoff menu items.
+set linespace=1
+set nobackup                	" Don't back up file.
+set undolevels=500
+set updatetime=500				" Similar to auto save.
+set wildmenu					" Command line completion is enhanced.
+set winaltkeys=no				" Disable ALT key for the GVIM application.
+set hidden          	        "Make the buffer hidden, instead of unload
+set whichwrap+=<,>,[,]			"Move the cursor to next or previous line.
+set noswapfile
+set textwidth=75
+
+" [Search configuration]
+set ignorecase          		" Ignore case when searching
+set smartcase           		" Case matches depend on what you type
+set incsearch           		" Make search act like search in modern browsers
+set magic               		" Use regular expressions for searching
+
+" [Tab configuration]
+set shiftwidth  =2              " Number of space for indenting
+set tabstop     =2              " Width of TAB
+set softtabstop =2
+set expandtab                   " Insert space for TAB
+set smarttab
+
+" [spell checking]
+set nospell						" No spell checking.
+set spelllang=en  				" Language for spell checking.
+
+" [Display configuration]
+set splitright					" Put new splited window to the right of current.
+set number              		" Display line number
+set display=lastline,uhex
+set ruler                		" Always show current position
+set cmdheight=2          		" The commandbar height
+set showcmd              		" Show the command currently executing.
+set showmode             		" Show which mode you are in
+set showmatch            		" Show matching bracets when text indicator is over them
+set nolazyredraw         		" Don't redraw while executing macros
+set linebreak
+set wrap						        " Wrap the text
+set t_Co=256
+set hlsearch                " highlight search
+set encoding=utf-8
+set term=screen-256color
+set background=dark
+colorscheme wombat256mod
+" colorscheme solarized
+
+set laststatus=2 				" Always show the statusline
+set statusline=
+set statusline+=[%n]\                            "buffer number
+set statusline+=%<%f\                            "File+path
+set statusline+=%=%{strftime('%I:%M')}\ \        "Current time
+set statusline+=%y\ \                            "FileType
+set statusline+=%{''.(&fenc!=''?&fenc:&enc).''}  "Encoding
+set statusline+=%{(&bomb?\",BOM\":\"\")}/        "Encoding2
+set statusline+=%{&ff}\                          "FileFormat (dos/unix..)
+set statusline+=\ row:%l/%L\ \                   "Rownumber/total (%)
+set statusline+=col:%03c\                        "Colnr
+set statusline+=\ %m%r%w\ %P\ \                  "Modified? Readonly? Top/bot.
+
+" [Indent configuration]
+set autoindent
+set cindent
+set cino+=(0
+
+" [diff options]
+set diffopt=filler,vertical
+
+" [encoding]
+setglobal fenc=utf-8
+set termencoding=utf-8
+set fileencodings=ucs-bom,utf-8,cp936,gb18030,big5,iso-8859-1
+set fileformats=unix,dos,mac
+
+"                           Auto Commands:
+" ----------------------------------------------------------------
+
+" Highlight the text if the length over 81
+augroup vimrc_autocmds
+    autocmd!
+    autocmd FileType python,c,cpp,java highlight Excess ctermbg=DarkGrey guibg=Black
+    autocmd FileType python,c,cpp,java match Excess /\%81v.*/
+augroup END
+
+" When editing a file, always jump to the last known cursor position.
+autocmd BufReadPost *
+            \ if line("'\"") > 0 && line("'\"") <= line("$") |
+            \   exe "normal! g`\"" |
+            \ endif
+
+" set textwidth 
+autocmd BufRead *.html set textwidth=0
+  
+" 						          General Maping Keys:
+" -----------------------------------------------------------------------
+" [Copy and cut in visual mode; Paste in insert mode]
+noremap    <c-a>   ggVG
+inoremap    <c-v>   <c-o>:set paste<cr><c-r>+<c-o>:set nopaste<cr>
+xnoremap    <c-c>   "+y
+xnoremap    <c-x>   "+x
+
+" [Basically you press * or # to search for the current selection !! Really useful]
+vnoremap    <silent> *  y/<C-R>=escape(@", '\\/.*$^~[]')<CR><CR>
+vnoremap    <silent> #  y?<C-R>=escape(@", '\\/.*$^~[]')<CR><CR>
+
+" [CTRL-hjkl to browse command history and move the cursor]
+cnoremap    <c-k>   <up>
+cnoremap    <c-j>   <down>
+cnoremap    <c-h>   <left>
+cnoremap    <c-l>   <right>
+
+" [Easy indent in visual mode]
+xnoremap    <   <gv
+xnoremap    >   >gv
+
+" [Quick write and quit]
+nnoremap    <leader>ww   :wqa!<cr>
+nnoremap    <leader>qq   :qa!<cr>
+
+" [Up down move]
+nnoremap    j       gj
+nnoremap    k       gk
+nnoremap    gj      j
+nnoremap    gk      k
+
+" [Misc]
+nnoremap    J       gJ
+nnoremap    gJ      J
+nnoremap    -       _
+nnoremap    _       -
+
+" [Use the arrows to switch between buffers]
+nmap <tab> :bn<cr>
+nmap <S-tab> :bp<cr>
+
+" no Highlight search"
+nmap <leader><cr> :nohlsearch<cr>
+
+" [switch to the directory of the open buffer]
+map <leader>cd :cd %:p:h<cr>
+
+" [complete close curly brace]
+inoremap {<cr> {<cr>}<c-[>ko
+
+" [Spell checking]"
+map <leader>se :setlocal spell spelllang=en_us<cr>
+map <leader>sn :setlocal nospell<cr>
+
+" 						          Plugin Setting:
+" -----------------------------------------------------------------------
+
+" [Doxygen highling]
+au BufNewFile,BufRead *.doxygen setfiletype doxygen
+let g:doxygen_enhanced_color=0
+let g:doxygen_my_rendering=0
+let g:doxygen_javadoc_autobrief=1
+let g:doxygen_end_punctuation='[.]'
+let g:doxygenErrorComment=0
+let g:doxygenLinkError=0
+let g:DoxygenToolkit_authorName="Conghui He"
+map <F9> :Dox<cr>
+imap <F9> <Esc>:Dox<cr>
+
+" [Easy Align]
+" Start interactive EasyAlign in visual mode (e.g. vip<Enter>)
+vmap <Enter> <Plug>(EasyAlign)
+
+" Start interactive EasyAlign for a motion/text object (e.g. <Leader>aip)
+nmap <Leader>a <Plug>(EasyAlign)
+
+" [fswitch]
+nmap <silent> <Leader>of :FSHere<cr>
+nmap <silent> <Leader>oh :FSSplitLeft<cr>
+nmap <silent> <Leader>ol :FSSplitRight<cr>
+nmap <silent> <Leader>ok :FSSplitAbove<cr>
+nmap <silent> <Leader>oj :FSSplitBelow<cr>
+
+" [fuzzy-finder]
+let g:fuf_modesDisable = []
+let g:fuf_mrufile_maxItem = 400
+let g:fuf_mrucmd_maxItem = 400
+nnoremap <silent> sj     :FufBuffer<CR>
+nnoremap <silent> sk     :FufFileWithCurrentBufferDir<CR>
+nnoremap <silent> sK     :FufFileWithFullCwd<CR>
+nnoremap <silent> s<C-k> :FufFile<CR>
+nnoremap <silent> sl     :FufCoverageFileChange<CR>
+nnoremap <silent> sL     :FufCoverageFileChange<CR>
+nnoremap <silent> s<C-l> :FufCoverageFileRegister<CR>
+nnoremap <silent> sd     :FufDirWithCurrentBufferDir<CR>
+nnoremap <silent> sD     :FufDirWithFullCwd<CR>
+nnoremap <silent> s<C-d> :FufDir<CR>
+nnoremap <silent> sn     :FufMruFile<CR>
+nnoremap <silent> sN     :FufMruFileInCwd<CR>
+nnoremap <silent> sm     :FufMruCmd<CR>
+nnoremap <silent> su     :FufBookmarkFile<CR>
+nnoremap <silent> s<C-u> :FufBookmarkFileAdd<CR>
+vnoremap <silent> s<C-u> :FufBookmarkFileAddAsSelectedText<CR>
+nnoremap <silent> si     :FufBookmarkDir<CR>
+nnoremap <silent> s<C-i> :FufBookmarkDirAdd<CR>
+nnoremap <silent> st     :FufTag<CR>
+nnoremap <silent> sT     :FufTag!<CR>
+nnoremap <silent> s<C-]> :FufTagWithCursorWord!<CR>
+nnoremap <silent> s,     :FufBufferTag<CR>
+nnoremap <silent> s<     :FufBufferTag!<CR>
+vnoremap <silent> s,     :FufBufferTagWithSelectedText!<CR>
+vnoremap <silent> s<     :FufBufferTagWithSelectedText<CR>
+nnoremap <silent> s}     :FufBufferTagWithCursorWord!<CR>
+nnoremap <silent> s.     :FufBufferTagAll<CR>
+nnoremap <silent> s>     :FufBufferTagAll!<CR>
+vnoremap <silent> s.     :FufBufferTagAllWithSelectedText!<CR>
+vnoremap <silent> s>     :FufBufferTagAllWithSelectedText<CR>
+nnoremap <silent> s]     :FufBufferTagAllWithCursorWord!<CR>
+nnoremap <silent> sg     :FufTaggedFile<CR>
+nnoremap <silent> sG     :FufTaggedFile!<CR>
+nnoremap <silent> so     :FufJumpList<CR>
+nnoremap <silent> sp     :FufChangeList<CR>
+nnoremap <silent> sq     :FufQuickfix<CR>
+nnoremap <silent> sy     :FufLine<CR>
+nnoremap <silent> sh     :FufHelp<CR>
+nnoremap <silent> se     :FufEditDataFile<CR>
+nnoremap <silent> sr     :FufRenewCache<CR>
+
+" [gundo]
+nnoremap <leader>un :GundoToggle<CR>
+
+" [MiniBuffer]
+let g:miniBufExplTabWrap = 1
+let g:miniBufExplModSelTarget = 1
+let g:miniBufExplUseSingleClick = 1
+let g:miniBufExplMaxSize = 2
+hi MBEVisibleActive guifg=#A6DB29 guibg=fg
+hi MBEVisibleChangedActive guifg=#F1266F guibg=fg
+hi MBEVisibleChanged guifg=#F1266F guibg=fg
+hi MBEVisibleNormal guifg=#5DC2D6 guibg=fg
+hi MBEChanged guifg=#CD5907 guibg=fg
+hi MBENormal guifg=#808080 guibg=fg
+
+" [ultisnips]
+" Trigger configuration. Do not use <tab> if you use https://github.com/Valloric/YouCompleteMe.
+let g:UltiSnipsExpandTrigger="<c-j>"
+let g:UltiSnipsJumpForwardTrigger="<c-b>"
+let g:UltiSnipsJumpBackwardTrigger="<c-z>"
+
+" [vim-latex]
+" IMPORTANT: win32 users will need to have 'shellslash' set so that latex
+" can be called correctly.
+set shellslash
+
+" IMPORTANT: grep will sometimes skip displaying the file name if you
+" search in a singe file. This will confuse Latex-Suite. Set your grep
+" program to always generate a file-name.
+set grepprg=grep\ -nH\ $*
+
+" OPTIONAL: Starting with Vim 7, the filetype of empty .tex files defaults to
+" 'plaintex' instead of 'tex', which results in vim-latex not being loaded.
+" The following changes the default filetype back to 'tex':
+let g:tex_flavor='latex'
+
+let g:Tex_DefaultTargetFormat='pdf'
+let g:Tex_CompileRule_pdf    ='xelatex -interaction=nonstopmode $*'
+
+" [you-complete-me]
+let g:ycm_min_num_of_chars_for_completion = 3
+let g:ycm_key_invoke_completion = '<C-Space>'
+let g:ycm_key_detailed_diagnostics = '<leader>d'
+let g:ycm_global_ycm_extra_conf = '~/.vim/bundle/YouCompleteMe/third_party/ycmd/cpp/ycm/.ycm_extra_conf.py'
+let g:ycm_confirm_extra_conf = 1
