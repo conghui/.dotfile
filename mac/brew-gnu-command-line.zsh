@@ -21,6 +21,7 @@ brew install watch
 brew install wdiff --with-gettext
 brew install wget
 brew install tmux
+brew install reattach-to-user-namespace
 brew install vim 
 
 brew install bash
