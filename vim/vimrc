@@ -28,6 +28,7 @@ Plugin 'nacitar/terminalkeys.vim'
 Plugin 'scrooloose/nerdcommenter'
 Plugin 'sjl/gundo.vim'
 Plugin 'tpope/vim-markdown'
+Plugin 'altercation/vim-colors-solarized'
 
 " All of your Plugins must be added before the following line
 call vundle#end()            " required
@@ -108,9 +109,10 @@ set wrap						        " Wrap the text
 set t_Co=256
 set hlsearch                " highlight search
 set encoding=utf-8
-set term=screen-256color
 set background=dark
-colorscheme wombat256mod
+"set term=screen-256color
+colorscheme solarized
+"colorscheme wombat256mod
 
 set laststatus=2 				" Always show the statusline
 set statusline=
@@ -332,3 +334,4 @@ let g:ycm_key_invoke_completion = '<C-Space>'
 let g:ycm_key_detailed_diagnostics = '<leader>d'
 let g:ycm_global_ycm_extra_conf = '~/.vim/bundle/YouCompleteMe/third_party/ycmd/cpp/ycm/.ycm_extra_conf.py'
 let g:ycm_confirm_extra_conf = 1
+
