@@ -33,6 +33,8 @@ alias git='noglob git'
 alias gst='git status'
 alias gd='git diff'
 
+# editing files
+alias evar='vim ~/.vars.sh'
 alias valgrind="valgrind --leak-check=full"
 alias nsight='nsight &'
 

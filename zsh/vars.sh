@@ -54,7 +54,7 @@ function prepend_bin_lib_man()
 function source_if_exist()
 {
   if [[ -f ${1} ]]; then
-    source "$@"
+    source "$@" &> /dev/null
   fi
 }
 
@@ -137,6 +137,19 @@ prepend_PATH ${INSTALL_ROOT}/tmux/bin
 
 # gnuplot
 prepend_bin_shareman ${INSTALL_ROOT}/gnuplot
+
+# zsh
+prepend_bin_lib_shareman ${INSTALL_ROOT}/zsh
+
+# git
+prepend_bin_lib_shareman ${INSTALL_ROOT}/git
+
+# matlab2014b
+prepend_PATH ${INSTALL_ROOT}/matlab/bin
+prepend_LD_LIBRARY_PATH ${INSTALL_ROOT}/matlab/runtime/glnxa64
+prepend_LD_LIBRARY_PATH ${INSTALL_ROOT}/matlab/bin/glnxa64
+prepend_LD_LIBRARY_PATH ${INSTALL_ROOT}/matlab/sys/os/glnxa64
+prepend_LD_LIBRARY_PATH ${INSTALL_ROOT}/matlab/sys/opengl/lib/glnxa64
 
 # sbin
 prepend_PATH /usr/sbin/
