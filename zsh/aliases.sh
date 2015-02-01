@@ -14,16 +14,15 @@ alias -g ...='../..'
 alias -g ....='../../..'
 alias -g .....='../../../..'
 
+# ls
+alias ls='ls --color=auto'
+
 # rsync
 alias rsync-copy="rsync -avz --progress -h"
 alias rsync-move="rsync -avz --progress -h --remove-source-files"
 alias rsync-update="rsync -avzu --progress -h"
 alias rsync-synchronize="rsync -avzu --delete --progress -h"
 
-alias ls="ls --color=auto "
-alias l='ls'
-alias sl='ls'
-alias ll="ls -lrt"
 alias cd..='cd ..'
 alias sshx='ssh -X'
 alias grep='grep --color=auto'
