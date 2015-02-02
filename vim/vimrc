@@ -29,6 +29,7 @@ Plugin 'scrooloose/nerdcommenter'
 Plugin 'sjl/gundo.vim'
 Plugin 'tpope/vim-markdown'
 Plugin 'altercation/vim-colors-solarized'
+Plugin 'MattesGroeger/vim-bookmarks'
 
 " All of your Plugins must be added before the following line
 call vundle#end()            " required
