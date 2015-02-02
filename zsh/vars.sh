@@ -141,9 +141,6 @@ prepend_bin_shareman ${INSTALL_ROOT}/gnuplot
 # zsh
 prepend_bin_lib_shareman ${INSTALL_ROOT}/zsh
 
-# git
-prepend_bin_lib_shareman ${INSTALL_ROOT}/git
-
 # matlab2014b
 prepend_PATH ${INSTALL_ROOT}/matlab/bin
 prepend_LD_LIBRARY_PATH ${INSTALL_ROOT}/matlab/runtime/glnxa64
