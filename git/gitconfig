@@ -93,6 +93,7 @@
   autocrlf = false
   editor = vim
   excludesfile = ~/.dotfile/git/gitignore
+	quotepath = false
 [advice]
   statusHints = false
 [diff]
