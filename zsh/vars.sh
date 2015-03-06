@@ -72,6 +72,14 @@ TERM="xterm-256color"
 PAGER="less"
 export INSTALL_ROOT=${HOME}/softs/install/
 
+# sbin
+prepend_PATH /usr/sbin/
+
+# /usr/local/bin
+prepend_PATH /usr/local/bin
+
+prepend_MANPATH /usr/local/man
+
 # vim
 prepend_bin_shareman ${INSTALL_ROOT}/vim
 
@@ -148,19 +156,11 @@ prepend_LD_LIBRARY_PATH ${INSTALL_ROOT}/matlab/bin/glnxa64
 prepend_LD_LIBRARY_PATH ${INSTALL_ROOT}/matlab/sys/os/glnxa64
 prepend_LD_LIBRARY_PATH ${INSTALL_ROOT}/matlab/sys/opengl/lib/glnxa64
 
-# sbin
-prepend_PATH /usr/sbin/
-
-# /usr/local/bin
-prepend_PATH /usr/local/bin
-
 # ${HOME}/.local/bin
 prepend_PATH ${HOME}/.local/bin
 
 # ${HOME}/.dotfile/bin
 prepend_PATH ${HOME}/.dotfile/bin
-
-prepend_MANPATH /usr/local/man
 
 setup_osx
 
