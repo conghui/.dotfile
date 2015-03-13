@@ -75,6 +75,9 @@ export INSTALL_ROOT=${HOME}/softs/install/
 # sbin
 prepend_PATH /usr/sbin/
 
+# /sbin
+prepend_PATH /sbin/
+
 # /usr/local/bin
 prepend_PATH /usr/local/bin
 
