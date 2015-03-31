@@ -4,3 +4,5 @@ zsh/zprezto/
 solarized/gnome/
 solarized/dircolors/
 tmux/tmux-yank/
+ssh/rice_rsa
+ssh/known_hosts

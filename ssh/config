@@ -1,0 +1,8 @@
+Host github.com
+  User git
+
+Host fpga
+  HostName 101.6.241.113
+
+Host *
+  IdentityFile ~/.ssh/rice_rsa
