@@ -19,11 +19,14 @@ link_file `pwd`/vim/vimrc        ${HOME}/.vimrc
 link_file `pwd`/tmux/tmux.conf   ${HOME}/.tmux.conf
 link_file `pwd`/zsh/aliases.sh   ${HOME}/.aliases.sh
 link_file `pwd`/zsh/vars.sh      ${HOME}/.vars.sh
-link_file `pwd`/ssh              ${HOME}/.ssh
 
 # install solarized
 echo "install solarized"
 (cd solarized; zsh install.zsh)
+
+# install ssh
+echo "install ssh"
+(cd ssh; zsh install.zsh)
 
 # install zsh
 echo "install zsh"
