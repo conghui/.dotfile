@@ -4,5 +4,11 @@ Host github.com
 Host fpga
   HostName 101.6.241.113
 
+Host gpu
+  HostName 101.6.241.102
+
+Host hpgc
+  HostName 101.6.240.118
+
 Host *
   IdentityFile ~/.ssh/rice_rsa
