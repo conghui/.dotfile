@@ -91,6 +91,7 @@ source_if_exist ${INSTALL_ROOT}/madagascar/share/madagascar/etc/env.sh
 
 # python
 prepend_bin_lib_shareman ${INSTALL_ROOT}/Python
+export PYTHONSTARTUP=~/.pystartup
 
 # ruby
 prepend_bin_lib_shareman ${INSTALL_ROOT}/ruby

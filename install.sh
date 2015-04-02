@@ -9,6 +9,7 @@ function link_file()
   SOFT="$2"
   
   echo "linking $TRUE to $SOFT"
+  rm -f $SOFT
   ln -sf $TRUE $SOFT
 }
 
@@ -19,6 +20,7 @@ link_file `pwd`/vim/vimrc        ${HOME}/.vimrc
 link_file `pwd`/tmux/tmux.conf   ${HOME}/.tmux.conf
 link_file `pwd`/zsh/aliases.sh   ${HOME}/.aliases.sh
 link_file `pwd`/zsh/vars.sh      ${HOME}/.vars.sh
+link_file `pwd`/python/pystartup ${HOME}/.pystartup
 
 # install solarized
 echo "install solarized"
