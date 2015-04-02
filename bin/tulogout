@@ -1,0 +1,4 @@
+#!/bin/bash
+
+cd ~/.dotfile/bin
+python -c "from tunet_log import *; logout()"
