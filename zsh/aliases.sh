@@ -24,7 +24,7 @@ alias rsync-update="rsync -avzu --progress -h"
 alias rsync-synchronize="rsync -avzu --delete --progress -h"
 
 alias cd..='cd ..'
-alias sshx='ssh -Y'
+alias ssh='ssh -Y'
 alias grep='grep --color=auto'
 
 # for git
