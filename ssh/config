@@ -8,7 +8,10 @@ Host gpu
   HostName 101.6.241.102
 
 Host hpgc
-  HostName 101.6.240.114
+  HostName 101.6.240.229
+
+Host cy
+  HostName 101.6.240.157
 
 Host *
   IdentityFile ~/.ssh/rice_rsa
