@@ -145,11 +145,11 @@ set fileformats=unix,dos,mac
 "                           Auto Commands:
 " ----------------------------------------------------------------
 
-" Highlight the text if the length over 81
+" Highlight the text if the length over 121
 augroup vimrc_autocmds
     autocmd!
     autocmd FileType python,c,cpp,java highlight Excess ctermbg=DarkGrey guibg=Black
-    autocmd FileType python,c,cpp,java match Excess /\%81v.*/
+    autocmd FileType python,c,cpp,java match Excess /\%121v.*/
 augroup END
 
 " When editing a file, always jump to the last known cursor position.

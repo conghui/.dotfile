@@ -160,6 +160,9 @@ prepend_LD_LIBRARY_PATH ${INSTALL_ROOT}/matlab/bin/glnxa64
 prepend_LD_LIBRARY_PATH ${INSTALL_ROOT}/matlab/sys/os/glnxa64
 prepend_LD_LIBRARY_PATH ${INSTALL_ROOT}/matlab/sys/opengl/lib/glnxa64
 
+PATH_TO_DFE_SNIPPETS=${HOME}/dfe-snippets/
+prepend_PATH ${PATH_TO_DFE_SNIPPETS}/scripts/
+
 # ${HOME}/.local/bin
 prepend_PATH ${HOME}/.local/bin
 
