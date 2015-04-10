@@ -46,6 +46,11 @@ function prepend_bin_lib_shareman()
   prepend_p_l_m ${1}/bin ${1}/lib ${1}/share/man
 }
 
+function prepend_bin_lib64_shareman()
+{
+  prepend_p_l_m ${1}/bin ${1}/lib64 ${1}/share/man
+}
+
 function prepend_bin_lib_man()
 {
   prepend_p_l_m ${1}/bin ${1}/lib ${1}/man
@@ -160,6 +165,11 @@ prepend_LD_LIBRARY_PATH ${INSTALL_ROOT}/matlab/bin/glnxa64
 prepend_LD_LIBRARY_PATH ${INSTALL_ROOT}/matlab/sys/os/glnxa64
 prepend_LD_LIBRARY_PATH ${INSTALL_ROOT}/matlab/sys/opengl/lib/glnxa64
 
+# gcc
+prepend_bin_lib64_shareman ${INSTALL_ROOT}/gcc
+export LD_RUN_PATH=${INSTALL_ROOT}/gcc/lib64:${LD_RUN_PATH}
+
+# dfe-snippets
 PATH_TO_DFE_SNIPPETS=${HOME}/dfe-snippets/
 prepend_PATH ${PATH_TO_DFE_SNIPPETS}/scripts/
 
