@@ -36,5 +36,6 @@ alias gd='git diff'
 alias evar='vim ~/.vars.sh'
 alias valgrind="valgrind --leak-check=full"
 alias nsight='nsight &'
+alias maxide='maxide &'
 
 # vim: ft=zsh
