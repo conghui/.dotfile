@@ -64,7 +64,7 @@ set guioptions-=L               " No left-hand scrollbar always
 set guioptions-=r               " No right-hand scrollbar
 set guioptions-=R               " No right-hand scrollbar always
 set guioptions-=b               " No bottom scrollbar
-set guioptions-=m               " No menubar
+set guioptions+=m               " No menubar
 set guioptions-=T               " No toolbar(T)
 set guioptions-=t               " Not include tearoff menu items.
 set linespace=1
@@ -141,6 +141,15 @@ setglobal fenc=utf-8
 set termencoding=utf-8
 set fileencodings=ucs-bom,utf-8,cp936,gb18030,big5,iso-8859-1
 set fileformats=unix,dos,mac
+
+" gui running
+if has("gui_running")
+  if has("gui_gtk2")
+    set guifont=Inconsolata\ 12
+  elseif has("gui_macvim")
+    set guifont=Menlo\ Regular:h14
+  endif
+endif
 
 "                           Auto Commands:
 " ----------------------------------------------------------------
@@ -327,7 +336,12 @@ set grepprg=grep\ -nH\ $*
 let g:tex_flavor='latex'
 
 let g:Tex_DefaultTargetFormat='pdf'
+let g:Tex_MultipleCompileFormats='pdf,bib,pdf'
 let g:Tex_CompileRule_pdf    ='xelatex -interaction=nonstopmode $*'
+if has("unix") && match(system("uname"),'Darwin') != -1
+    " It's a Mac!
+    let g:Tex_ViewRule_pdf = 'open -a Preview.app'
+  endif
 
 " [you-complete-me]
 let g:ycm_min_num_of_chars_for_completion = 3
