@@ -86,10 +86,11 @@
 [format]
   pretty = format:%ad%Creset %C(yellow)%h%C(green)%d%Creset %s %C(magenta) [%an]%Creset
 [apply]
-  whitespace = nowarn
+  whitespace = fix
 [branch]
   autosetupmerge = true
 [core]
+  whitespace = trailing-space,space-before-tab
   autocrlf = false
   editor = vim
   excludesfile = ~/.dotfile/git/gitignore
