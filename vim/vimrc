@@ -31,6 +31,7 @@ Plugin 'altercation/vim-colors-solarized'
 Plugin 'MattesGroeger/vim-bookmarks'
 Plugin 'bling/vim-airline'
 Plugin 'powerline/fonts'
+Plugin 'ntpeters/vim-better-whitespace'
 
 " All of your Plugins must be added before the following line
 call vundle#end()            " required
