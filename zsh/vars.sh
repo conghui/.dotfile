@@ -155,6 +155,9 @@ prepend_PATH ${INSTALL_ROOT}/tmux/bin
 # gnuplot
 prepend_bin_shareman ${INSTALL_ROOT}/gnuplot
 
+# gnu parallel
+prepend_bin_shareman ${INSTALL_ROOT}/parallel
+
 # zsh
 prepend_bin_lib_shareman ${INSTALL_ROOT}/zsh
 
@@ -168,6 +171,9 @@ prepend_LD_LIBRARY_PATH ${INSTALL_ROOT}/matlab/sys/opengl/lib/glnxa64
 # gcc
 prepend_bin_lib64_shareman ${INSTALL_ROOT}/gcc
 export LD_RUN_PATH=${INSTALL_ROOT}/gcc/lib64:${LD_RUN_PATH}
+
+# curl
+prepend_bin_lib_shareman ${INSTALL_ROOT}/curl
 
 # dfe-snippets
 PATH_TO_DFE_SNIPPETS=${HOME}/dfe-snippets/

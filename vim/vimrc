@@ -15,7 +15,7 @@ Plugin 'gmarik/Vundle.vim'
 Plugin 'L9'
 Plugin 'godlygeek/tabular'
 Plugin 'junegunn/vim-easy-align'
-Plugin 'fholgado/minibufexpl.vim'
+"Plugin 'fholgado/minibufexpl.vim'
 Plugin 'FuzzyFinder'
 Plugin 'DoxygenToolkit.vim'
 Plugin 'jcf/vim-latex'
@@ -30,6 +30,8 @@ Plugin 'sjl/gundo.vim'
 Plugin 'tpope/vim-markdown'
 Plugin 'altercation/vim-colors-solarized'
 Plugin 'MattesGroeger/vim-bookmarks'
+Plugin 'bling/vim-airline'
+Plugin 'powerline/fonts'
 
 " All of your Plugins must be added before the following line
 call vundle#end()            " required
@@ -67,7 +69,7 @@ set guioptions-=b               " No bottom scrollbar
 set guioptions+=m               " No menubar
 set guioptions-=T               " No toolbar(T)
 set guioptions-=t               " Not include tearoff menu items.
-set linespace=1
+set linespace=0
 set nobackup                	" Don't back up file.
 set undolevels=500
 set updatetime=500				" Similar to auto save.
@@ -76,6 +78,7 @@ set winaltkeys=no				" Disable ALT key for the GVIM application.
 set hidden          	        "Make the buffer hidden, instead of unload
 set whichwrap+=<,>,[,]			"Move the cursor to next or previous line.
 set noswapfile
+set modifiable
 set textwidth=75
 
 " [Search configuration]
@@ -353,3 +356,9 @@ let g:ycm_key_detailed_diagnostics = '<leader>d'
 let g:ycm_global_ycm_extra_conf = '~/.vim/bundle/YouCompleteMe/third_party/ycmd/cpp/ycm/.ycm_extra_conf.py'
 let g:ycm_confirm_extra_conf = 1
 
+
+" vim airline
+let g:airline#extensions#tabline#enabled = 1
+let g:airline#extensions#tabline#left_sep = ' '
+let g:airline#extensions#tabline#left_alt_sep = '|'
+let g:airline_powerline_fonts = 1
