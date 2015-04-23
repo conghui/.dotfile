@@ -22,7 +22,7 @@
     cursor_color = "#eee8d5"
     foreground_color = "#b3b3ad"
     show_titlebar = False
-    font = Monospace 13
+    font = Meslo LG S for Powerline 13
     background_color = "#002b36"
     allow_bold = False
     scrollback_infinite = True

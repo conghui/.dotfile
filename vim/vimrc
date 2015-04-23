@@ -170,9 +170,9 @@ autocmd BufReadPost *
             \   exe "normal! g`\"" |
             \ endif
 
-" set textwidth 
+" set textwidth
 autocmd BufRead *.html set textwidth=0
-  
+
 " 						          General Maping Keys:
 " -----------------------------------------------------------------------
 " [Copy and cut in visual mode; Paste in insert mode]
@@ -338,7 +338,7 @@ if has("unix") && match(system("uname"),'Darwin') != -1
   let g:Tex_ViewRule_ps = 'Preview'
   let g:Tex_ViewRule_pdf = 'Skim'
 endif
- 
+
 " let g:Tex_IgnoredWarnings ='
 "       \"Underfull\n".
 "       \"Overfull\n".
@@ -347,7 +347,7 @@ endif
 "       \"Missing number, treated as zero.\n".
 "       \"There were undefined references\n".
 "       \"Citation %.%# undefined\n".
-"       \"\oval, \circle, or \line size unavailable\n"' 
+"       \"\oval, \circle, or \line size unavailable\n"'
 
 " [you-complete-me]
 let g:ycm_min_num_of_chars_for_completion = 3
