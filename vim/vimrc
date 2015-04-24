@@ -32,6 +32,9 @@ Plugin 'MattesGroeger/vim-bookmarks'
 Plugin 'bling/vim-airline'
 Plugin 'powerline/fonts'
 Plugin 'ntpeters/vim-better-whitespace'
+Plugin 'tpope/vim-fugitive'
+Plugin 'bling/vim-bufferline'
+Plugin 'airblade/vim-gitgutter'
 
 " All of your Plugins must be added before the following line
 call vundle#end()            " required
@@ -358,7 +361,7 @@ let g:ycm_confirm_extra_conf = 1
 
 
 " vim airline
-let g:airline#extensions#tabline#enabled = 1
-let g:airline#extensions#tabline#left_sep = ' '
-let g:airline#extensions#tabline#left_alt_sep = '|'
 let g:airline_powerline_fonts = 1
+
+" vim bufferline
+let g:bufferline_show_bufnr = 0
