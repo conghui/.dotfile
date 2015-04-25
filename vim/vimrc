@@ -1,183 +1,410 @@
-" ========================================
-" Vim plugin configuration
-" ========================================
-set nocompatible              " be iMproved, required
+" vim: fdm=marker ts=2 sts=2 sw=2 fdl=0
 
-" Filetype off is required by vundle
-filetype off                  " required
+" setup & neobundle {{{
+  set nocompatible
+  set all& "reset everything to their defaults
+  set rtp+=~/.vim/bundle/neobundle.vim
+  call neobundle#begin(expand('~/.vim/bundle/'))
+  NeoBundleFetch 'Shougo/neobundle.vim'
+"}}}
+" functions {{{
+  function! s:get_cache_dir(suffix) "{{{
+    return resolve(expand(s:cache_dir . '/' . a:suffix))
+  endfunction "}}}
+  function! EnsureExists(path) "{{{
+    if !isdirectory(expand(a:path))
+      call mkdir(expand(a:path))
+    endif
+  endfunction "}}}
+"}}}
+" default settings {{{
+  let s:settings                     = {}
+  let s:cache_dir                    = '~/.vim/.cache'
+  let s:is_macvim                    = has('gui_macvim')
+  let s:settings.default_indent      = 2
+  let s:settings.max_column          = 120
+  let s:settings.enable_colorcolumn  = 0
+  let s:settings.enable_cursorcolumn = 0
+  let s:settings.colorscheme         = 'solarized'
+"}}}
+" base configuration {{{
+  set timeoutlen=300                                  "mapping timeout
+  set ttimeoutlen=50                                  "keycode timeout
 
-" set the runtime path to include Vundle and initialize
-set rtp+=~/.vim/bundle/Vundle.vim
-call vundle#begin()
-
-" let Vundle manage Vundle, required
-Plugin 'gmarik/Vundle.vim'
-Plugin 'L9'
-Plugin 'godlygeek/tabular'
-Plugin 'junegunn/vim-easy-align'
-Plugin 'FuzzyFinder'
-Plugin 'DoxygenToolkit.vim'
-Plugin 'jcf/vim-latex'
-Plugin 'SirVer/ultisnips'
-Plugin 'honza/vim-snippets'
-Plugin 'derekwyatt/vim-fswitch'
-Plugin 'Valloric/YouCompleteMe'
-Plugin 'Lokaltog/vim-easymotion'
-Plugin 'nacitar/terminalkeys.vim'
-Plugin 'scrooloose/nerdcommenter'
-Plugin 'sjl/gundo.vim'
-Plugin 'tpope/vim-markdown'
-Plugin 'altercation/vim-colors-solarized'
-Plugin 'MattesGroeger/vim-bookmarks'
-Plugin 'bling/vim-airline'
-Plugin 'powerline/fonts'
-Plugin 'ntpeters/vim-better-whitespace'
-Plugin 'tpope/vim-fugitive'
-Plugin 'bling/vim-bufferline'
-Plugin 'airblade/vim-gitgutter'
-
-" All of your Plugins must be added before the following line
-call vundle#end()            " required
-
-"                           General Options:
-"-------------------------------------------------------------------
-set nocompatible
-let mapleader = ","
-let g:mapleader = ","
-filetype plugin on       		" Enable filetype plugin
-filetype indent on
-syntax on               		" Enable syntax hl
-filetype on
-set ambiwidth=double
-language message en_US.UTF-8
-set autoread                	" Auto read when a file is changed from the outside
-set noerrorbells                " No sound on errors
-set novisualbell                " No sound on errors
-set mouse=a                 	" Enable mouse
-set backspace=eol,start,indent 	" Set backspace config
-set history=70              	" The lines of history VIM has to remember
-set completeopt=menu,menuone,longest
-set complete-=i					" Not to include headers?
-set fillchars=vert:\|,fold:-
-set formatoptions+=c  " auto-wrap comments using textwith, inserting the current comment leader automatically
-set formatoptions+=w  " Trailing white space indicates a paragraph continues in the next line.
-                      " A line that ends in a non-white character ends a paragraph.
-
-set guioptions+=eg
-set guioptions-=l               " No left-hand scrollbar
-set guioptions-=L               " No left-hand scrollbar always
-set guioptions-=r               " No right-hand scrollbar
-set guioptions-=R               " No right-hand scrollbar always
-set guioptions-=b               " No bottom scrollbar
-set guioptions+=m               " No menubar
-set guioptions-=T               " No toolbar(T)
-set guioptions-=t               " Not include tearoff menu items.
-set linespace=0
-set nobackup                	" Don't back up file.
-set undolevels=500
-set updatetime=500				" Similar to auto save.
-set wildmenu					" Command line completion is enhanced.
-set winaltkeys=no				" Disable ALT key for the GVIM application.
-set hidden          	        "Make the buffer hidden, instead of unload
-set whichwrap+=<,>,[,]			"Move the cursor to next or previous line.
-set noswapfile
-set modifiable
-set textwidth=75
-
-" [Search configuration]
-set ignorecase          		" Ignore case when searching
-set smartcase           		" Case matches depend on what you type
-set incsearch           		" Make search act like search in modern browsers
-set magic               		" Use regular expressions for searching
-
-" [Tab configuration]
-set shiftwidth  =2              " Number of space for indenting
-set tabstop     =2              " Width of TAB
-set softtabstop =2
-set expandtab                   " Insert space for TAB
-set smarttab
-
-" [spell checking]
-set nospell						" No spell checking.
-set spelllang=en  				" Language for spell checking.
-
-" [Display configuration]
-set splitright					" Put new splited window to the right of current.
-set number              		" Display line number
-set display=lastline,uhex
-set ruler                		" Always show current position
-set cmdheight=2          		" The commandbar height
-set showcmd              		" Show the command currently executing.
-set showmode             		" Show which mode you are in
-set showmatch            		" Show matching bracets when text indicator is over them
-set nolazyredraw         		" Don't redraw while executing macros
-set linebreak
-set wrap						        " Wrap the text
-set t_Co=256
-set hlsearch                " highlight search
-set encoding=utf-8
-set background=dark
-"set term=screen-256color
-colorscheme solarized
-"colorscheme wombat256mod
-
-set laststatus=2 				" Always show the statusline
-set statusline=
-set statusline+=[%n]\                            "buffer number
-set statusline+=%<%f\                            "File+path
-set statusline+=%=%{strftime('%I:%M')}\ \        "Current time
-set statusline+=%y\ \                            "FileType
-set statusline+=%{''.(&fenc!=''?&fenc:&enc).''}  "Encoding
-set statusline+=%{(&bomb?\",BOM\":\"\")}/        "Encoding2
-set statusline+=%{&ff}\                          "FileFormat (dos/unix..)
-set statusline+=\ row:%l/%L\ \                   "Rownumber/total (%)
-set statusline+=col:%03c\                        "Colnr
-set statusline+=\ %m%r%w\ %P\ \                  "Modified? Readonly? Top/bot.
-
-" [Indent configuration]
-set autoindent
-set cindent
-set cino+=(0
-
-" [diff options]
-set diffopt=filler,vertical
-
-" [encoding]
-setglobal fenc=utf-8
-set termencoding=utf-8
-set fileencodings=ucs-bom,utf-8,cp936,gb18030,big5,iso-8859-1
-set fileformats=unix,dos,mac
-
-" gui running
-if has("gui_running")
-  if has("gui_gtk2")
-    set guifont=Inconsolata\ 12
-  elseif has("gui_macvim")
-    set guifont=Menlo\ Regular:h14
+  set mouse=a                                         "enable mouse
+  set mousehide                                       "hide when characters are typed
+  set history=1000                                    "number of command lines to remember
+  set ttyfast                                         "assume fast terminal connection
+  set viewoptions=folds,options,cursor,unix,slash     "unix/windows compatibility
+  set encoding=utf-8                                  "set encoding for text
+  if exists('$TMUX')
+    set clipboard=
+  else
+    set clipboard=unnamed                             "sync with OS clipboard
   endif
-endif
+  set hidden                                          "allow buffer switching without saving
+  set autoread                                        "auto reload if file saved externally
+  set fileformats+=mac                                "add mac to auto-detection of file format line endings
+  set nrformats-=octal                                "always assume decimal numbers
+  set showcmd
+  set tags=tags;/
+  set showfulltag
+  set modeline
+  set modelines=5
 
-"                           Auto Commands:
-" ----------------------------------------------------------------
+  if $SHELL =~ '/fish$'
+    " VIM expects to be run from a POSIX shell.
+    set shell=sh
+  endif
 
-" Highlight the text if the length over 121
-augroup vimrc_autocmds
-    autocmd!
-    autocmd FileType python,c,cpp,java highlight Excess ctermbg=DarkGrey guibg=Black
-    autocmd FileType python,c,cpp,java match Excess /\%121v.*/
-augroup END
+  set noshelltemp                                     "use pipes
 
-" When editing a file, always jump to the last known cursor position.
-autocmd BufReadPost *
-            \ if line("'\"") > 0 && line("'\"") <= line("$") |
-            \   exe "normal! g`\"" |
-            \ endif
+  " whitespace
+  set backspace=indent,eol,start                      "allow backspacing everything in insert mode
+  set autoindent                                      "automatically indent to match adjacent lines
+  set expandtab                                       "spaces instead of tabs
+  set smarttab                                        "use shiftwidth to enter tabs
+  let &tabstop=s:settings.default_indent              "number of spaces per tab for display
+  let &softtabstop=s:settings.default_indent          "number of spaces per tab in insert mode
+  let &shiftwidth=s:settings.default_indent           "number of spaces when indenting
+  set list                                            "highlight whitespace
+  set listchars=tab:│\ ,trail:•,extends:❯,precedes:❮
+  set shiftround
+  set linebreak
+  let &showbreak='↪ '
 
-" set textwidth
-autocmd BufRead *.html set textwidth=0
+  set scrolloff=1                                     "always show content after scroll
+  set scrolljump=5                                    "minimum number of lines to scroll
+  set display+=lastline
+  set wildmenu                                        "show list for autocomplete
+  set wildmode=list:full
+  set wildignorecase
 
-" 						          General Maping Keys:
-" -----------------------------------------------------------------------
+  set splitbelow
+  set splitright
+
+  " disable sounds
+  set noerrorbells
+  set novisualbell
+  set t_vb=
+
+  " searching
+  set hlsearch                                        "highlight searches
+  set incsearch                                       "incremental searching
+  set ignorecase                                      "ignore case for searching
+  set smartcase                                       "do case-sensitive if there's a capital letter
+  if executable('ack')
+    set grepprg=ack\ --nogroup\ --column\ --smart-case\ --nocolor\ --follow\ $*
+    set grepformat=%f:%l:%c:%m
+  endif
+  if executable('ag')
+    set grepprg=ag\ --nogroup\ --column\ --smart-case\ --nocolor\ --follow
+    set grepformat=%f:%l:%c:%m
+  endif
+
+  " vim file/folder management {{{
+    " persistent undo
+    if exists('+undofile')
+      set undofile
+      let &undodir = s:get_cache_dir('undo')
+    endif
+
+    " backups
+    set backup
+    let &backupdir = s:get_cache_dir('backup')
+
+    " swap files
+    let &directory = s:get_cache_dir('swap')
+    set noswapfile
+
+    call EnsureExists(s:cache_dir)
+    call EnsureExists(&undodir)
+    call EnsureExists(&backupdir)
+    call EnsureExists(&directory)
+  "}}}
+
+  let mapleader = ","
+  let g:mapleader = ","
+"}}}
+" ui configuration {{{
+  set background=dark
+  set showmatch                                       "automatically highlight matching braces/brackets/etc.
+  set matchtime=2                                     "tens of a second to show matching parentheses
+  set number
+  set lazyredraw
+  set laststatus=2
+  set noshowmode
+  set foldenable                                      "enable folds by default
+  set foldmethod=syntax                               "fold via syntax of files
+  set foldlevelstart=99                               "open all folds by default
+  let g:xml_syntax_folding=1                          "enable xml folding
+
+  set cursorline
+  autocmd WinLeave * setlocal nocursorline
+  autocmd WinEnter * setlocal cursorline
+
+  if s:settings.enable_colorcolumn
+    let &colorcolumn=s:settings.max_column
+  endif
+
+  if s:settings.enable_cursorcolumn
+    set cursorcolumn
+    autocmd WinLeave * setlocal nocursorcolumn
+    autocmd WinEnter * setlocal cursorcolumn
+  endif
+
+  if has('conceal')
+    set conceallevel=1
+    set listchars+=conceal:Δ
+  endif
+
+  if has('gui_running')
+    " open maximized
+    set lines=999 columns=9999
+
+    set guioptions+=t                                 "tear off menu items
+    set guioptions-=T                                 "toolbar icons
+
+    if s:is_macvim
+      set gfn=Ubuntu_Mono:h14
+      set transparency=2
+    endif
+
+    if has('gui_gtk')
+      set gfn=Ubuntu\ Mono\ 11
+    endif
+  else
+    if $COLORTERM == 'gnome-terminal'
+      set t_Co=256 "why you no tell me correct colors?!?!
+    endif
+    if $TERM_PROGRAM == 'iTerm.app'
+      " different cursors for insert vs normal mode
+      if exists('$TMUX')
+        let &t_SI = "\<Esc>Ptmux;\<Esc>\<Esc>]50;CursorShape=1\x7\<Esc>\\"
+        let &t_EI = "\<Esc>Ptmux;\<Esc>\<Esc>]50;CursorShape=0\x7\<Esc>\\"
+      else
+        let &t_SI = "\<Esc>]50;CursorShape=1\x7"
+        let &t_EI = "\<Esc>]50;CursorShape=0\x7"
+      endif
+    endif
+  endif
+"}}}
+
+    NeoBundle 'matchit.zip'
+    NeoBundle 'sjl/gundo.vim'
+    NeoBundle 'vim-scripts/DoxyGen-Syntax'
+    NeoBundle 'vim-scripts/STL-Syntax'
+    NeoBundle 'vim-scripts/gnuplot.vim'
+    NeoBundle 'vim-scripts/scons.vim'
+    NeoBundle 'artoj/qmake-syntax-vim'
+    NeoBundle 'vim-scripts/L9'
+    NeoBundle 'mileszs/ack.vim'
+    NeoBundle 'chrisbra/NrrwRgn'
+    NeoBundle 'tpope/vim-repeat'
+    NeoBundle 'tpope/vim-eunuch'
+    NeoBundle 'tpope/vim-endwise'
+    NeoBundle 'tpope/vim-dispatch'
+    NeoBundle 'honza/vim-snippets'
+    NeoBundle 'jiangmiao/auto-pairs'
+    NeoBundle 'airblade/vim-gitgutter'
+    NeoBundle 'scrooloose/nerdcommenter'
+    NeoBundle 'vim-scripts/wombat256.vim'
+    NeoBundle 'terryma/vim-expand-region'
+    NeoBundle 'terryma/vim-multiple-cursors'
+    NeoBundle 'ntpeters/vim-better-whitespace'
+    "NeoBundle Shougo/vimproc.vim'"{{{
+    NeoBundle 'Shougo/vimproc.vim', {
+      \ 'build': {
+        \ 'mac': 'make -f make_mac.mak',
+        \ 'unix': 'make -f make_unix.mak',
+        \ 'cygwin': 'make -f make_cygwin.mak',
+        \ 'windows': '"C:\Program Files (x86)\Microsoft Visual Studio 11.0\VC\bin\nmake.exe" make_msvc32.mak',
+      \ },
+    \ }
+    "}}}
+    NeoBundle 'justinmk/vim-sneak' "{{{
+      let g:sneak#streak = 1
+    "}}}
+    NeoBundle 'bling/vim-airline' "{{{
+      let g:airline_powerline_fonts = 1
+      let g:airline#extensions#tabline#enabled = 1
+      let g:airline#extensions#tabline#left_sep = ' '
+      let g:airline#extensions#tabline#left_alt_sep = '¦'
+      let g:airline#extensions#tabline#buffer_idx_mode = 1
+      nmap <leader>1 <Plug>AirlineSelectTab1
+      nmap <leader>2 <Plug>AirlineSelectTab2
+      nmap <leader>3 <Plug>AirlineSelectTab3
+      nmap <leader>4 <Plug>AirlineSelectTab4
+      nmap <leader>5 <Plug>AirlineSelectTab5
+      nmap <leader>6 <Plug>AirlineSelectTab6
+      nmap <leader>7 <Plug>AirlineSelectTab7
+      nmap <leader>8 <Plug>AirlineSelectTab8
+      nmap <leader>9 <Plug>AirlineSelectTab9
+    "}}}
+    NeoBundle 'tpope/vim-unimpaired' "{{{
+      nmap <c-up> [e
+      nmap <c-down> ]e
+      vmap <c-up> [egv
+      vmap <c-down> ]egv
+    "}}}
+    NeoBundle 'SirVer/ultisnips' "{{{
+      let g:UltiSnipsExpandTrigger="<tab>"
+      let g:UltiSnipsJumpForwardTrigger="<tab>"
+      let g:UltiSnipsJumpBackwardTrigger="<s-tab>"
+      let g:UltiSnipsSnippetsDir='~/.vim/snippets'
+    "}}}
+    NeoBundle 'nathanaelkane/vim-indent-guides' "{{{
+      let g:indent_guides_start_level=1
+      let g:indent_guides_guide_size=1
+      let g:indent_guides_enable_on_vim_startup=0
+      let g:indent_guides_color_change_percent=3
+      if !has('gui_running')
+        let g:indent_guides_auto_colors=0
+        function! s:indent_set_console_colors()
+          hi IndentGuidesOdd ctermbg=235
+          hi IndentGuidesEven ctermbg=236
+        endfunction
+        autocmd VimEnter,Colorscheme * call s:indent_set_console_colors()
+      endif
+    "}}}
+  NeoBundle 'altercation/vim-colors-solarized' "{{{
+    "let g:solarized_termcolors=256
+    "let g:solarized_termtrans=1
+  "}}}
+    NeoBundle 'tpope/vim-fugitive' "{{{
+      nnoremap <silent> <leader>gs :Gstatus<CR>
+      nnoremap <silent> <leader>gd :Gdiff<CR>
+      nnoremap <silent> <leader>gc :Gcommit<CR>
+      nnoremap <silent> <leader>gb :Gblame<CR>
+      nnoremap <silent> <leader>gl :Glog<CR>
+      nnoremap <silent> <leader>gp :Git push<CR>
+      nnoremap <silent> <leader>gw :Gwrite<CR>
+      nnoremap <silent> <leader>gr :Gremove<CR>
+      autocmd BufReadPost fugitive://* set bufhidden=delete
+    "}}}
+    NeoBundle 'Valloric/YouCompleteMe', {'vim_version':'7.3.584'} "{{{
+      let g:ycm_complete_in_comments_and_strings=1
+      let g:ycm_key_list_select_completion=['<C-n>', '<Down>']
+      let g:ycm_key_list_previous_completion=['<C-p>', '<Up>']
+      let g:ycm_filetype_blacklist={'unite': 1}
+    "}}}
+    NeoBundleLazy 'gregsexton/gitv', {'depends':['tpope/vim-fugitive'], 'autoload':{'commands':'Gitv'}} "{{{
+      nnoremap <silent> <leader>gv :Gitv<CR>
+      nnoremap <silent> <leader>gV :Gitv!<CR>
+    "}}}
+    NeoBundleLazy 'majutsushi/tagbar', {'autoload':{'commands':'TagbarToggle'}} "{{{
+      nnoremap <silent> <F9> :TagbarToggle<CR>
+
+    NeoBundle 'vim-scripts/FuzzyFinder' "{{{
+      let g:fuf_modesDisable = []
+      let g:fuf_mrufile_maxItem = 400
+      let g:fuf_mrucmd_maxItem = 400
+      nnoremap <silent> sj     :FufBuffer<CR>
+      nnoremap <silent> sk     :FufFileWithCurrentBufferDir<CR>
+      nnoremap <silent> sK     :FufFileWithFullCwd<CR>
+      nnoremap <silent> s<C-k> :FufFile<CR>
+      nnoremap <silent> sl     :FufCoverageFileChange<CR>
+      nnoremap <silent> sL     :FufCoverageFileChange<CR>
+      nnoremap <silent> s<C-l> :FufCoverageFileRegister<CR>
+      nnoremap <silent> sd     :FufDirWithCurrentBufferDir<CR>
+      nnoremap <silent> sD     :FufDirWithFullCwd<CR>
+      nnoremap <silent> s<C-d> :FufDir<CR>
+      nnoremap <silent> sn     :FufMruFile<CR>
+      nnoremap <silent> sN     :FufMruFileInCwd<CR>
+      nnoremap <silent> sm     :FufMruCmd<CR>
+      nnoremap <silent> su     :FufBookmarkFile<CR>
+      nnoremap <silent> s<C-u> :FufBookmarkFileAdd<CR>
+      vnoremap <silent> s<C-u> :FufBookmarkFileAddAsSelectedText<CR>
+      nnoremap <silent> si     :FufBookmarkDir<CR>
+      nnoremap <silent> s<C-i> :FufBookmarkDirAdd<CR>
+      nnoremap <silent> st     :FufTag<CR>
+      nnoremap <silent> sT     :FufTag!<CR>
+      nnoremap <silent> s<C-]> :FufTagWithCursorWord!<CR>
+      nnoremap <silent> s,     :FufBufferTag<CR>
+      nnoremap <silent> s<     :FufBufferTag!<CR>
+      vnoremap <silent> s,     :FufBufferTagWithSelectedText!<CR>
+      vnoremap <silent> s<     :FufBufferTagWithSelectedText<CR>
+      nnoremap <silent> s}     :FufBufferTagWithCursorWord!<CR>
+      nnoremap <silent> s.     :FufBufferTagAll<CR>
+      nnoremap <silent> s>     :FufBufferTagAll!<CR>
+      vnoremap <silent> s.     :FufBufferTagAllWithSelectedText!<CR>
+      vnoremap <silent> s>     :FufBufferTagAllWithSelectedText<CR>
+      nnoremap <silent> s]     :FufBufferTagAllWithCursorWord!<CR>
+      nnoremap <silent> sg     :FufTaggedFile<CR>
+      nnoremap <silent> sG     :FufTaggedFile!<CR>
+      nnoremap <silent> so     :FufJumpList<CR>
+      nnoremap <silent> sp     :FufChangeList<CR>
+      nnoremap <silent> sq     :FufQuickfix<CR>
+      nnoremap <silent> sy     :FufLine<CR>
+      nnoremap <silent> sh     :FufHelp<CR>
+      nnoremap <silent> se     :FufEditDataFile<CR>
+      nnoremap <silent> sr     :FufRenewCache<CR>
+    "}}}
+
+    NeoBundle 'derekwyatt/vim-fswitch' "{{{
+      nmap <silent> <Leader>of :FSHere<cr>
+      nmap <silent> <Leader>oh :FSSplitLeft<cr>
+      nmap <silent> <Leader>ol :FSSplitRight<cr>
+      nmap <silent> <Leader>ok :FSSplitAbove<cr>
+      nmap <silent> <Leader>oj :FSSplitBelow<cr>
+    "}}}
+
+    NeoBundle 'nacitar/terminalkeys.vim'
+
+    NeoBundle 'tpope/vim-markdown'
+
+    NeoBundle 'MattesGroeger/vim-bookmarks' "{{{
+      let g:bookmark_auto_close = 1
+      let g:bookmark_save_per_working_dir = 1
+      let g:bookmark_auto_save = 1
+    "}}}
+    "
+    NeoBundle 'powerline/fonts'
+
+    NeoBundle 'ntpeters/vim-better-whitespace'
+
+    NeoBundle 'airblade/vim-gitgutter'
+
+    NeoBundle 'DoxygenToolkit.vim' "{{{
+      au BufNewFile,BufRead *.doxygen setfiletype doxygen
+      let g:doxygen_enhanced_color=0
+      let g:doxygen_my_rendering=0
+      let g:doxygen_javadoc_autobrief=1
+      let g:doxygen_end_punctuation='[.]'
+      let g:doxygenErrorComment=0
+      let g:doxygenLinkError=0
+      let g:DoxygenToolkit_authorName="Conghui He"
+      map <F9> :Dox<cr>
+      imap <F9> <Esc>:Dox<cr>
+    "}}}
+
+    NeoBundle 'junegunn/vim-easy-align' "{{{
+      " Start interactive EasyAlign in visual mode (e.g. vip<Enter>)
+      vmap <Enter> <Plug>(EasyAlign)
+      " Start interactive EasyAlign for a motion/text object (e.g. <Leader>aip)
+      nmap <Leader>a <Plug>(EasyAlign)
+    "}}}
+
+    NeoBundle 'jcf/vim-latex' "{{{
+      set shellslash
+      set grepprg=grep\ -nH\ $*
+
+      let g:tex_flavor                 = 'latex'
+      let g:Tex_DefaultTargetFormat    = 'pdf'
+      let g:Tex_CompileRule_pdf        = 'pdflatex -synctex=1 --interaction=nonstopmode $*'
+      let g:Tex_MultipleCompileFormats = 'pdf,bib,pdf'
+
+      if has("unix") && match(system("uname"),'Darwin') != -1
+        " It's a Mac!
+        let g:Tex_ViewRule_dvi = 'texniscope'
+        let g:Tex_ViewRule_ps = 'Preview'
+        let g:Tex_ViewRule_pdf = 'Skim'
+      endif
+"}}}
+
+    "}}}
+
+ "mappings {{{
 " [Copy and cut in visual mode; Paste in insert mode]
 noremap    <c-a>   ggVG
 inoremap    <c-v>   <c-o>:set paste<cr><c-r>+<c-o>:set nopaste<cr>
@@ -198,10 +425,6 @@ cnoremap    <c-l>   <right>
 xnoremap    <   <gv
 xnoremap    >   >gv
 
-" [Quick write and quit]
-nnoremap    <leader>ww   :wqa!<cr>
-nnoremap    <leader>qq   :qa!<cr>
-
 " [Up down move]
 nnoremap    j       gj
 nnoremap    k       gk
@@ -214,154 +437,41 @@ nnoremap    gJ      J
 nnoremap    -       _
 nnoremap    _       -
 
-" [Use the arrows to switch between buffers]
-nmap <tab> :bn<cr>
-nmap <S-tab> :bp<cr>
-
 " no Highlight search"
 nmap <leader><cr> :nohlsearch<cr>
-
-" [switch to the directory of the open buffer]
-map <leader>cd :cd %:p:h<cr>
-
-" [complete close curly brace]
-inoremap {<cr> {<cr>}<c-[>ko
 
 " [Spell checking]"
 map <leader>se :setlocal spell spelllang=en_us<cr>
 map <leader>sn :setlocal nospell<cr>
 
-" 						          Plugin Setting:
-" -----------------------------------------------------------------------
+"}}}
 
-" [Doxygen highling]
-au BufNewFile,BufRead *.doxygen setfiletype doxygen
-let g:doxygen_enhanced_color=0
-let g:doxygen_my_rendering=0
-let g:doxygen_javadoc_autobrief=1
-let g:doxygen_end_punctuation='[.]'
-let g:doxygenErrorComment=0
-let g:doxygenLinkError=0
-let g:DoxygenToolkit_authorName="Conghui He"
-map <F9> :Dox<cr>
-imap <F9> <Esc>:Dox<cr>
+" autocmd {{{
+  " go back to previous position of cursor if any
+  autocmd BufReadPost *
+    \ if line("'\"") > 0 && line("'\"") <= line("$") |
+    \  exe 'normal! g`"zvzz' |
+    \ endif
 
-" [Easy Align]
-" Start interactive EasyAlign in visual mode (e.g. vip<Enter>)
-vmap <Enter> <Plug>(EasyAlign)
+  autocmd FileType python setlocal foldmethod=indent
+  autocmd FileType markdown setlocal nolist
+  autocmd FileType vim setlocal fdm=indent keywordprg=:help
 
-" Start interactive EasyAlign for a motion/text object (e.g. <Leader>aip)
-nmap <Leader>a <Plug>(EasyAlign)
+  " remove (strip) whitespace at the end of lines when saving
+  autocmd FileType * autocmd BufWritePre <buffer> StripWhitespace
+"}}}
 
-" [fswitch]
-nmap <silent> <Leader>of :FSHere<cr>
-nmap <silent> <Leader>oh :FSSplitLeft<cr>
-nmap <silent> <Leader>ol :FSSplitRight<cr>
-nmap <silent> <Leader>ok :FSSplitAbove<cr>
-nmap <silent> <Leader>oj :FSSplitBelow<cr>
+" finish loading {{{
+  if exists('g:dotvim_settings.disabled_plugins')
+    for plugin in g:dotvim_settings.disabled_plugins
+      exec 'NeoBundleDisable '.plugin
+    endfor
+  endif
 
-" [fuzzy-finder]
-let g:fuf_modesDisable = []
-let g:fuf_mrufile_maxItem = 400
-let g:fuf_mrucmd_maxItem = 400
-nnoremap <silent> sj     :FufBuffer<CR>
-nnoremap <silent> sk     :FufFileWithCurrentBufferDir<CR>
-nnoremap <silent> sK     :FufFileWithFullCwd<CR>
-nnoremap <silent> s<C-k> :FufFile<CR>
-nnoremap <silent> sl     :FufCoverageFileChange<CR>
-nnoremap <silent> sL     :FufCoverageFileChange<CR>
-nnoremap <silent> s<C-l> :FufCoverageFileRegister<CR>
-nnoremap <silent> sd     :FufDirWithCurrentBufferDir<CR>
-nnoremap <silent> sD     :FufDirWithFullCwd<CR>
-nnoremap <silent> s<C-d> :FufDir<CR>
-nnoremap <silent> sn     :FufMruFile<CR>
-nnoremap <silent> sN     :FufMruFileInCwd<CR>
-nnoremap <silent> sm     :FufMruCmd<CR>
-nnoremap <silent> su     :FufBookmarkFile<CR>
-nnoremap <silent> s<C-u> :FufBookmarkFileAdd<CR>
-vnoremap <silent> s<C-u> :FufBookmarkFileAddAsSelectedText<CR>
-nnoremap <silent> si     :FufBookmarkDir<CR>
-nnoremap <silent> s<C-i> :FufBookmarkDirAdd<CR>
-nnoremap <silent> st     :FufTag<CR>
-nnoremap <silent> sT     :FufTag!<CR>
-nnoremap <silent> s<C-]> :FufTagWithCursorWord!<CR>
-nnoremap <silent> s,     :FufBufferTag<CR>
-nnoremap <silent> s<     :FufBufferTag!<CR>
-vnoremap <silent> s,     :FufBufferTagWithSelectedText!<CR>
-vnoremap <silent> s<     :FufBufferTagWithSelectedText<CR>
-nnoremap <silent> s}     :FufBufferTagWithCursorWord!<CR>
-nnoremap <silent> s.     :FufBufferTagAll<CR>
-nnoremap <silent> s>     :FufBufferTagAll!<CR>
-vnoremap <silent> s.     :FufBufferTagAllWithSelectedText!<CR>
-vnoremap <silent> s>     :FufBufferTagAllWithSelectedText<CR>
-nnoremap <silent> s]     :FufBufferTagAllWithCursorWord!<CR>
-nnoremap <silent> sg     :FufTaggedFile<CR>
-nnoremap <silent> sG     :FufTaggedFile!<CR>
-nnoremap <silent> so     :FufJumpList<CR>
-nnoremap <silent> sp     :FufChangeList<CR>
-nnoremap <silent> sq     :FufQuickfix<CR>
-nnoremap <silent> sy     :FufLine<CR>
-nnoremap <silent> sh     :FufHelp<CR>
-nnoremap <silent> se     :FufEditDataFile<CR>
-nnoremap <silent> sr     :FufRenewCache<CR>
+  call neobundle#end()
+  filetype plugin indent on
+  syntax enable
+  exec 'colorscheme '.s:settings.colorscheme
 
-" [gundo]
-nnoremap <leader>un :GundoToggle<CR>
-
-" [MiniBuffer]
-let g:miniBufExplTabWrap = 1
-let g:miniBufExplModSelTarget = 1
-let g:miniBufExplUseSingleClick = 1
-let g:miniBufExplMaxSize = 2
-hi MBEVisibleActive guifg=#A6DB29 guibg=fg
-hi MBEVisibleChangedActive guifg=#F1266F guibg=fg
-hi MBEVisibleChanged guifg=#F1266F guibg=fg
-hi MBEVisibleNormal guifg=#5DC2D6 guibg=fg
-hi MBEChanged guifg=#CD5907 guibg=fg
-hi MBENormal guifg=#808080 guibg=fg
-
-" [ultisnips]
-" Trigger configuration. Do not use <tab> if you use https://github.com/Valloric/YouCompleteMe.
-let g:UltiSnipsExpandTrigger="<c-k>"
-let g:UltiSnipsJumpForwardTrigger="<c-b>"
-let g:UltiSnipsJumpBackwardTrigger="<c-z>"
-
-" [vim-latex]
-set shellslash
-set grepprg=grep\ -nH\ $*
-
-let g:tex_flavor                 = 'latex'
-let g:Tex_DefaultTargetFormat    = 'pdf'
-let g:Tex_CompileRule_pdf        = 'pdflatex -synctex=1 --interaction=nonstopmode $*'
-let g:Tex_MultipleCompileFormats = 'pdf,bib,pdf'
-
-if has("unix") && match(system("uname"),'Darwin') != -1
-  " It's a Mac!
-  let g:Tex_ViewRule_dvi = 'texniscope'
-  let g:Tex_ViewRule_ps = 'Preview'
-  let g:Tex_ViewRule_pdf = 'Skim'
-endif
-
-" let g:Tex_IgnoredWarnings ='
-"       \"Underfull\n".
-"       \"Overfull\n".
-"       \"specifier changed to\n".
-"       \"You have requested\n".
-"       \"Missing number, treated as zero.\n".
-"       \"There were undefined references\n".
-"       \"Citation %.%# undefined\n".
-"       \"\oval, \circle, or \line size unavailable\n"'
-
-" [you-complete-me]
-let g:ycm_min_num_of_chars_for_completion = 3
-let g:ycm_key_invoke_completion = '<C-Space>'
-let g:ycm_key_detailed_diagnostics = '<leader>d'
-let g:ycm_global_ycm_extra_conf = '~/.vim/bundle/YouCompleteMe/third_party/ycmd/cpp/ycm/.ycm_extra_conf.py'
-let g:ycm_confirm_extra_conf = 1
-
-
-" vim airline
-let g:airline_powerline_fonts = 1
-
-" vim bufferline
-let g:bufferline_show_bufnr = 0
+  NeoBundleCheck
+"}}}
