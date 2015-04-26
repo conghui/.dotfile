@@ -249,7 +249,9 @@ NeoBundle 'altercation/vim-colors-solarized' "{{{
 "}}}
 
     NeoBundle 'honza/vim-snippets'
+    NeoBundle 'Valloric/ListToggle'
     NeoBundle 'scrooloose/nerdcommenter'
+    NeoBundle 'terryma/vim-expand-region'
     NeoBundle 'SirVer/ultisnips' "{{{
       let g:UltiSnipsExpandTrigger="<tab>"
       let g:UltiSnipsJumpForwardTrigger="<tab>"
@@ -257,6 +259,12 @@ NeoBundle 'altercation/vim-colors-solarized' "{{{
       let g:UltiSnipsSnippetsDir='~/.vim/snippets'
     "}}}
     NeoBundleLazy 'majutsushi/tagbar', {'autoload':{'commands':'TagbarToggle'}}
+    NeoBundle 'tpope/vim-unimpaired' "{{{
+      nmap <c-up>   [e
+      nmap <c-down> ]e
+      vmap <c-up>   [egv
+      vmap <c-down> ]egv
+    "}}}
     NeoBundle 'junegunn/vim-easy-align' "{{{
       " Start interactive EasyAlign in visual mode (e.g. vip<Enter>)
       vmap <Enter> <Plug>(EasyAlign)
@@ -293,10 +301,8 @@ NeoBundle 'altercation/vim-colors-solarized' "{{{
 
 
     NeoBundle 'sjl/gundo.vim'
-    NeoBundle 'jiangmiao/auto-pairs'
     NeoBundle 'tpope/vim-dispatch'
-    NeoBundle 'Valloric/ListToggle'
-    NeoBundle 'terryma/vim-expand-region'
+    NeoBundle 'jiangmiao/auto-pairs'
     NeoBundle 'terryma/vim-multiple-cursors'
     NeoBundle 'justinmk/vim-sneak' "{{{
       let g:sneak#streak = 1
@@ -316,12 +322,6 @@ NeoBundle 'altercation/vim-colors-solarized' "{{{
       nmap <leader>7 <Plug>AirlineSelectTab7
       nmap <leader>8 <Plug>AirlineSelectTab8
       nmap <leader>9 <Plug>AirlineSelectTab9
-    "}}}
-    NeoBundle 'tpope/vim-unimpaired' "{{{
-      nmap <c-up> [e
-      nmap <c-down> ]e
-      vmap <c-up> [egv
-      vmap <c-down> ]egv
     "}}}
     NeoBundle 'nathanaelkane/vim-indent-guides' "{{{
       let g:indent_guides_start_level=1
