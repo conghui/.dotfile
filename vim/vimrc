@@ -175,14 +175,9 @@
   endif
 
   if has('gui_running')
-    " open maximized
-    set lines=999 columns=9999
-
-    set guioptions+=t                                 "tear off menu items
-    set guioptions-=T                                 "toolbar icons
 
     if s:is_macvim
-      set gfn=Ubuntu_Mono:h14
+      set guifont=Meslo_LG_S_DZ_Regular_for_Powerline:h13
       set transparency=2
     endif
 
@@ -395,8 +390,9 @@ NeoBundle 'altercation/vim-colors-solarized' "{{{
       nmap <space> [unite]
       nnoremap [unite] <nop>
 
-      nnoremap <silent> [unite]r :<C-u>Unite -toggle -auto-resize -buffer-name=files file_rec/async:!<cr><c-u>
-      nnoremap <silent> [unite]f :<C-u>Unite -toggle -auto-resize -buffer-name=files file_rec<cr><c-u>
+      "nnoremap <silent> [unite]r :<C-u>Unite -toggle -auto-resize -buffer-name=files file_rec/async:!<cr><c-u>
+      nnoremap <silent> [unite]r :<C-u>Unite -toggle -auto-resize -buffer-name=files file_rec<cr><c-u>
+      nnoremap <silent> [unite]f :<C-u>Unite -toggle -auto-resize -buffer-name=files file<cr><c-u>
       nnoremap <silent> [unite]e :<C-u>Unite -buffer-name=recent file_mru<cr>
       nnoremap <silent> [unite]y :<C-u>Unite -buffer-name=yanks history/yank<cr>
       nnoremap <silent> [unite]l :<C-u>Unite -auto-resize -buffer-name=line line<cr>
