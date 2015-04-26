@@ -16,6 +16,21 @@
       call mkdir(expand(a:path))
     endif
   endfunction "}}}
+  function! Preserve(command) "{{{
+    " preparation: save last search, and cursor position.
+    let _s=@/
+    let l = line(".")
+    let c = col(".")
+    " do the business:
+    execute a:command
+    " clean up: restore previous search history, and cursor position
+    let @/=_s
+    call cursor(l, c)
+  endfunction "}}}
+  function! StripTrailingWhitespace() "{{{
+    call Preserve("%s/\\s\\+$//e")
+  endfunction "}}}
+
 "}}}
 " default settings {{{
   let s:settings                     = {}
@@ -51,6 +66,7 @@
   set showfulltag
   set modeline
   set modelines=5
+  set completeopt-=preview
 
   if $SHELL =~ '/fish$'
     " VIM expects to be run from a POSIX shell.
@@ -80,7 +96,7 @@
   set wildmode=list:full
   set wildignorecase
 
-  set splitbelow
+  "set splitbelow
   set splitright
 
   " disable sounds
@@ -189,29 +205,25 @@
     endif
   endif
 "}}}
-
+" Plugin: syntax  & colorscheme"{{{
+  NeoBundle 'tpope/vim-markdown'
+  NeoBundle 'vim-scripts/scons.vim'
+  NeoBundle 'artoj/qmake-syntax-vim'
+  NeoBundle 'vim-scripts/STL-Syntax'
+  NeoBundle 'vim-scripts/gnuplot.vim'
+  NeoBundle 'vim-scripts/wombat256.vim'
+  NeoBundle 'vim-scripts/DoxyGen-Syntax'
+NeoBundle 'altercation/vim-colors-solarized' "{{{
+  "let g:solarized_termcolors=256
+  "let g:solarized_termtrans=1
+"}}}
+"}}}
+" Plugin: better user experience"{{{
     NeoBundle 'matchit.zip'
-    NeoBundle 'sjl/gundo.vim'
-    NeoBundle 'vim-scripts/DoxyGen-Syntax'
-    NeoBundle 'vim-scripts/STL-Syntax'
-    NeoBundle 'vim-scripts/gnuplot.vim'
-    NeoBundle 'vim-scripts/scons.vim'
-    NeoBundle 'artoj/qmake-syntax-vim'
-    NeoBundle 'vim-scripts/L9'
-    NeoBundle 'mileszs/ack.vim'
-    NeoBundle 'chrisbra/NrrwRgn'
-    NeoBundle 'tpope/vim-repeat'
-    NeoBundle 'tpope/vim-eunuch'
+    NeoBundle 'powerline/fonts'
     NeoBundle 'tpope/vim-endwise'
-    NeoBundle 'tpope/vim-dispatch'
-    NeoBundle 'honza/vim-snippets'
-    NeoBundle 'jiangmiao/auto-pairs'
     NeoBundle 'airblade/vim-gitgutter'
-    NeoBundle 'scrooloose/nerdcommenter'
-    NeoBundle 'vim-scripts/wombat256.vim'
-    NeoBundle 'terryma/vim-expand-region'
-    NeoBundle 'terryma/vim-multiple-cursors'
-    NeoBundle 'ntpeters/vim-better-whitespace'
+    NeoBundle 'nacitar/terminalkeys.vim'
     "NeoBundle Shougo/vimproc.vim'"{{{
     NeoBundle 'Shougo/vimproc.vim', {
       \ 'build': {
@@ -222,6 +234,70 @@
       \ },
     \ }
     "}}}
+    NeoBundle 'DoxygenToolkit.vim' "{{{
+      au BufNewFile,BufRead *.doxygen setfiletype doxygen
+      let g:doxygen_enhanced_color=0
+      let g:doxygen_my_rendering=0
+      let g:doxygen_javadoc_autobrief=1
+      let g:doxygen_end_punctuation='[.]'
+      let g:doxygenErrorComment=0
+      let g:doxygenLinkError=0
+      let g:DoxygenToolkit_authorName="Conghui He"
+      map <F9> :Dox<cr>
+      imap <F9> <Esc>:Dox<cr>
+    "}}}
+"}}}
+
+    NeoBundle 'honza/vim-snippets'
+    NeoBundle 'scrooloose/nerdcommenter'
+    NeoBundle 'SirVer/ultisnips' "{{{
+      let g:UltiSnipsExpandTrigger="<tab>"
+      let g:UltiSnipsJumpForwardTrigger="<tab>"
+      let g:UltiSnipsJumpBackwardTrigger="<s-tab>"
+      let g:UltiSnipsSnippetsDir='~/.vim/snippets'
+    "}}}
+    NeoBundleLazy 'majutsushi/tagbar', {'autoload':{'commands':'TagbarToggle'}}
+    NeoBundle 'junegunn/vim-easy-align' "{{{
+      " Start interactive EasyAlign in visual mode (e.g. vip<Enter>)
+      vmap <Enter> <Plug>(EasyAlign)
+      " Start interactive EasyAlign for a motion/text object (e.g. <Leader>aip)
+      nmap <Leader>a <Plug>(EasyAlign)
+    "}}}
+    NeoBundle 'MattesGroeger/vim-bookmarks' "{{{
+      let g:bookmark_auto_close = 1
+      let g:bookmark_save_per_working_dir = 1
+      let g:bookmark_auto_save = 1
+    "}}}
+    NeoBundle 'Valloric/YouCompleteMe', {'vim_version':'7.3.584'} "{{{
+      nnoremap <leader>jd :YcmCompleter GoTo<CR>
+      let g:ycm_complete_in_comments_and_strings=1
+      let g:ycm_key_list_select_completion=['<C-n>', '<Down>']
+      let g:ycm_key_list_previous_completion=['<C-p>', '<Up>']
+    "}}}
+    NeoBundle 'jcf/vim-latex' "{{{
+      set shellslash
+      set grepprg=grep\ -nH\ $*
+
+      let g:tex_flavor                 = 'latex'
+      let g:Tex_DefaultTargetFormat    = 'pdf'
+      let g:Tex_CompileRule_pdf        = 'pdflatex -synctex=1 --interaction=nonstopmode $*'
+      let g:Tex_MultipleCompileFormats = 'pdf,bib,pdf'
+
+      if has("unix") && match(system("uname"),'Darwin') != -1
+        " It's a Mac!
+        let g:Tex_ViewRule_dvi = 'texniscope'
+        let g:Tex_ViewRule_ps = 'Preview'
+        let g:Tex_ViewRule_pdf = 'Skim'
+      endif
+"}}}
+
+
+    NeoBundle 'sjl/gundo.vim'
+    NeoBundle 'jiangmiao/auto-pairs'
+    NeoBundle 'tpope/vim-dispatch'
+    NeoBundle 'Valloric/ListToggle'
+    NeoBundle 'terryma/vim-expand-region'
+    NeoBundle 'terryma/vim-multiple-cursors'
     NeoBundle 'justinmk/vim-sneak' "{{{
       let g:sneak#streak = 1
     "}}}
@@ -247,12 +323,6 @@
       vmap <c-up> [egv
       vmap <c-down> ]egv
     "}}}
-    NeoBundle 'SirVer/ultisnips' "{{{
-      let g:UltiSnipsExpandTrigger="<tab>"
-      let g:UltiSnipsJumpForwardTrigger="<tab>"
-      let g:UltiSnipsJumpBackwardTrigger="<s-tab>"
-      let g:UltiSnipsSnippetsDir='~/.vim/snippets'
-    "}}}
     NeoBundle 'nathanaelkane/vim-indent-guides' "{{{
       let g:indent_guides_start_level=1
       let g:indent_guides_guide_size=1
@@ -267,10 +337,6 @@
         autocmd VimEnter,Colorscheme * call s:indent_set_console_colors()
       endif
     "}}}
-  NeoBundle 'altercation/vim-colors-solarized' "{{{
-    "let g:solarized_termcolors=256
-    "let g:solarized_termtrans=1
-  "}}}
     NeoBundle 'tpope/vim-fugitive' "{{{
       nnoremap <silent> <leader>gs :Gstatus<CR>
       nnoremap <silent> <leader>gd :Gdiff<CR>
@@ -282,65 +348,10 @@
       nnoremap <silent> <leader>gr :Gremove<CR>
       autocmd BufReadPost fugitive://* set bufhidden=delete
     "}}}
-    NeoBundle 'Valloric/YouCompleteMe', {'vim_version':'7.3.584'} "{{{
-      let g:ycm_complete_in_comments_and_strings=1
-      let g:ycm_key_list_select_completion=['<C-n>', '<Down>']
-      let g:ycm_key_list_previous_completion=['<C-p>', '<Up>']
-      let g:ycm_filetype_blacklist={'unite': 1}
-    "}}}
     NeoBundleLazy 'gregsexton/gitv', {'depends':['tpope/vim-fugitive'], 'autoload':{'commands':'Gitv'}} "{{{
       nnoremap <silent> <leader>gv :Gitv<CR>
       nnoremap <silent> <leader>gV :Gitv!<CR>
     "}}}
-    NeoBundleLazy 'majutsushi/tagbar', {'autoload':{'commands':'TagbarToggle'}} "{{{
-      nnoremap <silent> <F9> :TagbarToggle<CR>
-
-    NeoBundle 'vim-scripts/FuzzyFinder' "{{{
-      let g:fuf_modesDisable = []
-      let g:fuf_mrufile_maxItem = 400
-      let g:fuf_mrucmd_maxItem = 400
-      nnoremap <silent> sj     :FufBuffer<CR>
-      nnoremap <silent> sk     :FufFileWithCurrentBufferDir<CR>
-      nnoremap <silent> sK     :FufFileWithFullCwd<CR>
-      nnoremap <silent> s<C-k> :FufFile<CR>
-      nnoremap <silent> sl     :FufCoverageFileChange<CR>
-      nnoremap <silent> sL     :FufCoverageFileChange<CR>
-      nnoremap <silent> s<C-l> :FufCoverageFileRegister<CR>
-      nnoremap <silent> sd     :FufDirWithCurrentBufferDir<CR>
-      nnoremap <silent> sD     :FufDirWithFullCwd<CR>
-      nnoremap <silent> s<C-d> :FufDir<CR>
-      nnoremap <silent> sn     :FufMruFile<CR>
-      nnoremap <silent> sN     :FufMruFileInCwd<CR>
-      nnoremap <silent> sm     :FufMruCmd<CR>
-      nnoremap <silent> su     :FufBookmarkFile<CR>
-      nnoremap <silent> s<C-u> :FufBookmarkFileAdd<CR>
-      vnoremap <silent> s<C-u> :FufBookmarkFileAddAsSelectedText<CR>
-      nnoremap <silent> si     :FufBookmarkDir<CR>
-      nnoremap <silent> s<C-i> :FufBookmarkDirAdd<CR>
-      nnoremap <silent> st     :FufTag<CR>
-      nnoremap <silent> sT     :FufTag!<CR>
-      nnoremap <silent> s<C-]> :FufTagWithCursorWord!<CR>
-      nnoremap <silent> s,     :FufBufferTag<CR>
-      nnoremap <silent> s<     :FufBufferTag!<CR>
-      vnoremap <silent> s,     :FufBufferTagWithSelectedText!<CR>
-      vnoremap <silent> s<     :FufBufferTagWithSelectedText<CR>
-      nnoremap <silent> s}     :FufBufferTagWithCursorWord!<CR>
-      nnoremap <silent> s.     :FufBufferTagAll<CR>
-      nnoremap <silent> s>     :FufBufferTagAll!<CR>
-      vnoremap <silent> s.     :FufBufferTagAllWithSelectedText!<CR>
-      vnoremap <silent> s>     :FufBufferTagAllWithSelectedText<CR>
-      nnoremap <silent> s]     :FufBufferTagAllWithCursorWord!<CR>
-      nnoremap <silent> sg     :FufTaggedFile<CR>
-      nnoremap <silent> sG     :FufTaggedFile!<CR>
-      nnoremap <silent> so     :FufJumpList<CR>
-      nnoremap <silent> sp     :FufChangeList<CR>
-      nnoremap <silent> sq     :FufQuickfix<CR>
-      nnoremap <silent> sy     :FufLine<CR>
-      nnoremap <silent> sh     :FufHelp<CR>
-      nnoremap <silent> se     :FufEditDataFile<CR>
-      nnoremap <silent> sr     :FufRenewCache<CR>
-    "}}}
-
     NeoBundle 'derekwyatt/vim-fswitch' "{{{
       nmap <silent> <Leader>of :FSHere<cr>
       nmap <silent> <Leader>oh :FSSplitLeft<cr>
@@ -348,105 +359,103 @@
       nmap <silent> <Leader>ok :FSSplitAbove<cr>
       nmap <silent> <Leader>oj :FSSplitBelow<cr>
     "}}}
+    NeoBundle 'Shougo/unite.vim' "{{{
+      let bundle = neobundle#get('unite.vim')
+      function! bundle.hooks.on_source(bundle)
+        call unite#filters#matcher_default#use(['matcher_fuzzy'])
+        call unite#filters#sorter_default#use(['sorter_rank'])
+        call unite#custom#profile('default', 'context', {
+              \ 'start_insert': 1
+              \ })
+      endfunction
 
-    NeoBundle 'nacitar/terminalkeys.vim'
+      let g:unite_data_directory=s:get_cache_dir('unite')
+      let g:unite_source_history_yank_enable=1
+      let g:unite_source_rec_max_cache_files=200
 
-    NeoBundle 'tpope/vim-markdown'
-
-    NeoBundle 'MattesGroeger/vim-bookmarks' "{{{
-      let g:bookmark_auto_close = 1
-      let g:bookmark_save_per_working_dir = 1
-      let g:bookmark_auto_save = 1
-    "}}}
-    "
-    NeoBundle 'powerline/fonts'
-
-    NeoBundle 'ntpeters/vim-better-whitespace'
-
-    NeoBundle 'airblade/vim-gitgutter'
-
-    NeoBundle 'DoxygenToolkit.vim' "{{{
-      au BufNewFile,BufRead *.doxygen setfiletype doxygen
-      let g:doxygen_enhanced_color=0
-      let g:doxygen_my_rendering=0
-      let g:doxygen_javadoc_autobrief=1
-      let g:doxygen_end_punctuation='[.]'
-      let g:doxygenErrorComment=0
-      let g:doxygenLinkError=0
-      let g:DoxygenToolkit_authorName="Conghui He"
-      map <F9> :Dox<cr>
-      imap <F9> <Esc>:Dox<cr>
-    "}}}
-
-    NeoBundle 'junegunn/vim-easy-align' "{{{
-      " Start interactive EasyAlign in visual mode (e.g. vip<Enter>)
-      vmap <Enter> <Plug>(EasyAlign)
-      " Start interactive EasyAlign for a motion/text object (e.g. <Leader>aip)
-      nmap <Leader>a <Plug>(EasyAlign)
-    "}}}
-
-    NeoBundle 'jcf/vim-latex' "{{{
-      set shellslash
-      set grepprg=grep\ -nH\ $*
-
-      let g:tex_flavor                 = 'latex'
-      let g:Tex_DefaultTargetFormat    = 'pdf'
-      let g:Tex_CompileRule_pdf        = 'pdflatex -synctex=1 --interaction=nonstopmode $*'
-      let g:Tex_MultipleCompileFormats = 'pdf,bib,pdf'
-
-      if has("unix") && match(system("uname"),'Darwin') != -1
-        " It's a Mac!
-        let g:Tex_ViewRule_dvi = 'texniscope'
-        let g:Tex_ViewRule_ps = 'Preview'
-        let g:Tex_ViewRule_pdf = 'Skim'
+      if executable('ag')
+        let g:unite_source_grep_command='ag'
+        let g:unite_source_grep_default_opts='--nocolor --line-numbers --nogroup -S -C4'
+        let g:unite_source_grep_recursive_opt=''
+      elseif executable('ack')
+        let g:unite_source_grep_command='ack'
+        let g:unite_source_grep_default_opts='--no-heading --no-color -C4'
+        let g:unite_source_grep_recursive_opt=''
       endif
+
+      function! s:unite_settings()
+        nmap <buffer> Q     <plug>(unite_exit)
+        nmap <buffer> <esc> <plug>(unite_exit)
+        imap <buffer> <esc> <plug>(unite_exit)
+        imap <buffer> <C-j> <Plug>(unite_select_next_line)
+        imap <buffer> <C-k> <Plug>(unite_select_previous_line)
+      endfunction
+      autocmd FileType unite call s:unite_settings()
+
+      nmap <space> [unite]
+      nnoremap [unite] <nop>
+
+      nnoremap <silent> [unite]r :<C-u>Unite -toggle -auto-resize -buffer-name=files file_rec/async:!<cr><c-u>
+      nnoremap <silent> [unite]f :<C-u>Unite -toggle -auto-resize -buffer-name=files file_rec<cr><c-u>
+      nnoremap <silent> [unite]e :<C-u>Unite -buffer-name=recent file_mru<cr>
+      nnoremap <silent> [unite]y :<C-u>Unite -buffer-name=yanks history/yank<cr>
+      nnoremap <silent> [unite]l :<C-u>Unite -auto-resize -buffer-name=line line<cr>
+      nnoremap <silent> [unite]b :<C-u>Unite -auto-resize -buffer-name=buffers buffer file_mru<cr>
+      nnoremap <silent> [unite]/ :<C-u>Unite -no-quit -buffer-name=search grep:.<cr>
+      nnoremap <silent> [unite]m :<C-u>Unite -auto-resize -buffer-name=mappings mapping<cr>
+      nnoremap <silent> [unite]s :<C-u>Unite -quick-match buffer<cr>
+
+      NeoBundleLazy 'Shougo/neomru.vim', {'autoload':{'unite_sources':'file_mru'}}
+      NeoBundleLazy 'Shougo/unite-outline', {'autoload':{'unite_sources':'outline'}}
+      nnoremap <silent> [unite]o :<C-u>Unite -auto-resize -buffer-name=outline outline<cr>
+      NeoBundleLazy 'Shougo/unite-help', {'autoload':{'unite_sources':'help'}}
+      nnoremap <silent> [unite]h :<C-u>Unite -auto-resize -buffer-name=help help<cr>
+  "}}}
+
+ " mappings {{{
+  noremap    <c-a>   ggVG
+  inoremap    <c-v>   <c-o>:set paste<cr><c-r>+<c-o>:set nopaste<cr>
+  xnoremap    <c-c>   "+y
+  xnoremap    <c-x>   "+x
+
+  inoremap jk <Esc>
+
+  " [Basically you press * or # to search for the current selection !! Really useful]
+  vnoremap    <silent> *  y/<C-R>=escape(@", '\\/.*$^~[]')<CR><CR>
+  vnoremap    <silent> #  y?<C-R>=escape(@", '\\/.*$^~[]')<CR><CR>
+
+  " [CTRL-hjkl to browse command history and move the cursor]
+  cnoremap    <c-k>   <up>
+  cnoremap    <c-j>   <down>
+  cnoremap    <c-h>   <left>
+  cnoremap    <c-l>   <right>
+
+  " [Easy indent in visual mode]
+  xnoremap    <   <gv
+  xnoremap    >   >gv
+
+  " [Up down move]
+  nnoremap    j       gj
+  nnoremap    k       gk
+  nnoremap    gj      j
+  nnoremap    gk      k
+
+  " [Misc]
+  nnoremap    J       gJ
+  nnoremap    gJ      J
+  nnoremap    -       _
+  nnoremap    _       -
+
+  " no Highlight search"
+  nmap <leader><cr> :nohlsearch<cr>
+
+  " [Spell checking]"
+  map <leader>se :setlocal spell spelllang=en_us<cr>
+  map <leader>sn :setlocal nospell<cr>
+
 "}}}
 
-    "}}}
-
- "mappings {{{
-" [Copy and cut in visual mode; Paste in insert mode]
-noremap    <c-a>   ggVG
-inoremap    <c-v>   <c-o>:set paste<cr><c-r>+<c-o>:set nopaste<cr>
-xnoremap    <c-c>   "+y
-xnoremap    <c-x>   "+x
-
-" [Basically you press * or # to search for the current selection !! Really useful]
-vnoremap    <silent> *  y/<C-R>=escape(@", '\\/.*$^~[]')<CR><CR>
-vnoremap    <silent> #  y?<C-R>=escape(@", '\\/.*$^~[]')<CR><CR>
-
-" [CTRL-hjkl to browse command history and move the cursor]
-cnoremap    <c-k>   <up>
-cnoremap    <c-j>   <down>
-cnoremap    <c-h>   <left>
-cnoremap    <c-l>   <right>
-
-" [Easy indent in visual mode]
-xnoremap    <   <gv
-xnoremap    >   >gv
-
-" [Up down move]
-nnoremap    j       gj
-nnoremap    k       gk
-nnoremap    gj      j
-nnoremap    gk      k
-
-" [Misc]
-nnoremap    J       gJ
-nnoremap    gJ      J
-nnoremap    -       _
-nnoremap    _       -
-
-" no Highlight search"
-nmap <leader><cr> :nohlsearch<cr>
-
-" [Spell checking]"
-map <leader>se :setlocal spell spelllang=en_us<cr>
-map <leader>sn :setlocal nospell<cr>
-
-"}}}
-
-" autocmd {{{
+" Autocmd: "{{{
   " go back to previous position of cursor if any
   autocmd BufReadPost *
     \ if line("'\"") > 0 && line("'\"") <= line("$") |
@@ -458,7 +467,8 @@ map <leader>sn :setlocal nospell<cr>
   autocmd FileType vim setlocal fdm=indent keywordprg=:help
 
   " remove (strip) whitespace at the end of lines when saving
-  autocmd FileType * autocmd BufWritePre <buffer> StripWhitespace
+  autocmd! BufWritePre <buffer> :call StripTrailingWhitespace()
+
 "}}}
 
 " finish loading {{{
