@@ -104,6 +104,9 @@
   set novisualbell
   set t_vb=
 
+  " set text width
+  set tw=80
+
   " searching
   set hlsearch                                        "highlight searches
   set incsearch                                       "incremental searching
@@ -117,11 +120,6 @@
     set grepprg=ag\ --nogroup\ --column\ --smart-case\ --nocolor\ --follow
     set grepformat=%f:%l:%c:%m
   endif
-
-  " compiling
-  "if filereadable('SConstruct')
-    "set makeprg=scons
-  "endif
 
   " vim file/folder management {{{
     " persistent undo
