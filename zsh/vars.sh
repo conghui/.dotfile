@@ -8,7 +8,11 @@ export DOTFILE_ROOT=${HOME}/.dotfile
 export ZSH_ROOT=${DOTFILE_ROOT}/zsh
 export DOTFILE_BUNDLE_ROOT=${DOTFILE_ROOT}/gundle/
 export INSTALL_ROOT=${HOME}/softs/install/
-export NUM_CORES=`grep -c '^processor' /proc/cpuinfo`
+if [[ "$OSTYPE" == "linux-gnu" ]]; then
+  export NUM_CORES=`grep -c '^processor' /proc/cpuinfo`
+elif [[ "$OSTYPE" == "darwin"* ]]; then
+  export NUM_CORES=`sysctl -n hw.ncpu`
+fi
 # }}}
 
 # aliases# {{{
