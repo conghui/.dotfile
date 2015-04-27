@@ -13,10 +13,6 @@ export NUM_CORES=`grep -c '^processor' /proc/cpuinfo`
 source ${DOTFILE_ROOT}/zsh/aliases.sh
 # }}}
 # functions# {{{
-function assert() { # {{{
-  command="$@"
-  $command || exit 1
-} # }}}
 function prepend_PATH() { # {{{
   export PATH=${@}:${PATH}
 } # }}}
