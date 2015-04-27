@@ -1,8 +1,5 @@
 zsh/cache/*
 vim/bundle/
-zsh/zprezto/
-solarized/gnome/
-solarized/dircolors/
-tmux/tmux-yank/
+gundle/
 ssh/rice_rsa
 ssh/known_hosts
