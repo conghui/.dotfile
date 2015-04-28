@@ -7,6 +7,7 @@ num_cores=`grep -c '^processor' /proc/cpuinfo`
 
 ../configure --prefix=${INSTALL_ROOT}/${packageName} --enable-optimized || exit 1
 make -j${num_cores} || exit 1
+make install || exit 1
 
 linkName=${packageName%%-*}
 cd ${INSTALL_ROOT} || exit 1
