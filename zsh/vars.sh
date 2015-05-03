@@ -28,6 +28,9 @@ function prepend_LD_LIBRARY_PATH() { # {{{
 function prepend_MANPATH() { # {{{
   export MANPATH=${@}:${MANPATH}
 } # }}}
+function prepend_PYTHONPATH() { # {{{
+  export PYTHONPATH=${@}:${PYTHONPATH}
+} # }}}
 function prepend_bin_man() { # {{{
   prepend_PATH ${1}/bin
   prepend_MANPATH ${1}/man
