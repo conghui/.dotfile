@@ -93,10 +93,9 @@ NeoBundle      'ghuntley/terminator-solarized'
 " zprezto & zsh"{{{
 NeoBundle      'sorin-ionescu/prezto', {'name' : 'zprezto'}
   call LinkFile('$DOTFILE_BUNDLE_ROOT/zprezto', '~/.zprezto')
-  call LinkFile('$ZSH_ROOT/zpreztorc', '~/.zpreztorc')
 
   let old_wig = &wig
-  set wig=*.md,zshrc
+  set wig=*.md,zshrc,zpreztorc
 
   for f in split(globpath('~/.zprezto/runcoms', '*'), '\n')
     let soft = expand("~/." . substitute(f, ".*/", "", ""))
@@ -105,6 +104,7 @@ NeoBundle      'sorin-ionescu/prezto', {'name' : 'zprezto'}
 
   set wig=&old_wig
 
+  call LinkFile('$ZSH_ROOT/zpreztorc', '~/.zpreztorc')
   call LinkFile('$ZSH_ROOT/zshrc.zsh', '~/.zshrc')
 "}}}
 

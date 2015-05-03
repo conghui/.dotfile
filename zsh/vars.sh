@@ -127,7 +127,7 @@ prepend_MANPATH ${TEXLIVE_ROOT}/texmf/doc/man
 prepend_LD_LIBRARY_PATH ${INSTALL_ROOT}/opencv/lib
 # }}}
 # git# {{{
-prepend_bin_man ${INSTALL_ROOT}/git
+prepend_bin_shareman ${INSTALL_ROOT}/git
 # }}}
 # valgrind# {{{
 prepend_bin_man ${INSTALL_ROOT}/valgrind
