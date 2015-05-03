@@ -16,7 +16,7 @@ fi
 # }}}
 
 # aliases# {{{
-source ${DOTFILE_ROOT}/zsh/aliases.sh
+source ${ZSH_ROOT}/aliases.sh
 # }}}
 # functions# {{{
 function prepend_PATH() { # {{{

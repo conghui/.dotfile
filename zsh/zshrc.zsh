@@ -1,10 +1,11 @@
 #
 ZSHDIR=${HOME}/.dotfile/zsh
 
-source ${ZSHDIR}/vars.sh
-
 # Source Prezto.
 source ~/.zprezto/init.zsh
+
+# source alias and set environment variables
+source ${ZSHDIR}/vars.sh
 
 # Source self-defined scripts
 source ${ZSHDIR}/fasd.zsh
