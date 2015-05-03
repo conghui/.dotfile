@@ -31,7 +31,6 @@ zstyle ':prezto:load' pmodule \
   'git' \
   'osx' \
   'ssh' \
-  'tmux' \
   'syntax-highlighting' \
   'history-substring-search' \
   'prompt'
@@ -62,6 +61,9 @@ zstyle ':prezto:module:prompt' theme 'sorin'
 # Enable ssh-agent forwarding.
 zstyle ':prezto:module:ssh-agent' forwarding 'yes'
 
+# Set the SSH identities to load into the agent.
+zstyle ':prezto:module:ssh:load' identities 'id_rsa' 'rice_rsa'
+
 #
 # Syntax Highlighting
 #
@@ -81,11 +83,3 @@ zstyle ':prezto:module:syntax-highlighting' highlighters \
 
 # Auto set the tab and window titles.
 zstyle ':prezto:module:terminal' auto-title 'yes'
-
-#
-# Tmux
-#
-
-# Auto start a session when Zsh is launched.
-zstyle ':prezto:module:tmux:auto-start' local 'no'
-zstyle ':prezto:module:tmux:auto-start' remote 'no'
