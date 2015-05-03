@@ -14,23 +14,19 @@ function! EnsureExists(path) "{{{
 endfunction
 "}}}
 function! MakeSoftLink(true, soft) "{{{
-  echomsg "[Done]: linking " . expand(a:true) . " to " . expand(a:soft)
+  "echomsg "[OK]: linking " . expand(a:true) . " to " . expand(a:soft)
   call system("rm -f " . expand(a:soft))
   call system("ln -s " . expand(a:true) . " " . expand(a:soft))
 endfunction
 "}}}
 function! LinkFile(true, soft) "{{{
-  try
-    let succeeded = 1
-    if filereadable(expand(a:true))
-      call MakeSoftLink(a:true, a:soft)
-    elseif isdirectory(expand(a:true))
-      call MakeSoftLink(a:true, a:soft)
-    else
-      echoerr "Error: " . expand(a:true) . " doesn't exist"
-    endif
-  finally
-  endtry
+  if filereadable(expand(a:true))
+    call MakeSoftLink(a:true, a:soft)
+  elseif isdirectory(expand(a:true))
+    call MakeSoftLink(a:true, a:soft)
+  else
+    echoerr "[Error]: " . expand(a:true) . " doesn't exist"
+  endif
 endfunction
 "}}}
 "}}}
