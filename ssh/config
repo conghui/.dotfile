@@ -13,5 +13,8 @@ Host hpgc
 Host cy
   HostName 101.6.240.157
 
+Host s814
+  HostName 101.6.240.212
+
 Host *
   IdentityFile ~/.ssh/rice_rsa
