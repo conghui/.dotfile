@@ -3,10 +3,9 @@
 packageName=${PWD##*/}
 prefix=${INSTALL_ROOT}/${packageName}
 
-./bootstrap.sh --prefix=${prefix}
-./b2 install variant=release link=shared
+./bootstrap.sh --prefix=${prefix} || exit 1
+./b2 install variant=release link=shared || exit 1
 
-cd ${INSTALL_ROOT}
 linkName=${prefix%%_*}
-rm -f ${linkName}
-ln -s ${packageName} ${linkName}
+cd ${INSTALL_ROOT} || exit 1
+rm -f ${linkName} && ln -s ${packageName} ${linkName} || exit 1
