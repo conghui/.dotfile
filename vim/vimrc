@@ -247,6 +247,7 @@ NeoBundle 'altercation/vim-colors-solarized' "{{{
     NeoBundle 'Valloric/ListToggle'
     NeoBundle 'scrooloose/nerdcommenter'
     NeoBundle 'terryma/vim-expand-region'
+    NeoBundle 'tpope/vim-surround'
     NeoBundleLazy 'majutsushi/tagbar', {'autoload':{'commands':'TagbarToggle'}}
     NeoBundle 'SirVer/ultisnips' "{{{
       let g:UltiSnipsExpandTrigger="<tab>"
@@ -315,6 +316,9 @@ NeoBundle 'altercation/vim-colors-solarized' "{{{
 
     NeoBundle 'sjl/gundo.vim'
     NeoBundle 'terryma/vim-multiple-cursors'
+    NeoBundle 'jiangmiao/auto-pairs' "{{{
+      au Filetype tex let b:AutoPairs = {}
+    "}}}
     NeoBundle 'justinmk/vim-sneak' "{{{
       let g:sneak#streak = 1
     "}}}
