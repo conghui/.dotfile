@@ -248,6 +248,7 @@ NeoBundle 'altercation/vim-colors-solarized' "{{{
     NeoBundle 'scrooloose/nerdcommenter'
     NeoBundle 'terryma/vim-expand-region'
     NeoBundle 'tpope/vim-surround'
+    NeoBundle 'thinca/vim-quickrun'
     NeoBundleLazy 'majutsushi/tagbar', {'autoload':{'commands':'TagbarToggle'}}
     NeoBundle 'SirVer/ultisnips' "{{{
       let g:UltiSnipsExpandTrigger="<tab>"
