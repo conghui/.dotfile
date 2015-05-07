@@ -376,6 +376,11 @@ NeoBundle 'altercation/vim-colors-solarized' "{{{
       nmap <silent> <Leader>oj :FSSplitBelow<cr>
     "}}}
     NeoBundle 'Shougo/unite.vim' "{{{
+      NeoBundleLazy 'thinca/vim-unite-history', {'autoload':{'unite_sources':'command'}}
+      NeoBundleLazy 'Shougo/neomru.vim',        {'autoload':{'unite_sources':'file_mru'}}
+      NeoBundleLazy 'Shougo/unite-outline',     {'autoload':{'unite_sources':'outline'}}
+      NeoBundleLazy 'Shougo/unite-help',        {'autoload':{'unite_sources':'help'}}
+
       let bundle = neobundle#get('unite.vim')
       function! bundle.hooks.on_source(bundle)
         call unite#filters#matcher_default#use(['matcher_fuzzy'])
@@ -400,7 +405,6 @@ NeoBundle 'altercation/vim-colors-solarized' "{{{
       endif
 
       function! s:unite_settings()
-        nmap <buffer> Q     <plug>(unite_exit)
         nmap <buffer> <esc> <plug>(unite_exit)
         imap <buffer> <esc> <plug>(unite_exit)
         imap <buffer> <C-j> <Plug>(unite_select_next_line)
@@ -421,12 +425,10 @@ NeoBundle 'altercation/vim-colors-solarized' "{{{
       nnoremap <silent> [unite]/ :<C-u>Unite -no-quit -buffer-name=search grep:.<cr>
       nnoremap <silent> [unite]m :<C-u>Unite -auto-resize -buffer-name=mappings mapping<cr>
       nnoremap <silent> [unite]s :<C-u>Unite -quick-match buffer<cr>
-
-      NeoBundleLazy 'Shougo/neomru.vim', {'autoload':{'unite_sources':'file_mru'}}
-      NeoBundleLazy 'Shougo/unite-outline', {'autoload':{'unite_sources':'outline'}}
+      nnoremap <silent> [unite]c :<C-u>Unite -buffer-name=commands -default-action=execute history/command command<CR>
       nnoremap <silent> [unite]o :<C-u>Unite -auto-resize -buffer-name=outline outline<cr>
-      NeoBundleLazy 'Shougo/unite-help', {'autoload':{'unite_sources':'help'}}
       nnoremap <silent> [unite]h :<C-u>Unite -auto-resize -buffer-name=help help<cr>
+
   "}}}
 
  " mappings {{{
