@@ -52,6 +52,7 @@
   set ttyfast                                         "assume fast terminal connection
   set viewoptions=folds,options,cursor,unix,slash     "unix/windows compatibility
   set encoding=utf-8                                  "set encoding for text
+  set fencs=utf-8,gbk
   if exists('$TMUX')
     set clipboard=
   else
@@ -279,7 +280,7 @@ NeoBundle 'altercation/vim-colors-solarized' "{{{
     "}}}
     NeoBundle 'Valloric/YouCompleteMe', {'vim_version':'7.3.584'} "{{{
       nnoremap <leader>jd :YcmCompleter GoTo<CR>
-      let g:ycm_confirm_extra_conf = 1
+      let g:ycm_confirm_extra_conf = 0
       let g:ycm_complete_in_comments_and_strings=1
       let g:ycm_key_list_select_completion=['<C-n>', '<Down>']
       let g:ycm_key_list_previous_completion=['<C-p>', '<Up>']
