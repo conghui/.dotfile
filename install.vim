@@ -54,6 +54,7 @@ endfor
 " add your plugin here
 NeoBundleFetch 'Shougo/neobundle.vim'
 NeoBundle      'tmux-plugins/tmux-yank'
+NeoBundle      'coolwanglu/guake-colors-solarized'
 NeoBundle      'seebi/dircolors-solarized'
 NeoBundle      'conghui/iterm2-color-solarized'
 NeoBundle      'Anthony25/gnome-terminal-colors-solarized'

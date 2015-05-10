@@ -52,6 +52,7 @@
   set ttyfast                                         "assume fast terminal connection
   set viewoptions=folds,options,cursor,unix,slash     "unix/windows compatibility
   set encoding=utf-8                                  "set encoding for text
+  set fencs=utf-8,gbk
   if exists('$TMUX')
     set clipboard=
   else
@@ -248,6 +249,7 @@ NeoBundle 'altercation/vim-colors-solarized' "{{{
     NeoBundle 'scrooloose/nerdcommenter'
     NeoBundle 'terryma/vim-expand-region'
     NeoBundle 'tpope/vim-surround'
+    NeoBundle 'thinca/vim-quickrun'
     NeoBundleLazy 'majutsushi/tagbar', {'autoload':{'commands':'TagbarToggle'}}
     NeoBundle 'SirVer/ultisnips' "{{{
       let g:UltiSnipsExpandTrigger="<tab>"
@@ -278,7 +280,7 @@ NeoBundle 'altercation/vim-colors-solarized' "{{{
     "}}}
     NeoBundle 'Valloric/YouCompleteMe', {'vim_version':'7.3.584'} "{{{
       nnoremap <leader>jd :YcmCompleter GoTo<CR>
-      let g:ycm_confirm_extra_conf = 1
+      let g:ycm_confirm_extra_conf = 0
       let g:ycm_complete_in_comments_and_strings=1
       let g:ycm_key_list_select_completion=['<C-n>', '<Down>']
       let g:ycm_key_list_previous_completion=['<C-p>', '<Up>']
@@ -316,6 +318,11 @@ NeoBundle 'altercation/vim-colors-solarized' "{{{
 
     NeoBundle 'sjl/gundo.vim'
     NeoBundle 'terryma/vim-multiple-cursors'
+    NeoBundle 'vim-scripts/LanguageTool' "{{{
+     let g:languagetool_jar='$HOME/softs/install/LanguageTool/languagetool-commandline.jar'
+     let g:languagetool_lang ='en-US'
+    "}}}
+
     NeoBundle 'jiangmiao/auto-pairs' "{{{
       au Filetype tex let b:AutoPairs = {}
     "}}}
@@ -375,6 +382,11 @@ NeoBundle 'altercation/vim-colors-solarized' "{{{
       nmap <silent> <Leader>oj :FSSplitBelow<cr>
     "}}}
     NeoBundle 'Shougo/unite.vim' "{{{
+      NeoBundleLazy 'thinca/vim-unite-history', {'autoload':{'unite_sources':'command'}}
+      NeoBundleLazy 'Shougo/neomru.vim',        {'autoload':{'unite_sources':'file_mru'}}
+      NeoBundleLazy 'Shougo/unite-outline',     {'autoload':{'unite_sources':'outline'}}
+      NeoBundleLazy 'Shougo/unite-help',        {'autoload':{'unite_sources':'help'}}
+
       let bundle = neobundle#get('unite.vim')
       function! bundle.hooks.on_source(bundle)
         call unite#filters#matcher_default#use(['matcher_fuzzy'])
@@ -399,7 +411,6 @@ NeoBundle 'altercation/vim-colors-solarized' "{{{
       endif
 
       function! s:unite_settings()
-        nmap <buffer> Q     <plug>(unite_exit)
         nmap <buffer> <esc> <plug>(unite_exit)
         imap <buffer> <esc> <plug>(unite_exit)
         imap <buffer> <C-j> <Plug>(unite_select_next_line)
@@ -420,12 +431,10 @@ NeoBundle 'altercation/vim-colors-solarized' "{{{
       nnoremap <silent> [unite]/ :<C-u>Unite -no-quit -buffer-name=search grep:.<cr>
       nnoremap <silent> [unite]m :<C-u>Unite -auto-resize -buffer-name=mappings mapping<cr>
       nnoremap <silent> [unite]s :<C-u>Unite -quick-match buffer<cr>
-
-      NeoBundleLazy 'Shougo/neomru.vim', {'autoload':{'unite_sources':'file_mru'}}
-      NeoBundleLazy 'Shougo/unite-outline', {'autoload':{'unite_sources':'outline'}}
+      nnoremap <silent> [unite]c :<C-u>Unite -buffer-name=commands -default-action=execute history/command command<CR>
       nnoremap <silent> [unite]o :<C-u>Unite -auto-resize -buffer-name=outline outline<cr>
-      NeoBundleLazy 'Shougo/unite-help', {'autoload':{'unite_sources':'help'}}
       nnoremap <silent> [unite]h :<C-u>Unite -auto-resize -buffer-name=help help<cr>
+
   "}}}
 
  " mappings {{{
