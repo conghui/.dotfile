@@ -132,9 +132,6 @@ prepend_LD_LIBRARY_PATH ${INSTALL_ROOT}/opencv/lib
 # git# {{{
 prepend_bin_shareman ${INSTALL_ROOT}/git
 # }}}
-# valgrind# {{{
-prepend_bin_man ${INSTALL_ROOT}/valgrind
-# }}}
 # cmake# {{{
 prepend_PATH ${INSTALL_ROOT}/cmake/bin
 # }}}
@@ -156,10 +153,6 @@ prepend_LD_LIBRARY_PATH ${INSTALL_ROOT}/matlab/runtime/glnxa64
 prepend_LD_LIBRARY_PATH ${INSTALL_ROOT}/matlab/bin/glnxa64
 prepend_LD_LIBRARY_PATH ${INSTALL_ROOT}/matlab/sys/os/glnxa64
 prepend_LD_LIBRARY_PATH ${INSTALL_ROOT}/matlab/sys/opengl/lib/glnxa64
-# }}}
-# gcc# {{{
-prepend_bin_lib64_shareman ${INSTALL_ROOT}/gcc
-export LD_RUN_PATH=${INSTALL_ROOT}/gcc/lib64:${LD_RUN_PATH}
 # }}}
 # curl# {{{
 prepend_bin_lib_shareman ${INSTALL_ROOT}/curl
