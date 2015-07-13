@@ -1,9 +1,10 @@
 # vim: fdm=marker fdl=0 ft=zsh
 
 # variables# {{{
-EDITOR="vim"
-TERM="xterm-256color"
-PAGER="less"
+export EDITOR="vim"
+export VISUAL='vim'
+export TERM="xterm-256color"
+export PAGER="less"
 export DOTFILE_ROOT=${HOME}/.dotfile
 export ZSH_ROOT=${DOTFILE_ROOT}/zsh
 export DOTFILE_BUNDLE_ROOT=${DOTFILE_ROOT}/gundle/
