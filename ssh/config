@@ -4,7 +4,7 @@ Host github.com
 Host fpga
   HostName 101.6.241.77
 
-Host gpu
+Host gpunode.tsinghua.edu.cn
   HostName 101.6.241.102
 
 Host hpgc
@@ -24,6 +24,11 @@ Host conghui.panding.com
 
 Host mac.panding.com
   HostName 192.168.1.121
+
+# Xue, Wei's computers
+Host login.xue.tsinghua.edu.cn
+  HostName 166.111.68.163
+  User user
 
 Host *
   IdentityFile ~/.ssh/rice_rsa

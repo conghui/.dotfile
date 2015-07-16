@@ -121,6 +121,8 @@ prepend_LD_LIBRARY_PATH ${INSTALL_ROOT}/boost/lib
 # }}}
 # maxcompiler# {{{
 source_if_exist ${INSTALL_ROOT}/maxcompiler/settings.sh
+export PATH=$MAXELEROSDIR/utils:$PATH
+
 # }}}
 # texlive# {{{
 TEXLIVE_ROOT=${INSTALL_ROOT}/texlive
@@ -157,6 +159,9 @@ prepend_LD_LIBRARY_PATH ${INSTALL_ROOT}/matlab/sys/opengl/lib/glnxa64
 # }}}
 # curl# {{{
 prepend_bin_lib_shareman ${INSTALL_ROOT}/curl
+# }}}
+# hydra# {{{
+prepend_bin_man ${INSTALL_ROOT}/hydra
 # }}}
 # dfe-snippets# {{{
 PATH_TO_DFE_SNIPPETS=${HOME}/dfe-snippets/
