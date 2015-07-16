@@ -1,7 +1,7 @@
 Host github.com
   User git
 
-Host fpga
+Host fpgaworkstation.tsinghua.edu.cn
   HostName 101.6.241.77
 
 Host gpunode.tsinghua.edu.cn
