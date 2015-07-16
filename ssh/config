@@ -13,7 +13,7 @@ Host hpgc
 Host cy
   HostName 101.6.240.157
 
-Host s814
+Host conghui.tsinghua.edu.cn
   HostName 101.6.240.165
 
 Host maxeler.vpngateway.co
