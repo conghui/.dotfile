@@ -10,9 +10,6 @@ Host fpgaworkstation.tsinghua.edu.cn
 Host gpunode.tsinghua.edu.cn
   HostName 101.6.241.102
 
-Host hpgc
-  HostName 101.6.240.229
-
 Host cy
   HostName 101.6.240.157
 

@@ -1,5 +1,8 @@
 #!/bin/bash
 
+# please make sure that you are in the directory named:
+# llvm-clang-compileRT-3.3/build
+
 version=3.3
 packageName="llvm-${version}"
 source_code_dir=../
