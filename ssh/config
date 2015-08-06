@@ -1,6 +1,9 @@
 Host github.com
   User git
 
+Host hpgcnode.tsinghua.edu.cn
+  HostName 101.6.241.8
+
 Host fpgaworkstation.tsinghua.edu.cn
   HostName 101.6.241.77
 
@@ -24,6 +27,10 @@ Host conghui.panding.com
 
 Host mac.panding.com
   HostName 192.168.1.121
+
+Host cess.tsinghua.edu.cn
+  HostName 166.111.7.40
+  User sysadmin
 
 # Xue, Wei's computers
 Host login.xue.tsinghua.edu.cn
