@@ -25,6 +25,9 @@ Host conghui.panding.com
 Host mac.panding.com
   HostName 192.168.1.121
 
+Host fpga.panding.com
+  HostName 192.168.1.107
+
 Host cess.tsinghua.edu.cn
   HostName 166.111.7.40
   User sysadmin
