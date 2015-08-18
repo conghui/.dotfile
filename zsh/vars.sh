@@ -108,7 +108,7 @@ prepend_PATH ${CWPROOT}/bin
 # }}}
 # intel toolkits# {{{
 INTEL_ROOT=${INSTALL_ROOT}/intel
-source_if_exist ${INTEL_ROOT}/composerxe/bin/compilervars.sh intel64
+source_if_exist ${INTEL_ROOT}/composer_xe_2013_sp1.3.174/bin/compilervars.sh intel64
 source_if_exist ${INTEL_ROOT}/impi/bin64/mpivars.sh
 source_if_exist ${INTEL_ROOT}/vtune_amplifier_xe/amplxe-vars.sh quiet
 source_if_exist ${INTEL_ROOT}/inspector_xe/inspxe-vars.sh quiet

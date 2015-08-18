@@ -2,7 +2,7 @@ Host github.com
   User git
 
 Host hpgcnode.tsinghua.edu.cn
-  HostName 101.6.241.18
+  HostName 101.6.240.118
 
 Host fpgaworkstation.tsinghua.edu.cn
   HostName 101.6.241.77
