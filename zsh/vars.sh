@@ -160,6 +160,9 @@ prepend_LD_LIBRARY_PATH ${INSTALL_ROOT}/matlab/sys/opengl/lib/glnxa64
 # curl# {{{
 prepend_bin_lib_shareman ${INSTALL_ROOT}/curl
 # }}}
+# seplib# {{{
+prepend_PATH ${INSTALL_ROOT}/seplib/bin
+# }}}
 # hydra# {{{
 prepend_bin_man ${INSTALL_ROOT}/hydra
 # }}}
