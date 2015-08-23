@@ -325,7 +325,7 @@ NeoBundle 'altercation/vim-colors-solarized' "{{{
     "}}}
 
     NeoBundle 'jiangmiao/auto-pairs' "{{{
-      au Filetype tex let b:AutoPairs = {}
+      au Filetype * let b:AutoPairs = {'{':'}'}
     "}}}
     NeoBundle 'justinmk/vim-sneak' "{{{
       let g:sneak#streak = 1
