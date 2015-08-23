@@ -244,6 +244,7 @@ NeoBundle 'altercation/vim-colors-solarized' "{{{
     "}}}
 "}}}
 
+    NeoBundle 'vim-scripts/fortran.vim'
     NeoBundle 'honza/vim-snippets'
     NeoBundle 'Valloric/ListToggle'
     NeoBundle 'scrooloose/nerdcommenter'
