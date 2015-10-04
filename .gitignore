@@ -1,5 +1,3 @@
 zsh/cache/*
 vim/bundle/
 gundle/
-ssh/rice_rsa
-ssh/known_hosts

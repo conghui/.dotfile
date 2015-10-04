@@ -75,15 +75,6 @@ NeoBundle       'Shougo/vimproc.vim', {
 NeoBundle      'gdbinit/Gdbinit'
   call LinkFile('$DOTFILE_BUNDLE_ROOT/Gdbinit/gdbinit', '~/.gdbinit')
 "}}}
-" ssh"{{{
-for f in split(globpath('$DOTFILE_ROOT/ssh', '*'), '\n')
-  let soft = expand("~/.ssh/" . substitute(f, ".*/", "", ""))
-
-  call system('chmod 600 ' . f)
-  call system('chmod 700 ~/.ssh')
-  call LinkFile(f, soft)
-endfor
-"}}}
 " terminator-solarized"{{{
 NeoBundle      'ghuntley/terminator-solarized'
   call EnsureExists('~/.config/terminator')
