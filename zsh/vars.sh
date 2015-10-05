@@ -166,6 +166,9 @@ prepend_PATH ${INSTALL_ROOT}/seplib/bin
 # hydra# {{{
 prepend_bin_man ${INSTALL_ROOT}/hydra
 # }}}
+# tmuxinator # {{{
+[[ -f $DOTFILE_BUNDLE_ROOT/tmuxinator/tmuxinator.zsh ]] && source $DOTFILE_BUNDLE_ROOT/tmuxinator/tmuxinator.zsh
+# }}}
 # dfe-snippets# {{{
 PATH_TO_DFE_SNIPPETS=${HOME}/dfe-snippets/
 prepend_PATH ${PATH_TO_DFE_SNIPPETS}/scripts/

@@ -60,7 +60,6 @@ NeoBundle      'conghui/iterm2-color-solarized'
 NeoBundle      'Anthony25/gnome-terminal-colors-solarized'
 NeoBundle      'bssthu/tunet_py'
 
-
 " vimproc "{{{
 NeoBundle       'Shougo/vimproc.vim', {
   \ 'build': {
@@ -80,6 +79,11 @@ NeoBundle      'ghuntley/terminator-solarized'
   call EnsureExists('~/.config/terminator')
   call LinkFile('$DOTFILE_BUNDLE_ROOT/terminator-solarized/config','~/.config/terminator/config')
 "}}}
+" tmuxinator "{{{
+NeoBundle      'tmuxinator/tmuxinator'
+  call LinkFile('$DOTFILE_BUNDLE_ROOT/tmuxinator/bin/mux', '$DOTFILE_ROOT/bin/')
+  call LinkFile('$DOTFILE_BUNDLE_ROOT/tmuxinator/bin/tmuxinator', '$DOTFILE_ROOT/bin/')
+"}}}
 " zprezto & zsh"{{{
 NeoBundle      'sorin-ionescu/prezto', {'name' : 'zprezto'}
   call LinkFile('$DOTFILE_BUNDLE_ROOT/zprezto', '~/.zprezto')
@@ -97,7 +101,6 @@ NeoBundle      'sorin-ionescu/prezto', {'name' : 'zprezto'}
   call LinkFile('$ZSH_ROOT/zpreztorc', '~/.zpreztorc')
   call LinkFile('$ZSH_ROOT/zshrc.zsh', '~/.zshrc')
 "}}}
-
 
 " finish"{{{
 call neobundle#end()
