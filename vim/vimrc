@@ -444,8 +444,6 @@ NeoBundle 'altercation/vim-colors-solarized' "{{{
   xnoremap    <c-c>   "+y
   xnoremap    <c-x>   "+x
 
-  inoremap jk <Esc>
-
   " [Basically you press * or # to search for the current selection !! Really useful]
   vnoremap    <silent> *  y/<C-R>=escape(@", '\\/.*$^~[]')<CR><CR>
   vnoremap    <silent> #  y?<C-R>=escape(@", '\\/.*$^~[]')<CR><CR>
