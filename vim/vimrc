@@ -316,7 +316,7 @@ NeoBundle 'altercation/vim-colors-solarized' "{{{
       endif
     "}}}
 
-
+    NeoBundle 'michaeljsmith/vim-indent-object'
     NeoBundle 'sjl/gundo.vim'
     NeoBundle 'terryma/vim-multiple-cursors'
     NeoBundle 'vim-scripts/LanguageTool' "{{{
