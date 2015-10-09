@@ -9,4 +9,4 @@ cmake -G "Unix Makefiles" \
   -DPATH_TO_LLVM_ROOT=${llvm_root_dir} . \
   ~/.vim/bundle/YouCompleteMe/third_party/ycmd/cpp || exit 1
 
-make && make ycm_support_libs -j${num_cores} || exit 1
+make -j${num_cores} && make ycm_support_libs -j${num_cores} || exit 1
