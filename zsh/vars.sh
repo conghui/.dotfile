@@ -1,4 +1,5 @@
-# vim: fdm=marker fdl=0 ft=zsh
+#!/bin/bash
+# vim: fdm=marker fdl=0
 
 # variables# {{{
 export EDITOR="vim"
