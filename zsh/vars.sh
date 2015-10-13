@@ -123,6 +123,7 @@ prepend_LD_LIBRARY_PATH ${INSTALL_ROOT}/boost/lib
 # maxcompiler# {{{
 source_if_exist ${INSTALL_ROOT}/maxcompiler/settings.sh
 export PATH=$MAXELEROSDIR/utils:$PATH
+prepend_LD_LIBRARY_PATH $MAXELEROSDIR/lib
 
 # }}}
 # texlive# {{{
