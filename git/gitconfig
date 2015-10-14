@@ -107,4 +107,4 @@
   # http://gitfu.wordpress.com/2008/04/20/git-rerere-rereremember-what-you-did-last-time/
   enabled = true
 [push]
-	default = simple
+  default = matching
