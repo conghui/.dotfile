@@ -171,6 +171,11 @@ prepend_bin_man ${INSTALL_ROOT}/hydra
 # tmuxinator # {{{
 [[ -f $DOTFILE_BUNDLE_ROOT/tmuxinator/tmuxinator.zsh ]] && source $DOTFILE_BUNDLE_ROOT/tmuxinator/tmuxinator.zsh
 # }}}
+# apache mvn#{{{
+export M2_HOME=${INSTALL_ROOT}/apache-maven
+export M2=$M2_HOME/bin
+export PATH=$M2:$PATH
+#}}}
 # dfe-snippets# {{{
 PATH_TO_DFE_SNIPPETS=${HOME}/dfe-snippets/
 prepend_PATH ${PATH_TO_DFE_SNIPPETS}/scripts/
