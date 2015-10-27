@@ -1,0 +1,10 @@
+#!/bin/bash
+
+BIN=~/softs/install/eclipse/eclipse-java-luna-SR2/eclipse
+
+if [[ ! -f $BIN ]]; then
+  echo "$BIN doesn't exist"
+  exit
+fi
+
+$BIN &
