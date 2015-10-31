@@ -31,7 +31,6 @@ alias grep='grep --color=auto'
 alias git='noglob git'
 alias gst='git status'
 alias gd='git diff'
-unalias gs
 
 # editing files
 alias evar='vim ~/.vars.sh'
