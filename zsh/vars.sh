@@ -171,6 +171,9 @@ prepend_bin_man ${INSTALL_ROOT}/hydra
 # tmuxinator # {{{
 [[ -f $DOTFILE_BUNDLE_ROOT/tmuxinator/tmuxinator.zsh ]] && source $DOTFILE_BUNDLE_ROOT/tmuxinator/tmuxinator.zsh
 # }}}
+# quartus#{{{
+prepend_PATH /opt/altera/13.1/quartus/bin
+#}}}
 # apache mvn#{{{
 export M2_HOME=${INSTALL_ROOT}/apache-maven
 export M2=$M2_HOME/bin
