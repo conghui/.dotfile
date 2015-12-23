@@ -27,12 +27,12 @@ zstyle ':prezto:load' pmodule \
   'utility' \
   'completion' \
   'archive' \
-  'fasd' \
   'git' \
   'osx' \
   'ssh' \
   'syntax-highlighting' \
   'history-substring-search' \
+  'fasd' \
   'prompt'
 
 #

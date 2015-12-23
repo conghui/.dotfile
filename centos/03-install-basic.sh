@@ -1,3 +1,9 @@
 #!/bin/bash
 
-yum install -y xclip terminator guake libcurl-devel openssl-devel openssl bwm-ng
+sudo yum install -y  xclip \
+                terminator \
+                guake \
+                libcurl-devel \
+                openssl-devel \
+                openssl \
+                bwm-ng
