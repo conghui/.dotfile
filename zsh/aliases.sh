@@ -31,9 +31,9 @@ alias grep='grep --color=auto'
 alias git='noglob git'
 alias gst='git status'
 alias gd='git diff'
+alias gpa='git remote | xargs -L1 git push'
 
 # editing files
-alias evar='vim ~/.vars.sh'
 alias valgrind="valgrind --leak-check=full"
 alias nsight='nsight &'
 alias maxide='maxide &'
