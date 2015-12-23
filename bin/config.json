@@ -1,0 +1,8 @@
+{
+    "server":["106.187.43.137"],
+    "server_port":15457,
+    "local_port":1080,
+    "password":"panding1305",
+    "timeout":60,
+	"method":"aes-256-cfb"
+}
