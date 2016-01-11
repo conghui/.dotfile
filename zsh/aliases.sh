@@ -38,4 +38,8 @@ alias valgrind="valgrind --leak-check=full"
 alias nsight='nsight &'
 alias maxide='maxide &'
 
+# docker
+alias docker-stop-all='docker stop `docker ps -aq`'
+alias docker-rm-all='docker rm `docker ps -aq`'
+
 # vim: ft=zsh
