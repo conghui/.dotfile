@@ -192,3 +192,6 @@ prepend_PATH ${HOME}/.local/bin
 # ${HOME}/.dotfile/bin# {{{
 prepend_PATH ${HOME}/.dotfile/bin
 # }}}
+# MAC: local Python/bin # {{{
+prepend_PATH ${HOME}/Library/Python/2.7/bin/
+# }}}

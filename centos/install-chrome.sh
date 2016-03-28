@@ -1,14 +1,14 @@
 #! /bin/bash
 
-# Google Chrome Installer/Uninstaller for RHEL/CentOS 6 or 7
-# (C) Richard K. Lloyd 2015 <rklloyd@gmail.com>
+# Google Chrome Installer/Uninstaller for 64-bit RHEL/CentOS 6 or 7
+# (C) Richard K. Lloyd 2016 <rklloyd@gmail.com>
 # See http://chrome.richardlloyd.org.uk/ for further details.
 
 # This script is in the public domain and has no warranty.
 # It needs to be run as root because it installs/uninstalls RPMs.
 
 # Minimum system requirements:
-# - 32-bit or 64-bit RHEL/CentOS 6.6 or later
+# - 64-bit RHEL/CentOS 6.6 or later (32-bit is no longer supported)
 #   (any 64-bit RHEL/CentOS 7 version is supported)
 # - Minimum RHEL/CentOS 6 kernel version supported is 2.6.32-431.el6
 #   (any RHEL/CentOS 7 kernel version is supported)
@@ -47,7 +47,7 @@ Syntax: ./install_chrome.sh [-b] [-d] [-f [-f [-f]]] [-h] [-n] [-q] [-s]
 }
 
 # Current version of this script
-version="7.23"
+version="7.30"
 
 # This script will download/install the following for an installation:
 
@@ -57,8 +57,7 @@ version="7.23"
 # These RHEL/CentOS 7 RPMs and their (many!) deps that aren't already installed:
 # redhat-lsb, wget, xdg-utils, GConf2, libXSCrnSaver. libX11, gnome-keyring and nss.
 # The latest Google Chrome RPM if not already downloaded (or out-of-date).
-# 64-bit RHEL/CentOS 6 only: libstdc++ library from a gcc 5.3.0 source build.
-# 32-bit RHEL/CentOS 6 only: libstdc++ RPM from CentOS 7.
+# RHEL/CentOS 6 only: libstdc++ library from a gcc 5.3.0 source build.
 
 # For RHEL/CentOS 6 only:
 # It then copies the downloaded libstdc++ library into /opt/google/chrome*/lib.
@@ -79,9 +78,23 @@ version="7.23"
 
 # Revision history:
 
+# 7.30 - 5th March 2016
+# - Google have completely pulled the 32-bit Linux Google Chrome repository,
+#   so I've matched this by dropping 32-bit support (I don't understand
+#   why anyone would ever install 32-bit RHEL/CentOS, but that's just me :-) ).
+# - An out-of-date kernel is always an error now rather than a warning.
+
+# 7.24 - 13th February 2016
+# - Adjusted year references to be 2016.
+# - Finally removed all references to LD_PRELOAD.
+# - Warn that this script's 32-bit support is deprecated and will be
+#   removed in a future release (shortly after Google Chrome drops 32-bit).
+# - CentoS 7.2.1511 is on the mirrors, so grab 32-bit libstdc++ from that
+#   and switch the fallback to the 7.1.1503 version.
+
 # 7.23 - 15th December 2015
 # - Increased version of chrome-deps package to 3.12 because of the newer
-#   libstdc++ in the previous release (yes, that should have been done with 7.22).
+#   libstdc++ in the previous release (yes, I should have done that with 7.22).
 # - wget now ignores cached files (e.g. from proxies) when downloading.
 # - If your running kernel is older than 2.6.32-431.el6 and you either refuse
 #   (or fail) to update it when prompted or refuse to reboot after the latest
@@ -781,7 +794,7 @@ init_vars()
    # Set option variables to temporary values so that errors prior to the
    # actual option parsing behave sensibly
    dry_run=0 ; do_install=0 ; delete_tmp=0 
-   past_run_check=0 ; force=0
+   past_run_check=0 ; force=0 ; quiet=0
 
    # Avoid picking up the custom libs for any binaries
    # run by this script
@@ -798,8 +811,6 @@ init_vars()
    case "$arch" in
    x86_64) rellib="lib64" ; rpmarch="$arch"
            rpmdep="()(64bit)" ;;
-     i686) rellib="lib" ; rpmarch="i386"
-           rpmdep="" ;;
         *) error "Unsupported architecture ($arch)" ;;
    esac
    relusrlib="usr/$rellib"
@@ -840,19 +851,6 @@ init_vars()
    wrapper_mod_version="2.10"
    install_message="already installed"
    trap "interrupt" 1 2 3
-
-   suffix="$arch.rpm"
-   centver="7.1.1503"
-   oldcentver="7.0.1406"
-
-   # Note that when 7.1.1503 provides a libstdc++ update, we'll have 2 fallbacks
-   # (penultimate 7.1.1503 and the last 7.0.1406 update)
-
-   # CentOS $centver initial release directory
-   baseurl="http://mirror.centos.org/centos-7/$centver/os/x86_64/Packages"
-
-   # CentOS $oldcentver updates directory
-   baseurlfallback="http://vault.centos.org/$oldcentver/updates/x86_64/Packages"
 
    wget="/usr/bin/wget"
    wget_options="--no-check-certificate --no-cache"
@@ -987,7 +985,7 @@ install_custom_lib()
    fi
      
    cat <<@EOF >"$customsrc"
-/* missing_functions.c 3.00 (C) Richard K. Lloyd 2015 <rklloyd@gmail.com>
+/* missing_functions.c 3.00 (C) Richard K. Lloyd 2016 <rklloyd@gmail.com>
 
    Provides a gnome_keyring_attribute_list_new() function (was
    a macro in CentOS 6 causing a missing symbol error when Google Chrome
@@ -1076,88 +1074,6 @@ gnome_keyring_attribute_list_new (void)
       fi
    else
       error "Unable to create $customsrc source file"
-   fi
-}
-
-install_library()
-# $1 = Core of basename of RPM filename
-# $2 = cksum of RPM
-# $3 = Size of RPM (in bytes)
-# $4 = After unpacking, relative path to library soft-link
-# $5 = Download URL dir
-# $6 = 0 means download failures are warnings, = 1 means errors
-{
-   # If we've already installed libstdc++, do nothing
-   if [ $lib_installed -eq 1 ]
-   then
-      return
-   fi
-
-   lib_name="`basename $4`"
-   fname="$libdir/$lib_name"
-
-   rpmfile="$1.$suffix"
-   rpmcksum="$2 $3 $rpmfile"
-
-   if [ -s $rpmfile ]
-   then
-      if [ "`cksum $rpmfile`" != "$rpmcksum" ]
-      then
-         rm -f $rpmfile
-         warning "Deleted pre-existing $rpmfile - checksum or size incorrect"
-      fi
-   fi
-
-   if [ ! -s $rpmfile ]
-   then
-      download_file "$5/$rpmfile" "$rpmfile" "$rpmcksum" "$6"
-      if [ ! -s $rpmfile -a $6 -eq 0 ]
-      then
-         return
-      fi
-   fi
-
-   message "Installing $fname" "n"
-
-   if [ $dry_run -eq 1 ]
-   then
-      echo "Would unpack $rpmfile using rpm2cpio/cpio and"
-      echo "then copy $4 to $fname" ; echo
-      return
-   fi
-
-   rpm2cpio "$rpmfile" | cpio -id 2>/dev/null
-
-   if [ $6 -eq 0 ]
-   then
-      errfunc="warning" ; retfunc="return"
-   else
-      errfunc="error" ; retfunc=""
-   fi
-      
-   rel_link="`dirname \"$4\"`/$lib_name"
-   if [ ! -h "$rel_link" ]
-   then
-      $errfunc "Failed to find $rel_link soft-link (couldn't install $fname)"
-      $retfunc
-   fi
-   
-   rel_file="`dirname \"$4\"`/`readlink \"$rel_link\"`"
-   if [ ! -s "$rel_file" ]
-   then
-      $errfunc "Failed to find $rel_file file (couldn't install $fname)"
-      $retfunc
-   fi
-
-   rm -f "$fname"
-   cp -fp "$rel_file" "$fname"
-   if [ -s "$fname" ]
-   then
-      change_se_context "$fname"
-      lib_installed=1
-   else
-      $errfunc "Failed to install $fname"
-      $retfunc
    fi
 }
 
@@ -1738,30 +1654,12 @@ check_if_kernel_obsolete()
 
    if [ $ans -eq 0 ]
    then
-      warning "$chrome_name should not be run until you upgrade this machine's kernel via \"yum update\" and reboot it after the upgrade"
+      error "$chrome_name should not be run until you upgrade this machine's kernel via \"yum update\" and reboot it after the upgrade"
    fi
 }
 
 install_prebuilt_library()
 # Download pre-built 64-bit libstdc++ library from script site
-{
-   download_file "$checksite$download_lib_xz" "$download_lib_xz" "581071372 338280 $download_lib_xz" 1
-
-   destlib="$libdir/$download_lib"
-   xzcat -f "$download_lib_xz" >$destlib
-   if [ -s $destlib ]
-   then
-      chmod a+rx "$destlib"
-      change_se_context "$destlib"
-      message "Installed $destlib" 
-   else
-      rm -f "$destlib"
-      error "Failed to install $download_lib"
-   fi
-}
-
-install_rpm_libraries()
-# Extract and install libraries from CentOS 7 RPMs
 {
    if [ $dry_run -eq 1 ]
    then
@@ -1781,15 +1679,19 @@ install_rpm_libraries()
       fi
    fi
 
-   case "$arch" in
-   x86_64) install_prebuilt_library ;;
-   *)
-   lib_installed=0
-   # Function       RPM core filename            32-bit cksum  32-bit size  Relative soft-link unpacked  URL                Warn/Err?
-   install_library  "libstdc++-4.8.3-9.el7"         103833770     314828    "$relusrlib/libstdc++.so.6"  "$baseurl"             0
-   install_library  "libstdc++-4.8.2-16.2.el7_0"   2441727600     308620    "$relusrlib/libstdc++.so.6"  "$baseurlfallback"     1
-   ;;
-   esac
+   download_file "$checksite$download_lib_xz" "$download_lib_xz" "581071372 338280 $download_lib_xz" 1
+
+   destlib="$libdir/$download_lib"
+   xzcat -f "$download_lib_xz" >$destlib
+   if [ -s $destlib ]
+   then
+      chmod a+rx "$destlib"
+      change_se_context "$destlib"
+      message "Installed $destlib" 
+   else
+      rm -f "$destlib"
+      error "Failed to install $download_lib"
+   fi
 }
 
 bulk_warning()
@@ -1841,7 +1743,7 @@ parse_options()
 # Parse script options passed as $*
 {
    delete_tmp=0 ; dry_run=0 ; do_install=1
-   quiet=0 ; inst_str="Installer"
+   inst_str="Installer"
    risky_type="$old_rpm_type"
 
    while [ "x$1" != "x" ]
@@ -1946,6 +1848,8 @@ rm -rf %{buildroot}
 
 # Changelog, with annoyingly "wrong" US date format
 %changelog
+* Tue Dec 15 2015 Richard K. Lloyd <rklloyd@gmail.com> - 3.12-1
+- New libstdc++ library release.
 * Tue Feb 23 2015 Richard K. Lloyd <rklloyd@gmail.com> - 3.11-1
 - Added a Provides: line to avoid an RPM dependency issue.
 * Fri Feb  6 2015 Richard K. Lloyd <rklloyd@gmail.com> - 3.10-1
@@ -2067,17 +1971,6 @@ build_deps_rpm()
          rpmbuild $rpmbuild_options "`basename \"$specfile\"`"
          rm -f "$specfile"
 
-         # Some users claim that the i386 build tree is actually i686,
-         # but that's doesn't happen for me in RHEL/CentOS or Scientific Linux.
-         # Still, let's check for it anyway
-         if [ ! -s "$built_rpm" -a "$rpmarch" = "i386" ]
-         then
-            built_rpm_base="$deps_name-$deps_version-1.i686.rpm"
-            built_rpm="$rpmbuilddir/RPMS/i686/$built_rpm_base"
-            # We don't change tmpdir_rpm, so this handily renames
-            # the final RPM to an i386-based filename below
-         fi
-
          if [ -s "$built_rpm" ]
          then
             mv -f "$built_rpm" "$tmpdir_rpm"
@@ -2107,7 +2000,7 @@ adjust_chrome_defaults()
 # (for all 3 RPM tpyes):
 # - Remove any existing setting of repo_add_once
 # - Updates (or adds) a custom ### START .. ### END section, which will
-#   add an LD_PRELOAD definition to google-chrome if one isn't present.
+#   ajusted the exec cat commands in google-chrome.
 # - Sets repo_add_once to true (picked up by /etc/cron.daily/google-chrome)
 # modify_wrapper is run once at the end of the chrome-deps-* RPM installation.
 {
@@ -2115,14 +2008,14 @@ adjust_chrome_defaults()
    then
       echo "Would create a modify_wrapper script to modify $chrome_defaults."
       echo "The script would ensure the creation of $chrome_repo and"
-      echo "the addition of a LD_PRELOAD variable to $chrome_wrapper."
+      echo "the adjustment of exec cat commands in $chrome_wrapper."
       echo
       return
    fi
 
    ( cat <<@EOF
 #! /bin/bash
-# @MODIFY_WRAPPER@ @WRAPPER_MOD_VERSION@ (C) Richard K. Lloyd 2015 <rklloyd@gmail.com>
+# @MODIFY_WRAPPER@ @WRAPPER_MOD_VERSION@ (C) Richard K. Lloyd 2016 <rklloyd@gmail.com>
 # Created by @SCRIPTNAME@ and included in the @DEPS_NAME@ RPM
 # to modify @CHROME_DEFAULTS@ in the following ways:
 # - Remove any existing setting of repo_add_once
@@ -2279,12 +2172,7 @@ main_code()
       # and we're using RHEL/CentOS 6.X
       if [ "$deps_latest" = "" -a $centos -eq 6 ]
       then
-         rpm_build_packages="gcc glibc-devel rpm-build rpmdevtools"
-         if [ "$arch" = "x86_64" ]
-         then
-            # On 64-bit RHEL/CentOS 6, we need the xz package
-            rpm_build_packages="$rpm_build_packages xz"
-         fi
+         rpm_build_packages="gcc glibc-devel rpm-build rpmdevtools xz"
       else
          rpm_build_packages=""
       fi
@@ -2299,7 +2187,7 @@ main_code()
       if [ "$deps_latest" = "" -a $centos -eq 6 ]
       then
          # Download/install libstdc++ library
-         install_rpm_libraries
+         install_prebuilt_library
 
          # Adjust /etc/default/google-chrome (sourced in daily by
          # /etc/cron.daily/google-chrome) as required
