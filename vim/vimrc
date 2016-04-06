@@ -220,16 +220,6 @@ NeoBundle 'altercation/vim-colors-solarized' "{{{
     NeoBundle 'vim-scripts/makeprgs'
     NeoBundle 'airblade/vim-gitgutter'
     NeoBundle 'nacitar/terminalkeys.vim'
-    "NeoBundle Shougo/vimproc.vim'"{{{
-    NeoBundle 'Shougo/vimproc.vim', {
-      \ 'build': {
-        \ 'mac': 'make -f make_mac.mak',
-        \ 'unix': 'make -f make_unix.mak',
-        \ 'cygwin': 'make -f make_cygwin.mak',
-        \ 'windows': '"C:\Program Files (x86)\Microsoft Visual Studio 11.0\VC\bin\nmake.exe" make_msvc32.mak',
-      \ },
-    \ }
-    "}}}
     NeoBundle 'DoxygenToolkit.vim' "{{{
       au BufNewFile,BufRead *.doxygen setfiletype doxygen
       let g:doxygen_enhanced_color=0
@@ -331,6 +321,7 @@ NeoBundle 'altercation/vim-colors-solarized' "{{{
     NeoBundle 'justinmk/vim-sneak' "{{{
       let g:sneak#streak = 1
     "}}}
+    NeoBundle 'vim-airline/vim-airline-themes'
     NeoBundle 'bling/vim-airline' "{{{
       let g:airline_powerline_fonts = 1
       let g:airline#extensions#tabline#enabled = 1
