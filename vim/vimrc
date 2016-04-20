@@ -106,7 +106,7 @@
   set t_vb=
 
   " set text width
-  set tw=80
+  set tw=0
 
   " searching
   set hlsearch                                        "highlight searches
