@@ -80,11 +80,6 @@ NeoBundle      'ghuntley/terminator-solarized'
   call EnsureExists('~/.config/terminator')
   call LinkFile('$DOTFILE_BUNDLE_ROOT/terminator-solarized/config','~/.config/terminator/config')
 "}}}
-" tmuxinator "{{{
-NeoBundle      'tmuxinator/tmuxinator'
-  call LinkFile('$DOTFILE_BUNDLE_ROOT/tmuxinator/bin/mux', '$DOTFILE_ROOT/bin/')
-  call LinkFile('$DOTFILE_BUNDLE_ROOT/tmuxinator/bin/tmuxinator', '$DOTFILE_ROOT/bin/')
-"}}}
 " zprezto & zsh"{{{
 NeoBundle      'sorin-ionescu/prezto', {'name' : 'zprezto'}
   call LinkFile('$DOTFILE_BUNDLE_ROOT/zprezto', '~/.zprezto')

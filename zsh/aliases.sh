@@ -42,4 +42,7 @@ alias maxide='maxide &'
 alias docker-stop-all='docker stop `docker ps -aq`'
 alias docker-rm-all='docker rm `docker ps -aq`'
 
+# utils
+alias sumcol='paste -sd+ - | bc'
+
 # vim: ft=zsh
