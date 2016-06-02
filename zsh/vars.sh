@@ -196,5 +196,5 @@ prepend_PATH ${HOME}/.dotfile/bin
 # MAC: local Python/bin # {{{
 prepend_PATH ${HOME}/Library/Python/2.7/bin/
 # }}}
-
+# gdal
 prepend_LD_LIBRARY_PATH /home/rice/softs/install/gdal/lib
