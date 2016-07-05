@@ -208,10 +208,10 @@
   NeoBundle 'vim-scripts/gnuplot.vim'
   NeoBundle 'vim-scripts/wombat256.vim'
   NeoBundle 'vim-scripts/DoxyGen-Syntax'
-NeoBundle 'altercation/vim-colors-solarized' "{{{
+  NeoBundle 'altercation/vim-colors-solarized' "{{{
   "let g:solarized_termcolors=256
   "let g:solarized_termtrans=1
-"}}}
+  "}}}
 "}}}
 " Plugin: better user experience"{{{
     NeoBundle 'matchit.zip'
