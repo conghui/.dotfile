@@ -300,11 +300,11 @@
       let g:Tex_CompileRule_pdf        = 'pdflatex -synctex=1 --interaction=nonstopmode $*'
       let g:Tex_MultipleCompileFormats = 'pdf,bib,pdf'
 
-      if has("unix") && match(system("uname"),'Darwin') != -1
-        " It's a Mac!
-        let g:Tex_ViewRule_ps = 'Preview'
-        let g:Tex_ViewRule_pdf = 'Skim'
-      endif
+      "if has("unix") && match(system("uname"),'Darwin') != -1
+        "" It's a Mac!
+        "let g:Tex_ViewRule_ps = 'Preview'
+        "let g:Tex_ViewRule_pdf = 'Skim'
+      "endif
     "}}}
 
     NeoBundle 'michaeljsmith/vim-indent-object'
@@ -463,7 +463,7 @@
   nnoremap    _       -
 
   " no Highlight search"
-  nmap <leader><cr> :nohlsearch<cr>
+  nmap <leader>, :nohlsearch<cr>
 
   " [Spell checking]"
   map <leader>se :setlocal spell spelllang=en_us<cr>
