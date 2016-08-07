@@ -242,6 +242,11 @@
     NeoBundle 'tpope/vim-surround'
     NeoBundle 'ekalinin/Dockerfile.vim'
     NeoBundle 'thinca/vim-quickrun'
+    NeoBundle 'Konfekt/FastFold'
+    NeoBundle 'michaeljsmith/vim-indent-object'
+    NeoBundle 'sjl/gundo.vim'
+    NeoBundle 'terryma/vim-multiple-cursors'
+    NeoBundle 'vim-airline/vim-airline-themes'
     NeoBundleLazy 'majutsushi/tagbar', {'autoload':{'commands':'TagbarToggle'}}
     NeoBundle 'SirVer/ultisnips' "{{{
       let g:UltiSnipsExpandTrigger="<tab>"
@@ -291,11 +296,9 @@
             \}
 
     "}}}
-    NeoBundle 'SHougo/neocomplete.vim'
+    NeoBundle 'SHougo/neocomplete.vim' "{{{
     let g:neocomplete#enable_at_startup = 1
-    NeoBundle 'Konfekt/FastFold'
-    "NeoBundle 'Shougo/deoplete.nvim'
-    "let g:deoplete#enable_at_startup = 1
+    "}}}
     NeoBundle 'jcf/vim-latex' "{{{
       set shellslash
       set grepprg=grep\ -nH\ $*
@@ -311,22 +314,12 @@
         "let g:Tex_ViewRule_pdf = 'Skim'
       "endif
     "}}}
-
-    NeoBundle 'michaeljsmith/vim-indent-object'
-    NeoBundle 'sjl/gundo.vim'
-    NeoBundle 'terryma/vim-multiple-cursors'
-    NeoBundle 'vim-scripts/LanguageTool' "{{{
-     let g:languagetool_jar='$HOME/softs/install/LanguageTool/languagetool-commandline.jar'
-     let g:languagetool_lang ='en-US'
-    "}}}
-
     NeoBundle 'jiangmiao/auto-pairs' "{{{
       au Filetype * let b:AutoPairs = {'{':'}'}
     "}}}
     NeoBundle 'justinmk/vim-sneak' "{{{
       let g:sneak#streak = 1
     "}}}
-    NeoBundle 'vim-airline/vim-airline-themes'
     NeoBundle 'bling/vim-airline' "{{{
       let g:airline_powerline_fonts = 1
       let g:airline#extensions#tabline#enabled = 1

@@ -16,11 +16,39 @@ function source_if_exist() { # {{{
     source "$@" &> /dev/null
   fi
 } # }}}
+function prepend_PATH() { # {{{
+  # only one path is allowed at a time
+  if [[ -d "$1" ]]; then
+    export PATH="$1:$PATH"
+  fi
+}
+# }}}
+function prepend_MANPATH() { # {{{
+  # only one path is allowed at a time
+  if [[ -d "$1" ]]; then
+    export MANPATH="$1:$MANPATH"
+  fi
+}
+# }}}
+function prepend_INFOPATH() { # {{{
+  # only one path is allowed at a time
+  if [[ -d "$1" ]]; then
+    export INFOPATH="$1:$INFOPATH"
+  fi
+}
+# }}}
+function prepend_LD_LIBRARY_PATH() { # {{{
+  # only one path is allowed at a time
+  if [[ -d "$1" ]]; then
+    export LD_LIBRARY_PATH="$1:$LD_LIBRARY_PATH"
+  fi
+}
+# }}}
+
 
 # OS independent alias# {{{
 # keep it in lexicographic order
 alias gst='git status'
-alias gd='git diff'
 alias gpa='git remote | xargs -L1 git push'
 alias sumcol='paste -sd+ - | bc'
 alias ssh='ssh -Y'
@@ -33,7 +61,7 @@ export PYTHONPATH=$PYTHONPATH:$RSFSRC/build/book/Recipes
 export DATAPATH=${HOME}/.rsfdata
 # }}}
 # ${HOME}/.dotfile/bin# {{{
-export PATH=${HOME}/.dotfile/bin:$PATH
+prepend_PATH ${HOME}/.dotfile/bin
 # }}}
 
 # Settings for Linux and MAC
@@ -44,29 +72,30 @@ alias docker-rm-all='docker rm `docker ps -aq`'
 alias open='gnome-open'
 # }}}
 # CUDA# {{{
-export PATH=${INSTALL_ROOT}/cuda:$PATH
+prepend_PATH ${INSTALL_ROOT}/cuda
 # }}}
 # boost# {{{
-export LD_LIBRARY_PATH=${INSTALL_ROOT}/boost/lib:$LD_LIBRARY_PATH
+prepend_LD_LIBRARY_PATH ${INSTALL_ROOT}/boost/lib
 # }}}
 # matlab# {{{
-export PATH=${INSTALL_ROOT}/matlab/bin:$PATH
+prepend_PATH ${INSTALL_ROOT}/matlab/bin
 # }}}
 # maxcompiler# {{{
 source_if_exist ${INSTALL_ROOT}/maxcompiler/settings.sh
-export PATH=$MAXELEROSDIR/utils:$PATH
+prepend_PATH $MAXELEROSDIR/utils
 # }}}
 # texlive# {{{
-export PATH=${INSTALL_ROOT}/texlive/bin/x86_64-linux:$PATH
-export MANPATH=${INSTALL_ROOT}/texlive/texmf/doc/man:$MANPATH
+prepend_PATH ${INSTALL_ROOT}/texlive/bin/x86_64-linux
+prepend_MANPATH ${INSTALL_ROOT}/texlive/texmf/doc/man
 # }}}
 # linuxbrew# {{{
-export PATH="$HOME/.linuxbrew/bin:$HOME/.linuxbrew/sbin:$PATH"
-export MANPATH="$HOME/.linuxbrew/share/man:$MANPATH"
-export INFOPATH="$HOME/.linuxbrew/share/info:$INFOPATH"
+prepend_PATH "$HOME/.linuxbrew/bin"
+prepend_PATH "$HOME/.linuxbrew/sbin"
+prepend_MANPATH "$HOME/.linuxbrew/share/man"
+prepend_INFOPATH "$HOME/.linuxbrew/share/info"
 # }}}
 elif [[ "$OSTYPE" == "darwin"* ]]; then # only set for MAC
 # coreutils# {{{
-export PATH="$(brew --prefix coreutils)/libexec/gnubin:$PATH"
+prepend_PATH "$(brew --prefix coreutils)/libexec/gnubin"
 # }}}
 fi
