@@ -3,7 +3,7 @@
 " setup"{{{
 set nocompatible
 set all& "reset everything to their defaults
-set rtp+=~/.vim/bundle/neobundle.vim
+set rtp+=~/.dotfile/gundle/neobundle.vim
 call neobundle#begin(expand('~/.dotfile/gundle/'))
 "}}}
 " functions"{{{
@@ -38,6 +38,9 @@ let linking_files = [
     \     ['zsh/vars.sh',       '.vars.sh'],
     \     ['zsh/localvars.sh',  '.localvars.sh'],
     \]
+
+" make sure zsh/localvars.sh exist
+call system('touch zsh/localvars.sh')
 
 " link linking_files for loop "{{{
 for file in linking_files
