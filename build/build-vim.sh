@@ -6,6 +6,7 @@ prefix=${INSTALL_ROOT}/${packageName}
 ./configure --with-features=huge \
   --enable-multibyte \
   --enable-pythoninterp \
+  --enable-luainterp \
   --enable-cscope \
   --prefix=${prefix} && \
   make -j8 && make install

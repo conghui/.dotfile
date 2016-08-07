@@ -33,12 +33,10 @@ endfunction
 
 let linking_files = [
     \     ['git/gitconfig',     '.gitconfig'],
-    \     ['vim',               '.vim'],
     \     ['vim/vimrc',         '.vimrc'],
-    \     ['/tmux/tmux.conf',   '.tmux.conf'],
-    \     ['zsh/aliases.sh',    '.aliases.sh'],
+    \     ['tmux/tmux.conf',   '.tmux.conf'],
     \     ['zsh/vars.sh',       '.vars.sh'],
-    \     ['python/pystartup',  '.pystartup'],
+    \     ['zsh/localvars.sh',  '.localvars.sh'],
     \]
 
 " link linking_files for loop "{{{
@@ -61,20 +59,6 @@ NeoBundle      'Anthony25/gnome-terminal-colors-solarized'
 NeoBundle      'bssthu/tunet_py'
 NeoBundle      'houtianze/bypy'
 
-" vimproc "{{{
-NeoBundle       'Shougo/vimproc.vim', {
-  \ 'build': {
-    \ 'mac': 'make -f make_mac.mak',
-    \ 'unix': 'make -f make_unix.mak',
-    \ 'cygwin': 'make -f make_cygwin.mak',
-    \ 'windows': '"C:\Program Files (x86)\Microsoft Visual Studio 11.0\VC\bin\nmake.exe" make_msvc32.mak',
-  \ },
-\ }
-"}}}
-" gdb"{{{
-NeoBundle      'gdbinit/Gdbinit'
-  call LinkFile('$DOTFILE_BUNDLE_ROOT/Gdbinit/gdbinit', '~/.gdbinit')
-"}}}
 " terminator-solarized"{{{
 NeoBundle      'ghuntley/terminator-solarized'
   call EnsureExists('~/.config/terminator')

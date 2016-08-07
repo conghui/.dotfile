@@ -270,9 +270,9 @@
       let g:bookmark_save_per_working_dir = 1
       let g:bookmark_auto_save = 1
     "}}}
-    NeoBundle 'Valloric/YouCompleteMe', {'vim_version':'7.3.584'} "{{{
+    "NeoBundle 'Valloric/YouCompleteMe', {'vim_version':'7.3.584'} "{{{
       nnoremap <leader>jd :YcmCompleter GoTo<CR>
-      let g:ycm_confirm_extra_conf = 1
+      let g:ycm_confirm_extra_conf = 0
       let g:ycm_complete_in_comments_and_strings=1
       let g:ycm_key_list_select_completion=['<C-n>', '<Down>']
       let g:ycm_key_list_previous_completion=['<C-p>', '<Up>']
@@ -291,6 +291,11 @@
             \}
 
     "}}}
+    NeoBundle 'SHougo/neocomplete.vim'
+    let g:neocomplete#enable_at_startup = 1
+    NeoBundle 'Konfekt/FastFold'
+    "NeoBundle 'Shougo/deoplete.nvim'
+    "let g:deoplete#enable_at_startup = 1
     NeoBundle 'jcf/vim-latex' "{{{
       set shellslash
       set grepprg=grep\ -nH\ $*
@@ -431,6 +436,7 @@
   "}}}
 
  " mappings {{{
+  noremap K <nop>
   noremap    <c-a>   ggVG
   inoremap    <c-v>   <c-o>:set paste<cr><c-r>+<c-o>:set nopaste<cr>
   xnoremap    <c-c>   "+y
