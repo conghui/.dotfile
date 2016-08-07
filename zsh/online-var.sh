@@ -19,7 +19,6 @@ function source_if_exist() { # {{{
 
 # OS independent alias# {{{
 # keep it in lexicographic order
-unalias rm &> /dev/null
 alias gst='git status'
 alias gd='git diff'
 alias gpa='git remote | xargs -L1 git push'
