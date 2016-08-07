@@ -68,7 +68,7 @@ NeoBundle      'ghuntley/terminator-solarized'
   call LinkFile('$DOTFILE_BUNDLE_ROOT/terminator-solarized/config','~/.config/terminator/config')
 "}}}
 " zprezto & zsh"{{{
-NeoBundle      'sorin-ionescu/prezto', {'name' : 'zprezto'}
+NeoBundle      'sorin-ionescu/prezto', {'name' : 'zprezto', 'build':'git submodule update --init --recursive'}
   call LinkFile('$DOTFILE_BUNDLE_ROOT/zprezto', '~/.zprezto')
 
   let old_wig = &wig
