@@ -3,7 +3,7 @@ ZSHDIR=${HOME}/.dotfile/zsh
 
 # source alias and set environment variables
 source ${ZSHDIR}/vars.sh
-source ${ZSHDIR}/localvars.sh
+source_if_exist ${ZSHDIR}/localvars.sh
 
 # Source Prezto.
 source ~/.zprezto/init.zsh
