@@ -251,6 +251,7 @@ call dein#add('Shougo/dein.vim')
     call dein#add('scrooloose/nerdcommenter')
     call dein#add('terryma/vim-expand-region')
     call dein#add('thinca/vim-quickrun')
+    call dein#add('vim-scripts/BufOnly.vim')
     call dein#add('terryma/vim-multiple-cursors')
     call dein#add('lfv89/vim-interestingwords')
     call dein#add('SirVer/ultisnips') "{{{
