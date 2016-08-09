@@ -252,6 +252,7 @@ call dein#add('Shougo/dein.vim')
     call dein#add('terryma/vim-expand-region')
     call dein#add('thinca/vim-quickrun')
     call dein#add('terryma/vim-multiple-cursors')
+    call dein#add('lfv89/vim-interestingwords')
     call dein#add('SirVer/ultisnips') "{{{
       let g:UltiSnipsExpandTrigger="<tab>"
       let g:UltiSnipsJumpForwardTrigger="<tab>"
@@ -396,7 +397,7 @@ call dein#add('Shougo/dein.vim')
       nnoremap <silent> [unite]y :<C-u>Unite -buffer-name=yanks history/yank<cr>
       nnoremap <silent> [unite]l :<C-u>Unite -auto-resize -buffer-name=line line<cr>
       nnoremap <silent> [unite]b :<C-u>Unite -auto-resize -buffer-name=buffers buffer file_mru<cr>
-      nnoremap <silent> [unite]/ :<C-u>Unite -no-quit -buffer-name=search grep:.<cr>
+      nnoremap <silent> [unite]/ :<C-u>Unite -auto-resize -buffer-name=search grep:.<cr>
       nnoremap <silent> [unite]m :<C-u>Unite -auto-resize -buffer-name=mappings mapping<cr>
       nnoremap <silent> [unite]s :<C-u>Unite -quick-match buffer<cr>
       nnoremap <silent> [unite]c :<C-u>Unite -buffer-name=commands -default-action=execute history/command command<CR>
@@ -409,7 +410,6 @@ call dein#add('Shougo/dein.vim')
     tnoremap <Esc> <C-\><C-n>
   endif
 
-  noremap K <nop>
   noremap    <c-a>   ggVG
   inoremap    <c-v>   <c-o>:set paste<cr><c-r>+<c-o>:set nopaste<cr>
   xnoremap    <c-c>   "+y

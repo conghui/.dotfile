@@ -48,6 +48,12 @@ function prepend_LD_LIBRARY_PATH() { # {{{
 
 # OS independent alias# {{{
 # keep it in lexicographic order
+alias a='fasd -a' # any
+alias s='fasd -si' # show / search / select
+alias d='fasd -d' # directory
+alias f='fasd -f' # file
+alias z='fasd_cd -d' # cd, same functionality as j in autojump
+alias zz='fasd_cd -d -i' # interactive directory jump
 alias gst='git status'
 alias gpa='git remote | xargs -L1 git push'
 alias sumcol='paste -sd+ - | bc'
