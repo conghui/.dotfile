@@ -36,15 +36,6 @@ function prepend_INFOPATH() { # {{{
     export INFOPATH="$1:$INFOPATH"
   fi
 }
-# }}}
-function prepend_LD_LIBRARY_PATH() { # {{{
-  # only one path is allowed at a time
-  if [[ -d "$1" ]]; then
-    export LD_LIBRARY_PATH="$1:$LD_LIBRARY_PATH"
-  fi
-}
-# }}}
-
 
 # OS independent alias# {{{
 # keep it in lexicographic order
@@ -56,6 +47,7 @@ alias z='fasd_cd -d' # cd, same functionality as j in autojump
 alias zz='fasd_cd -d -i' # interactive directory jump
 alias gst='git status'
 alias gpa='git remote | xargs -L1 git push'
+alias mux='tmuxinator'
 alias sumcol='paste -sd+ - | bc'
 alias ssh='ssh -Y'
 # }}}
@@ -63,8 +55,6 @@ alias ssh='ssh -Y'
 # OS independent PATH for softwares
 # madagascar# {{{
 source_if_exist ${INSTALL_ROOT}/madagascar/share/madagascar/etc/env.sh
-export PYTHONPATH=$PYTHONPATH:$RSFSRC/build/book/Recipes
-export DATAPATH=${HOME}/.rsfdata
 # }}}
 # ${HOME}/.dotfile/bin# {{{
 prepend_PATH ${HOME}/.dotfile/bin
@@ -78,10 +68,7 @@ alias docker-rm-all='docker rm `docker ps -aq`'
 alias open='gnome-open'
 # }}}
 # CUDA# {{{
-prepend_PATH ${INSTALL_ROOT}/cuda
-# }}}
-# boost# {{{
-prepend_LD_LIBRARY_PATH ${INSTALL_ROOT}/boost/lib
+prepend_PATH ${INSTALL_ROOT}/cuda/bin
 # }}}
 # matlab# {{{
 prepend_PATH ${INSTALL_ROOT}/matlab/bin
