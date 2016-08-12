@@ -93,3 +93,7 @@ elif [[ "$OSTYPE" == "darwin"* ]]; then # only set for MAC
 prepend_PATH "$(brew --prefix coreutils)/libexec/gnubin"
 # }}}
 fi
+
+# IMPORTANT: unset LD_LIBRARY_PATH
+# please use direnv to set it per project to keep the base system clean
+export LD_LIBRARY_PATH=

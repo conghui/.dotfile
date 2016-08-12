@@ -1,6 +1,5 @@
 ZSHDIR=${HOME}/.dotfile/zsh
 
-
 # source alias and set environment variables
 source ${ZSHDIR}/vars.sh
 source_if_exist ${ZSHDIR}/localvars.sh
