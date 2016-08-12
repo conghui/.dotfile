@@ -36,6 +36,7 @@ function prepend_INFOPATH() { # {{{
     export INFOPATH="$1:$INFOPATH"
   fi
 }
+# }}}
 
 # OS independent alias# {{{
 # keep it in lexicographic order
