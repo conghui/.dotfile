@@ -286,11 +286,10 @@ call dein#add('Shougo/dein.vim')
       let g:Tex_CompileRule_pdf        = 'pdflatex -synctex=1 --interaction=nonstopmode $*'
       let g:Tex_MultipleCompileFormats = 'pdf,bib,pdf'
 
-      "if has("unix") && match(system("uname"),'Darwin') != -1
-        "" It's a Mac!
-        "let g:Tex_ViewRule_ps = 'Preview'
-        "let g:Tex_ViewRule_pdf = 'Skim'
-      "endif
+      " It's a Mac!
+      if has("unix") && match(system("uname"),'Darwin') != -1
+        let g:Tex_ViewRule_pdf = 'Skim'
+      endif
     "}}}
     call dein#add('jiangmiao/auto-pairs') "{{{
       au Filetype * let b:AutoPairs = {'{':'}'}
