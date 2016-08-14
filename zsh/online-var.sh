@@ -96,4 +96,4 @@ fi
 
 # IMPORTANT: unset LD_LIBRARY_PATH
 # please use direnv to set it per project to keep the base system clean
-export LD_LIBRARY_PATH=
+unset LD_LIBRARY_PATH
