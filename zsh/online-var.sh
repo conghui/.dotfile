@@ -4,6 +4,7 @@
 # variables# {{{
 export EDITOR="nvim"
 export VISUAL='nvim'
+export GIT_EDITOR=${VISUAL}
 export TERM="xterm-256color"
 export PAGER="less"
 export DOTFILE_ROOT=${HOME}/.dotfile

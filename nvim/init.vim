@@ -469,6 +469,8 @@ call dein#add('Shougo/dein.vim')
   " maxj file type
   autocmd BufRead,BufNewFile *.maxj    set filetype=java
 
+  autocmd BufRead,BufNewFile gitconfig set filetype=gitconfig
+
   " remove (strip) whitespace at the end of lines when saving
   autocmd! BufWritePre <buffer> :call StripTrailingWhitespace()
 "}}}
