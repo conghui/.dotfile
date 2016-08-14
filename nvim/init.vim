@@ -246,7 +246,7 @@ call dein#add('Shougo/dein.vim')
 "}}}
 " Add or remove your plugins here:
     call dein#add('Shougo/vimproc.vim', {'build': 'make'})
-    call dein#add('honza/vim-snippets')
+    call dein#add('Shougo/neosnippet-snippets')
     call dein#add('Valloric/ListToggle')
     call dein#add('scrooloose/nerdcommenter')
     call dein#add('terryma/vim-expand-region')
@@ -254,11 +254,16 @@ call dein#add('Shougo/dein.vim')
     call dein#add('vim-scripts/BufOnly.vim')
     call dein#add('terryma/vim-multiple-cursors')
     call dein#add('lfv89/vim-interestingwords')
-    call dein#add('SirVer/ultisnips') "{{{
-      let g:UltiSnipsExpandTrigger="<tab>"
-      let g:UltiSnipsJumpForwardTrigger="<tab>"
-      let g:UltiSnipsJumpBackwardTrigger="<s-tab>"
-      let g:UltiSnipsSnippetsDir='~/.vim/snippets'
+    call dein#add('Shougo/neosnippet.vim') "{{{
+      " Plugin key-mappings.
+      imap <C-k>     <Plug>(neosnippet_expand_or_jump)
+      smap <C-k>     <Plug>(neosnippet_expand_or_jump)
+      xmap <C-k>     <Plug>(neosnippet_expand_target)
+
+      " For conceal markers.
+      if has('conceal')
+        set conceallevel=2 concealcursor=niv
+      endif
     "}}}
     call dein#add('junegunn/vim-easy-align') "{{{
       " Start interactive EasyAlign in visual mode (e.g. vip<Enter>)
