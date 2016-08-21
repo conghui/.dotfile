@@ -18,6 +18,7 @@ zplug "sorin-ionescu/prezto", use:init.zsh, hook-build:\
   ln -s $ZPLUG_HOME/repos/sorin-ionescu/prezto/runcoms/zshenv ~/.zshenv; \
   ln -s $ZSHDIR/zpreztorc ~/.zpreztorc;"
 
+zplug "junegunn/fzf", hook-build:"./install"
 zplug "supercrabtree/k"
 zplug "mafredri/zsh-async"
 zplug "zlsun/solarized-man"
