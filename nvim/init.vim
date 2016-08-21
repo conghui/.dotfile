@@ -254,6 +254,8 @@ call dein#add('Shougo/dein.vim')
     call dein#add('vim-scripts/BufOnly.vim')
     call dein#add('terryma/vim-multiple-cursors')
     call dein#add('lfv89/vim-interestingwords')
+    call dein#add('davidhalter/jedi-vim')
+    call dein#add('honza/dockerfile.vim')
     call dein#add('Shougo/neosnippet.vim') "{{{
       " Plugin key-mappings.
       imap <C-k>     <Plug>(neosnippet_expand_or_jump)
@@ -288,7 +290,7 @@ call dein#add('Shougo/dein.vim')
 
       let g:tex_flavor                 = 'latex'
       let g:Tex_DefaultTargetFormat    = 'pdf'
-      let g:Tex_CompileRule_pdf        = 'pdflatex -synctex=1 --interaction=nonstopmode $*'
+      let g:Tex_CompileRule_pdf        = 'xelatex -synctex=1 --interaction=nonstopmode $*'
       let g:Tex_MultipleCompileFormats = 'pdf,bib,pdf'
 
       " It's a Mac!
@@ -475,6 +477,10 @@ call dein#add('Shougo/dein.vim')
   autocmd BufRead,BufNewFile *.maxj    set filetype=java
 
   autocmd BufRead,BufNewFile gitconfig set filetype=gitconfig
+
+  autocmd FileType python let &shiftwidth=s:settings.default_indent
+  autocmd FileType python let &softtabstop=s:settings.default_indent
+  autocmd FileType Python setlocal expandtab
 
   " remove (strip) whitespace at the end of lines when saving
   autocmd! BufWritePre <buffer> :call StripTrailingWhitespace()
