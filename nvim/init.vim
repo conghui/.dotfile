@@ -210,7 +210,10 @@ call dein#add('Shougo/dein.vim')
   endif
 "}}}
 " Plugin: syntax  & colorscheme"{{{
-  call dein#add('tpope/vim-markdown')
+  "call dein#add('tpope/vim-markdown')
+  call dein#add('godlygeek/tabular')
+  call dein#add('plasticboy/vim-markdown')
+    let g:vim_markdown_frontmatter = 1
   call dein#add('vim-scripts/scons.vim')
   call dein#add('artoj/qmake-syntax-vim')
   call dein#add('vim-scripts/STL-Syntax')
@@ -231,6 +234,7 @@ call dein#add('Shougo/dein.vim')
     call dein#add('vim-scripts/makeprgs')
     call dein#add('airblade/vim-gitgutter')
     call dein#add('nacitar/terminalkeys.vim')
+    call dein#add('Konfekt/FastFold')
     call dein#add('DoxygenToolkit.vim') "{{{
       au BufNewFile,BufRead *.doxygen setfiletype doxygen
       let g:doxygen_enhanced_color=0
@@ -256,6 +260,8 @@ call dein#add('Shougo/dein.vim')
     call dein#add('lfv89/vim-interestingwords')
     call dein#add('davidhalter/jedi-vim')
     call dein#add('honza/dockerfile.vim')
+    call dein#add('JamshedVesuna/vim-markdown-preview')
+      let vim_markdown_preview_github=1
     call dein#add('Shougo/neosnippet.vim') "{{{
       " Plugin key-mappings.
       imap <C-k>     <Plug>(neosnippet_expand_or_jump)
@@ -362,7 +368,7 @@ call dein#add('Shougo/dein.vim')
       call dein#add('Shougo/neomru.vim')
       call dein#add('Shougo/unite-outline')
       call dein#add('Shougo/unite-help')
-      call dein#add('Shougo/neoyank.vim')
+      "call dein#add('Shougo/neoyank.vim')
       call dein#add('ujihisa/unite-colorscheme')
 
       call unite#filters#matcher_default#use(['matcher_fuzzy'])
