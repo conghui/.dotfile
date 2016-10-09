@@ -3,7 +3,7 @@
 
 # variables# {{{
 export EDITOR="nvim"
-export VISUAL='nvim'
+export VISUAL=$EDITOR
 export GIT_EDITOR=${VISUAL}
 export TERM="xterm-256color"
 export PAGER="less"
@@ -17,8 +17,16 @@ function source_if_exist() { # {{{
     source "$@" &> /dev/null
   fi
 } # }}}
+function remove_PATH() { # {{{
+  # only one path is allowed at a time
+  if [[ -d "$1" ]]; then
+    export PATH=`echo -n $PATH | awk -v RS=: -v ORS=: '$0 != "'$1'"' | sed 's/:$//'`
+  fi
+}
+# }}}
 function prepend_PATH() { # {{{
   # only one path is allowed at a time
+  remove_PATH $1
   if [[ -d "$1" ]]; then
     export PATH="$1:$PATH"
   fi
