@@ -472,6 +472,8 @@ call dein#add('Shougo/dein.vim')
   autocmd FileType markdown setlocal nolist
   autocmd FileType vim setlocal fdm=indent keywordprg=:help
 
+  autocmd FilterWritePre * if &diff | setlocal wrap< | endif
+
   " scons filetype
   autocmd BufRead,BufNewFile SConstruct    set filetype=python
   autocmd BufRead,BufNewFile SConscript    set filetype=python
