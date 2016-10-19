@@ -58,7 +58,6 @@ NeoBundle      'coolwanglu/guake-colors-solarized'
 NeoBundle      'conghui/iterm2-color-solarized'
 NeoBundle      'Anthony25/gnome-terminal-colors-solarized'
 NeoBundle      'bssthu/tunet_py'
-NeoBundle      'houtianze/bypy'
 NeoBundle      'zplug/zplug'
 " terminator-solarized"{{{
 NeoBundle      'ghuntley/terminator-solarized'

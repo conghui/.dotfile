@@ -1,3 +1,0 @@
-#!/bin/bash
-# vim: ft=sh
-~/.dotfile/gundle/bypy/bypy.py $@
