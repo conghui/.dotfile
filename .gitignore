@@ -2,3 +2,4 @@ zsh/cache/*
 vim/bundle/
 gundle/
 vim/spell/
+bin/direnv
