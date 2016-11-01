@@ -270,7 +270,7 @@ call dein#add('Shougo/dein.vim')
 
       " For conceal markers.
       if has('conceal')
-        set conceallevel=1
+        set conceallevel=0
       endif
     "}}}
     call dein#add('junegunn/vim-easy-align') "{{{
