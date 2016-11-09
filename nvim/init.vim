@@ -210,22 +210,18 @@ call dein#add('Shougo/dein.vim')
   endif
 "}}}
 " Plugin: syntax  & colorscheme"{{{
-  "call dein#add('tpope/vim-markdown')
-  call dein#add('godlygeek/tabular')
-  call dein#add('plasticboy/vim-markdown')
-    let g:vim_markdown_frontmatter = 1
-  call dein#add('vim-scripts/scons.vim')
-  call dein#add('artoj/qmake-syntax-vim')
-  call dein#add('vim-scripts/STL-Syntax')
+  call dein#add('kien/rainbow_parentheses.vim')
+    au VimEnter * RainbowParenthesesToggle
+    au Syntax * RainbowParenthesesLoadRound
+    au Syntax * RainbowParenthesesLoadSquare
+    au Syntax * RainbowParenthesesLoadBraces
   call dein#add('vim-scripts/gnuplot.vim')
   call dein#add('vim-scripts/wombat256.vim')
   call dein#add('vim-scripts/DoxyGen-Syntax')
-  call dein#add('ekalinin/Dockerfile.vim')
-  call dein#add('vim-scripts/fortran.vim')
-  call dein#add('altercation/vim-colors-solarized') "{{{
-  "let g:solarized_termcolors=256
-  "let g:solarized_termtrans=1
-  "}}}
+  call dein#add('sheerun/vim-polyglot')
+  call dein#add('altercation/vim-colors-solarized')
+    "let g:solarized_termcolors=256
+    "let g:solarized_termtrans=1
 "}}}
 " Plugin: better user experience"{{{
     call dein#add('matchit.zip')
@@ -235,23 +231,17 @@ call dein#add('Shougo/dein.vim')
     call dein#add('airblade/vim-gitgutter')
     call dein#add('nacitar/terminalkeys.vim')
     call dein#add('Konfekt/FastFold')
-    call dein#add('DoxygenToolkit.vim') "{{{
-      au BufNewFile,BufRead *.doxygen setfiletype doxygen
-      let g:doxygen_enhanced_color=0
-      let g:doxygen_my_rendering=0
-      let g:doxygen_javadoc_autobrief=1
-      let g:doxygen_end_punctuation='[.]'
-      let g:doxygenErrorComment=0
-      let g:doxygenLinkError=0
-      let g:DoxygenToolkit_authorName="Conghui He"
-      map <F9> :Dox<cr>
-      imap <F9> <Esc>:Dox<cr>
-    "}}}
+    call dein#add('nelstrom/vim-visual-star-search')
 "}}}
 " Add or remove your plugins here:
     call dein#add('Shougo/vimproc.vim', {'build': 'make'})
     call dein#add('Shougo/neosnippet-snippets')
     call dein#add('Valloric/ListToggle')
+    call dein#add('haya14busa/incsearch.vim')
+      map /  <Plug>(incsearch-forward)
+      map ?  <Plug>(incsearch-backward)
+      map g/ <Plug>(incsearch-stay)
+      nnoremap <Esc><Esc> :<C-u>nohlsearch<CR>
     call dein#add('scrooloose/nerdcommenter')
     call dein#add('terryma/vim-expand-region')
     call dein#add('thinca/vim-quickrun')
@@ -259,7 +249,7 @@ call dein#add('Shougo/dein.vim')
     call dein#add('terryma/vim-multiple-cursors')
     call dein#add('lfv89/vim-interestingwords')
     call dein#add('davidhalter/jedi-vim')
-    call dein#add('honza/dockerfile.vim')
+    call dein#add('xaizek/vim-inccomplete')
     call dein#add('JamshedVesuna/vim-markdown-preview')
       let vim_markdown_preview_github=1
     call dein#add('Shougo/neosnippet.vim') "{{{
@@ -307,8 +297,7 @@ call dein#add('Shougo/dein.vim')
     call dein#add('jiangmiao/auto-pairs') "{{{
       au Filetype * let b:AutoPairs = {'{':'}'}
     "}}}
-    call dein#add('justinmk/vim-sneak') "{{{
-      let g:sneak#streak = 1
+    call dein#add('easymotion/vim-easymotion') "{{{
     "}}}
     call dein#add('bling/vim-airline') "{{{
       call dein#add('vim-airline/vim-airline-themes')
@@ -453,9 +442,6 @@ call dein#add('Shougo/dein.vim')
   nnoremap    gJ      J
   nnoremap    -       _
   nnoremap    _       -
-
-  " no Highlight search"
-  nmap <leader>, :nohlsearch<cr>
 
   " [Spell checking]"
   map <leader>se :setlocal spell spelllang=en_us<cr>
