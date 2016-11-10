@@ -22,7 +22,7 @@ zplug "junegunn/fzf", hook-build:"./install"
 zplug "supercrabtree/k"
 zplug "mafredri/zsh-async"
 zplug "zlsun/solarized-man"
-zplug "unixorn/docker-helpers.zshplugin"
+#zplug "unixorn/docker-helpers.zshplugin"
 zplug "felixr/docker-zsh-completion"
 zplug "joel-porquet/zsh-dircolors-solarized", hook-load:"setupsolarized dircolors.ansi-dark"
 zplug "zsh-users/zsh-syntax-highlighting", nice:10
