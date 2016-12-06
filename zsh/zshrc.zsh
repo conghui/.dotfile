@@ -64,3 +64,6 @@ EOBUNDLES
 antigen bundle sindresorhus/pure # my favorite theme
 
 antigen apply
+
+# PATH
+export PATH=${DOTFILEDIR}/bin:$PATH
