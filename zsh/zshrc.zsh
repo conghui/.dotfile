@@ -48,6 +48,7 @@ antigen use oh-my-zsh
 antigen bundles << EOBUNDLES
   git
   fasd
+  mafredri/zsh-async
   zsh-users/zsh-completions
   zsh-users/zsh-syntax-highlighting
   zlsun/solarized-man
@@ -55,7 +56,9 @@ antigen bundles << EOBUNDLES
   ${DOTFILEDIR}/zsh/custom
 EOBUNDLES
 
-# a skinny, topless prompt
-antigen theme evan
+# a skinny, topless prompt, use it if your computer is really slow
+#antigen theme evan
+
+antigen bundle sindresorhus/pure # my favorite theme
 
 antigen apply
