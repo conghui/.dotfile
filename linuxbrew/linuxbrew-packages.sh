@@ -16,10 +16,6 @@ brew install python3
 brew install neovim/neovim/neovim
 pip3 install neovim
 
-# tmuxinator
 brew install tmux
-gem install tmuxinator
-
-brew install homebrew/x11/xclip
-
 brew install direnv
+brew install fasd

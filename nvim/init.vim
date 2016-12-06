@@ -6,10 +6,10 @@ if &compatible
 endif
 
 " Required:
-set runtimepath^=$DOTFILE_BUNDLE_ROOT/repos/github.com/Shougo/dein.vim
+set runtimepath^=${HOME}/.dotfile/bundle/repos/github.com/Shougo/dein.vim
 
 " Required:
-call dein#begin(expand('$DOTFILE_BUNDLE_ROOT'))
+call dein#begin(expand('$HOME' . '/.dotfile/bundle'))
 
 " Required:
 filetype plugin indent on
@@ -187,27 +187,6 @@ call dein#add('Shougo/dein.vim')
     "set listchars+=conceal:Δ
   endif
 
-  if has('gui_running')
-    if s:is_macvim
-      set guifont=Meslo_LG_S_DZ_Regular_for_Powerline:h13
-    elseif has('gui_gtk')
-      set guifont=Meslo\ LG\ S\ DZ\ for\ Powerline\ 13
-    endif
-  else
-    if $COLORTERM == 'gnome-terminal'
-      set t_Co=256 "why you no tell me correct colors?!?!
-    endif
-    if $TERM_PROGRAM == 'iTerm.app'
-      " different cursors for insert vs normal mode
-      if exists('$TMUX')
-        let &t_SI = "\<Esc>Ptmux;\<Esc>\<Esc>]50;CursorShape=1\x7\<Esc>\\"
-        let &t_EI = "\<Esc>Ptmux;\<Esc>\<Esc>]50;CursorShape=0\x7\<Esc>\\"
-      else
-        let &t_SI = "\<Esc>]50;CursorShape=1\x7"
-        let &t_EI = "\<Esc>]50;CursorShape=0\x7"
-      endif
-    endif
-  endif
 "}}}
 " Plugin: syntax  & colorscheme"{{{
   call dein#add('kien/rainbow_parentheses.vim')
@@ -245,7 +224,6 @@ call dein#add('Shougo/dein.vim')
     call dein#add('scrooloose/nerdcommenter')
     call dein#add('terryma/vim-expand-region')
     call dein#add('thinca/vim-quickrun')
-    call dein#add('vim-scripts/BufOnly.vim')
     call dein#add('terryma/vim-multiple-cursors')
     call dein#add('lfv89/vim-interestingwords')
     call dein#add('davidhalter/jedi-vim')
@@ -297,8 +275,6 @@ call dein#add('Shougo/dein.vim')
     call dein#add('jiangmiao/auto-pairs') "{{{
       au Filetype * let b:AutoPairs = {'{':'}'}
     "}}}
-    call dein#add('easymotion/vim-easymotion') "{{{
-    "}}}
     call dein#add('bling/vim-airline') "{{{
       call dein#add('vim-airline/vim-airline-themes')
       let g:airline_powerline_fonts = 1
@@ -315,20 +291,6 @@ call dein#add('Shougo/dein.vim')
       nmap <leader>7 <Plug>AirlineSelectTab7
       nmap <leader>8 <Plug>AirlineSelectTab8
       nmap <leader>9 <Plug>AirlineSelectTab9
-    "}}}
-    call dein#add('nathanaelkane/vim-indent-guides') "{{{
-      let g:indent_guides_start_level=1
-      let g:indent_guides_guide_size=1
-      let g:indent_guides_enable_on_vim_startup=0
-      let g:indent_guides_color_change_percent=3
-      if !has('gui_running')
-        let g:indent_guides_auto_colors=0
-        function! s:indent_set_console_colors()
-          hi IndentGuidesOdd ctermbg=235
-          hi IndentGuidesEven ctermbg=236
-        endfunction
-        autocmd VimEnter,Colorscheme * call s:indent_set_console_colors()
-      endif
     "}}}
     call dein#add('tpope/vim-fugitive') "{{{
       nnoremap <silent> <leader>gs :Gstatus<CR>

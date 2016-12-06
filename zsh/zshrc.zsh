@@ -1,42 +1,61 @@
-# vim: ft=zsh fdm=marker fdl=0
-#
-ZSHDIR=${HOME}/.dotfile/zsh
-source ${ZSHDIR}/vars.sh
-source_if_exist ${ZSHDIR}/localvars.sh
+# vim: fdm=marker fdl=0 ft=zsh
 
-export ZPLUG_HOME=$DOTFILE_BUNDLE_ROOT/zplug
-source $ZPLUG_HOME/init.zsh
+fpath+=(~/.linuxbrew/Cellar/zsh/5.2/share/zsh/functions/)
 
-zplug "zplug/zplug"
+# variables
+export EDITOR="nvim"
+export GIT_EDITOR=${EDITOR}
+export TERM="xterm-256color"
+export PAGER="less"
+export DOTFILEDIR=${HOME}/.dotfile
+export INSTALL_ROOT=${HOME}/softs/install
 
-zplug "sorin-ionescu/prezto", use:init.zsh, hook-build:\
-  "rm -f ~/.zprezto ~/.zlogin ~/.zlogout ~/.zpreztorc ~/.zprofile ~/.zshenv; \
-  ln -s $ZPLUG_HOME/repos/sorin-ionescu/prezto ~/.zprezto; \
-  ln -s $ZPLUG_HOME/repos/sorin-ionescu/prezto/runcoms/zlogin ~/.zlogin; \
-  ln -s $ZPLUG_HOME/repos/sorin-ionescu/prezto/runcoms/zlogout ~/.zlogout; \
-  ln -s $ZPLUG_HOME/repos/sorin-ionescu/prezto/runcoms/zprofile ~/.zprofile; \
-  ln -s $ZPLUG_HOME/repos/sorin-ionescu/prezto/runcoms/zshenv ~/.zshenv; \
-  ln -s $ZSHDIR/zpreztorc ~/.zpreztorc;"
+# aliases
+alias e=$EDITOR
+alias ssh='ssh -Y'
+alias docker-stop-all='docker stop `docker ps -aq`'
+alias docker-rm-all='docker rm `docker ps -aq`'
 
-zplug "junegunn/fzf", hook-build:"./install"
-zplug "supercrabtree/k"
-zplug "mafredri/zsh-async"
-zplug "zlsun/solarized-man"
-#zplug "unixorn/docker-helpers.zshplugin"
-zplug "felixr/docker-zsh-completion"
-zplug "joel-porquet/zsh-dircolors-solarized", hook-load:"setupsolarized dircolors.ansi-dark"
-zplug "zsh-users/zsh-syntax-highlighting", nice:10
+if [[ "$OSTYPE" == "linux-gnu" ]]; then # only set for Linux
+  alias open='gnome-open'
 
-# Install plugins if there are plugins that have not been installed
-if ! zplug check --verbose; then
-    printf "Install? [y/N]: "
-    if read -q; then
-        echo; zplug install
-    fi
+  export PATH="$HOME/.linuxbrew/bin":"$HOME/.linuxbrew/sbin":$PATH
+  export MANPATH="$HOME/.linuxbrew/share/man":$MANPATH
+  export INFOPATH="$HOME/.linuxbrew/share/info":$INFOPATH
+elif [[ "$OSTYPE" == "darwin"* ]]; then # only set for MAC
+  export PATH="$(brew --prefix coreutils)/libexec/gnubin":$PATH
 fi
 
-zplug load
+# make ~/.antigen inside dotfile# {{{
+if ! readlink ${HOME}/.antigen | grep 'dotfile/bundle' -q; then
+  echo "${HOME}/.antigen is not inside dotfile"
+  echo "create a directory (if not exist) in ${DOTFILEDIR} to save zsh plugins"
+  mkdir -p ${DOTFILEDIR}/bundle/antigen/.antigen
 
-hash direnv &> /dev/null && eval "$(direnv hook zsh)"
+  echo "linking ${HOME}/.antigen to ${DOTFILEDIR}/bundle/antigen/.antigen"
+  rm -rf ${HOME}/.antigen && ln -s ${DOTFILEDIR}/bundle/antigen/.antigen ${HOME}/.antigen || exit
+fi
+# }}}
 
-[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
+# set true to improve performance, but need to run `antigen-reset` after any changes
+export _ANTIGEN_CACHE_ENABLED=false
+source ${DOTFILEDIR}/bundle/antigen/bin/antigen.zsh
+
+# antigen settings
+antigen use oh-my-zsh
+
+# put plugins to be loaded here
+antigen bundles << EOBUNDLES
+  git
+  fasd
+  zsh-users/zsh-completions
+  zsh-users/zsh-syntax-highlighting
+  zlsun/solarized-man
+  joel-porquet/zsh-dircolors-solarized
+  ${DOTFILEDIR}/zsh/custom
+EOBUNDLES
+
+# a skinny, topless prompt
+antigen theme evan
+
+antigen apply
