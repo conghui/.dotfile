@@ -46,13 +46,15 @@ antigen use oh-my-zsh
 
 # put plugins to be loaded here
 antigen bundles << EOBUNDLES
-  git
-  fasd
   mafredri/zsh-async
-  zsh-users/zsh-completions
   zsh-users/zsh-syntax-highlighting
+  zsh-users/zsh-completions
   zlsun/solarized-man
   joel-porquet/zsh-dircolors-solarized
+  git
+  fasd
+  history-substring-search
+  ${DOTFILEDIR}/zsh/plugin-config
   ${DOTFILEDIR}/zsh/custom
 EOBUNDLES
 
