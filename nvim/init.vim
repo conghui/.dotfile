@@ -63,11 +63,7 @@ call dein#add('Shougo/dein.vim')
   set viewoptions=folds,options,cursor,unix,slash     "unix/windows compatibility
   set encoding=utf-8                                  "set encoding for text
   set fencs=utf-8,gbk
-  if exists('$TMUX')
-    set clipboard=
-  else
-    set clipboard=unnamed                             "sync with OS clipboard
-  endif
+  set clipboard=unnamedplus                             "sync with OS clipboard
   set hidden                                          "allow buffer switching without saving
   set autoread                                        "auto reload if file saved externally
   set fileformats+=mac                                "add mac to auto-detection of file format line endings
@@ -211,6 +207,7 @@ call dein#add('Shougo/dein.vim')
     call dein#add('nacitar/terminalkeys.vim')
     call dein#add('Konfekt/FastFold')
     call dein#add('nelstrom/vim-visual-star-search')
+    call dein#add('christoomey/vim-tmux-navigator')
 "}}}
 " Add or remove your plugins here:
     call dein#add('Shougo/vimproc.vim', {'build': 'make'})
