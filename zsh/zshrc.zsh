@@ -3,7 +3,7 @@
 fpath+=(~/.linuxbrew/Cellar/zsh/5.2/share/zsh/functions/)
 
 # variables
-export EDITOR="nvim"
+export EDITOR=`which nvim &> /dev/null && echo nvim || echo vim`
 export GIT_EDITOR=${EDITOR}
 export TERM="xterm-256color"
 export PAGER="less"
@@ -13,12 +13,8 @@ export INSTALL_ROOT=${HOME}/softs/install
 # aliases
 alias e=$EDITOR
 alias ssh='ssh -Y'
-alias docker-stop-all='docker stop `docker ps -aq`'
-alias docker-rm-all='docker rm `docker ps -aq`'
 
 if [[ "$OSTYPE" == "linux-gnu" ]]; then # only set for Linux
-  alias open='gnome-open'
-
   export PATH="$HOME/.linuxbrew/bin":"$HOME/.linuxbrew/sbin":$PATH
   export MANPATH="$HOME/.linuxbrew/share/man":$MANPATH
   export INFOPATH="$HOME/.linuxbrew/share/info":$INFOPATH
