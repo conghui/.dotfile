@@ -12,6 +12,7 @@ git clone --recursive https://github.com/coolwanglu/guake-colors-solarized.git
 git clone --recursive https://github.com/conghui/iterm2-color-solarized.git
 git clone --recursive https://github.com/Anthony25/gnome-terminal-colors-solarized.git
 git clone --recursive https://github.com/ghuntley/terminator-solarized.git
+git clone --recursive https://github.com/bssthu/tunet_py.git
 popd
 
 # dein

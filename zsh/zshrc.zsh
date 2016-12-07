@@ -2,6 +2,15 @@
 
 fpath+=(~/.linuxbrew/Cellar/zsh/5.2/share/zsh/functions/)
 
+# setup PATH# {{{
+if [[ "$OSTYPE" == "linux-gnu" ]]; then # only set for Linux
+  export PATH="$HOME/.linuxbrew/bin":"$HOME/.linuxbrew/sbin":$PATH
+  export MANPATH="$HOME/.linuxbrew/share/man":$MANPATH
+  export INFOPATH="$HOME/.linuxbrew/share/info":$INFOPATH
+elif [[ "$OSTYPE" == "darwin"* ]]; then # only set for MAC
+  export PATH="$(brew --prefix coreutils)/libexec/gnubin":$PATH
+fi
+# }}}
 # variables
 export EDITOR=`which nvim &> /dev/null && echo nvim || echo vim`
 export GIT_EDITOR=${EDITOR}
@@ -13,14 +22,6 @@ export INSTALL_ROOT=${HOME}/softs/install
 # aliases
 alias e=$EDITOR
 alias ssh='ssh -Y'
-
-if [[ "$OSTYPE" == "linux-gnu" ]]; then # only set for Linux
-  export PATH="$HOME/.linuxbrew/bin":"$HOME/.linuxbrew/sbin":$PATH
-  export MANPATH="$HOME/.linuxbrew/share/man":$MANPATH
-  export INFOPATH="$HOME/.linuxbrew/share/info":$INFOPATH
-elif [[ "$OSTYPE" == "darwin"* ]]; then # only set for MAC
-  export PATH="$(brew --prefix coreutils)/libexec/gnubin":$PATH
-fi
 
 # make ~/.antigen inside dotfile# {{{
 if ! readlink ${HOME}/.antigen | grep 'dotfile/bundle' -q; then
