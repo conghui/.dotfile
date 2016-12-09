@@ -1,7 +1,5 @@
 # vim: fdm=marker fdl=0 ft=zsh
-
-fpath+=(~/.linuxbrew/Cellar/zsh/5.2/share/zsh/functions/)
-
+# keep this file as simple & clean as possible
 # setup PATH for linuxbrew/homebrew # {{{
 if [[ "$OSTYPE" == "linux-gnu" ]]; then # only set for Linux
   export PATH="$HOME/.linuxbrew/bin":"$HOME/.linuxbrew/sbin":$PATH
@@ -35,8 +33,8 @@ if ! readlink ${HOME}/.antigen | grep 'dotfile/bundle' -q; then
 fi
 # }}}
 # source config before antigen# {{{
-if ls $DOTFILEDIR/zsh/custom-config/init/ | grep -q '.zsh'; then
-  for f in $DOTFILEDIR/zsh/custom-config/init/*.zsh; do
+if ls $DOTFILEDIR/zsh/custom/ | grep -q '.zsh'; then
+  for f in $DOTFILEDIR/zsh/custom/*.zsh; do
     source $f
   done
 fi
@@ -45,10 +43,7 @@ fi
 export _ANTIGEN_CACHE_ENABLED=${_ANTIGEN_CACHE_ENABLED:-false}
 source ${DOTFILEDIR}/bundle/antigen/bin/antigen.zsh
 
-# antigen settings
-antigen use oh-my-zsh
-
-# put plugins to be loaded here
+antigen use oh-my-zsh # use oh-my-zsh as library
 antigen bundles << EOBUNDLES
   mafredri/zsh-async
   zsh-users/zsh-syntax-highlighting
@@ -58,15 +53,9 @@ antigen bundles << EOBUNDLES
   git
   fasd
   history-substring-search
-  ${DOTFILEDIR}/zsh/plugin-config/after
+  ${DOTFILEDIR}/zsh/plugin
 EOBUNDLES
 
-# a skinny, topless prompt, use it if your computer is really slow
-#antigen theme evan
-
-antigen bundle sindresorhus/pure # my favorite theme
-
+#antigen theme evan # a skinny, topless prompt, use it if your computer is really slow
+antigen bundle sindresorhus/pure # nice looking theme
 antigen apply
-
-# PATH
-export PATH=${DOTFILEDIR}/bin:$PATH
