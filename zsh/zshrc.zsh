@@ -2,7 +2,7 @@
 
 fpath+=(~/.linuxbrew/Cellar/zsh/5.2/share/zsh/functions/)
 
-# setup PATH# {{{
+# setup PATH for linuxbrew/homebrew # {{{
 if [[ "$OSTYPE" == "linux-gnu" ]]; then # only set for Linux
   export PATH="$HOME/.linuxbrew/bin":"$HOME/.linuxbrew/sbin":$PATH
   export MANPATH="$HOME/.linuxbrew/share/man":$MANPATH
@@ -11,6 +11,7 @@ elif [[ "$OSTYPE" == "darwin"* ]]; then # only set for MAC
   export PATH="$(brew --prefix coreutils)/libexec/gnubin":$PATH
 fi
 # }}}
+
 # variables
 export EDITOR=`which nvim &> /dev/null && echo nvim || echo vim`
 export GIT_EDITOR=${EDITOR}
@@ -33,9 +34,13 @@ if ! readlink ${HOME}/.antigen | grep 'dotfile/bundle' -q; then
   rm -rf ${HOME}/.antigen && ln -s ${DOTFILEDIR}/bundle/antigen/.antigen ${HOME}/.antigen || exit
 fi
 # }}}
-
+# source config before antigen# {{{
+for f in $DOTFILEDIR/zsh/custom-config/init/*.zsh; do
+  source $f
+done
+# }}}
 # set true to improve performance, but need to run `antigen-reset` after any changes
-export _ANTIGEN_CACHE_ENABLED=false
+export _ANTIGEN_CACHE_ENABLED=${_ANTIGEN_CACHE_ENABLED:-false}
 source ${DOTFILEDIR}/bundle/antigen/bin/antigen.zsh
 
 # antigen settings
@@ -51,8 +56,7 @@ antigen bundles << EOBUNDLES
   git
   fasd
   history-substring-search
-  ${DOTFILEDIR}/zsh/plugin-config
-  ${DOTFILEDIR}/zsh/custom
+  ${DOTFILEDIR}/zsh/plugin-config/after
 EOBUNDLES
 
 # a skinny, topless prompt, use it if your computer is really slow
