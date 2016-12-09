@@ -35,9 +35,11 @@ if ! readlink ${HOME}/.antigen | grep 'dotfile/bundle' -q; then
 fi
 # }}}
 # source config before antigen# {{{
-for f in $DOTFILEDIR/zsh/custom-config/init/*.zsh; do
-  source $f
-done
+if ls $DOTFILEDIR/zsh/custom-config/init/ | grep -q '.zsh'; then
+  for f in $DOTFILEDIR/zsh/custom-config/init/*.zsh; do
+    source $f
+  done
+fi
 # }}}
 # set true to improve performance, but need to run `antigen-reset` after any changes
 export _ANTIGEN_CACHE_ENABLED=${_ANTIGEN_CACHE_ENABLED:-false}
