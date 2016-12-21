@@ -48,3 +48,13 @@ Session.vim
 
 # python
 *.pyc
+
+# scons
+.sconsign.dblite
+
+# latex
+*.aux
+*.bbl
+*.blg
+*.fls
+*.synctex.gz
