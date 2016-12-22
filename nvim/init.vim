@@ -207,7 +207,6 @@ call dein#add('Shougo/dein.vim')
     call dein#add('nacitar/terminalkeys.vim')
     call dein#add('Konfekt/FastFold')
     call dein#add('nelstrom/vim-visual-star-search')
-    call dein#add('christoomey/vim-tmux-navigator')
 "}}}
 " Add or remove your plugins here:
     call dein#add('Shougo/vimproc.vim', {'build': 'make'})
