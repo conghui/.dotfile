@@ -58,3 +58,8 @@ Session.vim
 *.blg
 *.fls
 *.synctex.gz
+
+# object files
+*.o
+*.d
+.envrc
