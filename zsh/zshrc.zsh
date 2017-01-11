@@ -51,6 +51,7 @@ antigen bundles << EOBUNDLES
   zlsun/solarized-man
   joel-porquet/zsh-dircolors-solarized
   git
+  docker
   fasd
   history-substring-search
   ${DOTFILEDIR}/zsh/plugin
