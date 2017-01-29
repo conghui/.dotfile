@@ -11,7 +11,7 @@ fi
 # }}}
 
 # variables
-export EDITOR=`which nvim &> /dev/null && echo nvim || echo vim`
+export EDITOR="vim -u $HOME/.dotfile/vim/vimrc"
 export GIT_EDITOR=${EDITOR}
 export TERM="xterm-256color"
 export PAGER="less"

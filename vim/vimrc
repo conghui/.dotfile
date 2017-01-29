@@ -1,0 +1,337 @@
+" vim: fdm=marker ts=2 sts=2 sw=2 fdl=0
+
+" where vim is cached
+let s:cache_dir                    = "~/.cache/vim"
+
+"==================================================
+" Dein: setup
+"==================================================
+if &compatible
+  set nocompatible               " Be iMproved
+endif
+
+set runtimepath^=${HOME}/.dotfile/bundle/repos/github.com/Shougo/dein.vim
+call dein#begin(expand('$HOME' . '/.dotfile/bundle'))
+filetype plugin indent on
+call dein#add('Shougo/dein.vim')
+
+"==================================================
+" Functions:
+"==================================================
+function! s:get_cache_dir(suffix)
+  return resolve(expand(s:cache_dir . '/' . a:suffix))
+endfunction
+
+function! EnsureExists(path)
+  if !isdirectory(expand(a:path))
+    call mkdir(expand(a:path))
+  endif
+endfunction
+
+function! Preserve(command)
+  " preparation: save last search, and cursor position.
+  let _s=@/
+  let l = line(".")
+  let c = col(".")
+  " do the business:
+  execute a:command
+  " clean up: restore previous search history, and cursor position
+  let @/=_s
+  call cursor(l, c)
+endfunction
+
+function! StripTrailingWhitespace()
+  call Preserve("%s/\\s\\+$//e")
+endfunction
+
+"==================================================
+" Configuration:
+"==================================================
+syntax on
+let mapleader = ","
+let g:mapleader = ","
+set mouse=r                                         "enable mouse
+set history=1000                                    "number of command lines to remember
+set ttyfast                                         "assume fast terminal connection
+set lazyredraw
+set viewoptions=folds,options,cursor,unix,slash     "unix/windows compatibility
+set encoding=utf-8                                  "set encoding for text
+set fencs=utf-8,gbk
+set clipboard=autoselectplus
+set showcmd
+set completeopt-=preview
+set backspace=indent,eol,start                      "allow backspacing everything in insert mode
+set autoindent                                      "automatically indent to match adjacent lines
+set expandtab                                       "spaces instead of tabs
+set smarttab                                        "use shiftwidth to enter tabs
+set tabstop=2                                       "number of spaces per tab for display
+set softtabstop=2                                   "number of spaces per tab in insert mode
+set shiftwidth=2                                    "number of spaces when indenting
+set shiftround                                      "round indent to multiple of 'shiftwidth'
+set linebreak                                       "wrap long lines
+set display+=lastline                               "as much as possible of the last line will be displayed
+set wildmenu                                        "show list for autocomplete
+set wildmode=list:full                              "when more than one match, list all matches and complete first match
+set wildignorecase                                  "case is ignored when completing file names and directories
+set textwidth=0                                     " set text width
+set hlsearch                                        "highlight searches
+set incsearch                                       "incremental searching
+set ignorecase                                      "ignore case for searching
+set smartcase                                       "do case-sensitive if there's a capital letter
+set noswapfile
+
+" persistent undo
+if exists('+undofile')
+  set undofile
+  let &undodir = s:get_cache_dir('undo')
+endif
+call EnsureExists(s:cache_dir)
+call EnsureExists(&undodir)
+
+" ui configuration
+set background=dark
+colorscheme solarized
+set showmatch                                       "automatically highlight matching braces/brackets/etc.
+set matchtime=2                                     "tens of a second to show matching parentheses
+set number                                          "precede each line with its line number
+set laststatus=2                                    "always shows the status line
+set noshowmode
+set foldenable                                      "enable folds by default
+set foldlevelstart=99                               "open all folds by default
+set cursorline                                      " highlight current line
+autocmd WinLeave * setlocal nocursorline
+autocmd WinEnter * setlocal cursorline
+
+
+"==================================================
+" Plugins:
+"==================================================
+" Interactive command execution in Vim.
+call dein#add('Shougo/vimproc.vim', {'build': 'make'})
+
+" Wombat for 256 color xterms
+call dein#add('vim-scripts/wombat256.vim')
+
+" precision colorscheme for the vim text editor
+call dein#add('skwp/vim-colors-solarized')
+  "let g:solarized_termcolors=256
+  "let g:solarized_termtrans=1
+
+" Better Rainbow Parentheses
+call dein#add('kien/rainbow_parentheses.vim')
+  au VimEnter * RainbowParenthesesToggle
+  au Syntax * RainbowParenthesesLoadRound
+  au Syntax * RainbowParenthesesLoadSquare
+  au Syntax * RainbowParenthesesLoadBraces
+
+" A solid language pack for Vim.
+call dein#add('sheerun/vim-polyglot')
+
+" extended % matching for HTML, LaTeX, and many other languages
+call dein#add('tmhedberg/matchit')
+
+" wisely add "end" in ruby, endfunction/endif/more in vim script, etc
+call dein#add('tpope/vim-endwise')
+
+" A Vim plugin which shows a git diff in the gutter (sign column) and stages/undoes hunks.
+call dein#add('airblade/vim-gitgutter')
+
+" incrementally highlights ALL pattern matches unlike default 'incsearch'.
+call dein#add('haya14busa/incsearch.vim')
+  map /  <Plug>(incsearch-forward)
+  map ?  <Plug>(incsearch-backward)
+  map g/ <Plug>(incsearch-stay)
+  nnoremap <Esc><Esc> :<C-u>nohlsearch<CR>
+
+" Vim plugin for intensely orgasmic commenting
+call dein#add('scrooloose/nerdcommenter')
+
+" True Sublime Text style multiple selections for Vim
+call dein#add('terryma/vim-multiple-cursors')
+
+" vim-interestingwords allows you to highlight and navigate through (multiple) different words in a buffer
+call dein#add('lfv89/vim-interestingwords')
+
+" awesome Python autocompletion with VIM
+call dein#add('davidhalter/jedi-vim')
+
+" Next generation completion framework after neocomplcache
+call dein#add('Shougo/neocomplete.vim',{'if': 'has("lua")'} )
+  let g:neocomplete#enable_at_startup = 1
+
+" neo-snippet plugin contains neocomplete snippets source
+call dein#add('Shougo/neosnippet.vim')
+call dein#add('Shougo/neosnippet-snippets')
+  imap <C-k>     <Plug>(neosnippet_expand_or_jump)
+  smap <C-k>     <Plug>(neosnippet_expand_or_jump)
+  xmap <C-k>     <Plug>(neosnippet_expand_target)
+
+" A simple, easy-to-use Vim alignment plugin.
+call dein#add('junegunn/vim-easy-align')
+  vmap <Enter> <Plug>(EasyAlign)
+
+" This vim plugin allows toggling bookmarks per line
+call dein#add('MattesGroeger/vim-bookmarks')
+  let g:bookmark_auto_close = 1
+  let g:bookmark_save_per_working_dir = 1
+  let g:bookmark_auto_save = 1
+
+" Enhanced LaTeX support for Vim
+call dein#add('jcf/vim-latex')
+  set shellslash
+  let g:tex_flavor                 = 'latex'
+  let g:Tex_DefaultTargetFormat    = 'pdf'
+  let g:Tex_CompileRule_pdf        = 'xelatex --interaction=nonstopmode $*'
+  let g:Tex_MultipleCompileFormats = 'pdf,bib,pdf'
+  if has("unix") && match(system("uname"),'Darwin') != -1
+    let g:Tex_ViewRule_pdf = 'Skim'
+  endif
+
+" Insert or delete brackets, parens, quotes in pair.
+call dein#add('jiangmiao/auto-pairs')
+  let g:AutoPairs = {'{':'}'}
+
+" lean & mean status/tabline for vim that's light as air
+call dein#add('bling/vim-airline')
+call dein#add('vim-airline/vim-airline-themes')
+  let g:airline_powerline_fonts = 1
+  let g:airline#extensions#tabline#enabled = 1
+  let g:airline#extensions#tabline#left_sep = ' '
+  let g:airline#extensions#tabline#left_alt_sep = '¦'
+  let g:airline#extensions#tabline#buffer_idx_mode = 1
+  nmap <leader>1 <Plug>AirlineSelectTab1
+  nmap <leader>2 <Plug>AirlineSelectTab2
+  nmap <leader>3 <Plug>AirlineSelectTab3
+  nmap <leader>4 <Plug>AirlineSelectTab4
+  nmap <leader>5 <Plug>AirlineSelectTab5
+  nmap <leader>6 <Plug>AirlineSelectTab6
+  nmap <leader>7 <Plug>AirlineSelectTab7
+  nmap <leader>8 <Plug>AirlineSelectTab8
+  nmap <leader>9 <Plug>AirlineSelectTab9
+
+" fugitive.vim: a Git wrapper so awesome, it should be illegal
+call dein#add('tpope/vim-fugitive')
+  autocmd BufReadPost fugitive://* set bufhidden=delete
+
+" gitk for Vim.
+call dein#add ('gregsexton/gitv', {'on_cmd':'Gitv'})
+
+" Vim plug for switching between companion source files (e.g. ".h" and ".cpp")
+call dein#add('derekwyatt/vim-fswitch')
+  nmap <silent> <Leader>of :FSHere<cr>
+  nmap <silent> <Leader>oh :FSSplitLeft<cr>
+  nmap <silent> <Leader>ol :FSSplitRight<cr>
+  nmap <silent> <Leader>ok :FSSplitAbove<cr>
+  nmap <silent> <Leader>oj :FSSplitBelow<cr>
+
+" Unite and create user interfaces
+call dein#add('Shougo/unite.vim')
+  call dein#add('thinca/vim-unite-history')
+  call dein#add('Shougo/neomru.vim')
+  call dein#add('Shougo/neoyank.vim')
+  call dein#add('Shougo/unite-outline')
+  call unite#filters#matcher_default#use(['matcher_fuzzy'])
+  call unite#filters#sorter_default#use(['sorter_rank'])
+  call unite#custom#profile('default', 'context', {
+        \ 'start_insert': 1
+        \ })
+
+  let g:unite_data_directory=s:get_cache_dir('unite')
+  let g:unite_source_history_yank_enable=1
+  let g:unite_source_rec_max_cache_files=200
+
+  if executable('ag')
+    let g:unite_source_grep_command = 'ag'
+    let g:unite_source_grep_default_opts =
+    \ '-i --vimgrep --hidden --ignore ' .
+    \ '''.hg'' --ignore ''.svn'' --ignore ''.git'' --ignore ''.bzr'''
+    let g:unite_source_grep_recursive_opt = ''
+  endif
+
+  function! s:unite_settings()
+    nmap <buffer> <esc> <plug>(unite_exit)
+    imap <buffer> <esc> <plug>(unite_exit)
+    imap <buffer> <C-j> <Plug>(unite_select_next_line)
+    imap <buffer> <C-k> <Plug>(unite_select_previous_line)
+  endfunction
+  autocmd FileType unite call s:unite_settings()
+
+  nmap <space> [unite]
+  nnoremap [unite] <nop>
+  nnoremap <silent> [unite]r :<C-u>Unite -toggle -auto-resize -buffer-name=files file_rec/async:!<cr><c-u>
+  nnoremap <silent> [unite]f :<C-u>Unite -toggle -auto-resize -buffer-name=files file/async:!<cr><c-u>
+  nnoremap <silent> [unite]e :<C-u>Unite -buffer-name=recent file_mru<cr>
+  nnoremap <silent> [unite]y :<C-u>Unite -buffer-name=yanks history/yank<cr>
+  nnoremap <silent> [unite]l :<C-u>Unite -auto-resize -buffer-name=line line<cr>
+  nnoremap <silent> [unite]b :<C-u>Unite -auto-resize -buffer-name=buffers buffer file_mru<cr>
+  nnoremap <silent> [unite]/ :<C-u>Unite -auto-resize -buffer-name=search grep:.<cr>
+  nnoremap <silent> [unite]s :<C-u>Unite -quick-match buffer<cr>
+  nnoremap <silent> [unite]c :<C-u>Unite -buffer-name=commands -default-action=execute history/command<CR>
+  nnoremap <silent> [unite]o :<C-u>Unite -auto-resize -buffer-name=outline outline<cr>
+
+"==================================================
+ " Mappings:
+"==================================================
+if exists(':tnoremap')
+  tnoremap <Esc> <C-\><C-n>
+endif
+
+" windows-like copy and paste
+inoremap    <c-v>   <c-o>:set paste<cr><c-r>+<c-o>:set nopaste<cr>
+xnoremap    <c-c>   "+y
+
+" [Easy indent in visual mode]
+xnoremap    <   <gv
+xnoremap    >   >gv
+
+" [Up down move]
+nnoremap    j       gj
+nnoremap    k       gk
+nnoremap    gj      j
+nnoremap    gk      k
+
+" [Misc]
+nnoremap    J       gJ
+nnoremap    gJ      J
+nnoremap    -       _
+nnoremap    _       -
+
+" [Spell checking]"
+map <leader>se :setlocal spell spelllang=en_us<cr>
+map <leader>sn :setlocal nospell<cr>
+
+"==================================================
+" Autocmd:
+"==================================================
+" go back to previous position of cursor if any
+autocmd BufReadPost *
+  \ if line("'\"") > 0 && line("'\"") <= line("$") |
+  \  exe 'normal! g`"zvzz' |
+  \ endif
+
+autocmd FileType markdown setlocal nolist
+autocmd FileType vim setlocal fdm=indent keywordprg=:help
+autocmd FileType python set shiftwidth=2 softtabstop=2 tabstop=2 expandtab
+autocmd FilterWritePre * if &diff | setlocal wrap< | endif
+
+" file types
+autocmd BufRead,BufNewFile SConstruct   set filetype=python
+autocmd BufRead,BufNewFile SConscript   set filetype=python
+au BufRead,BufNewFile *.cu,*.cuda       set filetype=cpp
+autocmd BufRead,BufNewFile *.maxj       set filetype=java
+autocmd BufRead,BufNewFile gitconfig    set filetype=gitconfig
+
+" remove (strip) whitespace at the end of lines when saving
+autocmd! BufWritePre <buffer> :call StripTrailingWhitespace()
+
+"==================================================
+" DeinEnd: install & remove & end
+"==================================================
+if dein#check_install()
+  call dein#install()
+endif
+
+" remove unused plugins
+"call map(dein#check_clean(), "delete(v:val, 'rf')")
+
+call dein#end()
