@@ -11,7 +11,7 @@ if &compatible
 endif
 
 set runtimepath^=${HOME}/.dotfile/bundle/repos/github.com/Shougo/dein.vim
-call dein#begin(expand('$HOME' . '/.dotfile/bundle'))
+call dein#begin(expand('~/.dotfile/bundle'))
 filetype plugin indent on
 call dein#add('Shougo/dein.vim')
 
@@ -106,8 +106,11 @@ autocmd WinEnter * setlocal cursorline
 "==================================================
 " Plugins:
 "==================================================
+" Context filetype library for Vim script
+call dein#add('Shougo/context_filetype.vim')
+
 " Interactive command execution in Vim.
-call dein#add('Shougo/vimproc.vim', {'build': 'make'})
+call dein#add('Shougo/vimproc.vim', {'build': 'make'}, {'on_source': 'unite.vim'})
 
 " Wombat for 256 color xterms
 call dein#add('vim-scripts/wombat256.vim')
@@ -116,13 +119,6 @@ call dein#add('vim-scripts/wombat256.vim')
 call dein#add('altercation/vim-colors-solarized')
   "let g:solarized_termcolors=256
   "let g:solarized_termtrans=1
-
-" Better Rainbow Parentheses
-call dein#add('kien/rainbow_parentheses.vim')
-  au VimEnter * RainbowParenthesesToggle
-  au Syntax * RainbowParenthesesLoadRound
-  au Syntax * RainbowParenthesesLoadSquare
-  au Syntax * RainbowParenthesesLoadBraces
 
 " A solid language pack for Vim.
 call dein#add('sheerun/vim-polyglot')
@@ -153,22 +149,30 @@ call dein#add('terryma/vim-multiple-cursors')
 call dein#add('lfv89/vim-interestingwords')
 
 " awesome Python autocompletion with VIM
-call dein#add('davidhalter/jedi-vim')
+call dein#add('davidhalter/jedi-vim',
+      \ {'if': "!has('nvim')"},
+      \ {'on_ft': 'python'})
 
-" Next generation completion framework after neocomplcache
-call dein#add('Shougo/neocomplete.vim',{'if': 'has("lua")'} )
-  let g:neocomplete#enable_at_startup = 1
+call dein#add('Shougo/neocomplete.vim', {
+      \ 'depends': 'context_filetype.vim',
+      \ 'if': "has('lua')",
+      \ 'on_event': 'InsertEnter',
+      \ 'hook_source': 'let g:neocomplete#enable_at_startup = 1'
+      \ })
 
 " neo-snippet plugin contains neocomplete snippets source
-call dein#add('Shougo/neosnippet.vim')
 call dein#add('Shougo/neosnippet-snippets')
-  imap <C-k>     <Plug>(neosnippet_expand_or_jump)
-  smap <C-k>     <Plug>(neosnippet_expand_or_jump)
-  xmap <C-k>     <Plug>(neosnippet_expand_target)
+call dein#add('Shougo/neosnippet.vim', {
+      \ 'depends': ['neosnippet-snippets', 'context_filetype.vim'],
+      \ 'on_event': 'InsertCharPre',
+      \ 'on_ft': 'snippet',
+      \ 'hook_source': 'imap <silent>L  <Plug>(neosnippet_expand_or_jump)'
+      \})
 
 " A simple, easy-to-use Vim alignment plugin.
-call dein#add('junegunn/vim-easy-align')
-  vmap <Enter> <Plug>(EasyAlign)
+call dein#add('junegunn/vim-easy-align', {
+      \ 'hook_add': 'vmap <Enter> <Plug>(EasyAlign)'
+      \})
 
 " This vim plugin allows toggling bookmarks per line
 call dein#add('MattesGroeger/vim-bookmarks')
@@ -177,7 +181,7 @@ call dein#add('MattesGroeger/vim-bookmarks')
   let g:bookmark_auto_save = 1
 
 " Enhanced LaTeX support for Vim
-call dein#add('jcf/vim-latex')
+call dein#add('jcf/vim-latex', {'on_ft': ['tex']})
   set shellslash
   let g:tex_flavor                 = 'latex'
   let g:Tex_DefaultTargetFormat    = 'pdf'
@@ -188,26 +192,16 @@ call dein#add('jcf/vim-latex')
   endif
 
 " Insert or delete brackets, parens, quotes in pair.
-call dein#add('jiangmiao/auto-pairs')
-  let g:AutoPairs = {'{':'}'}
+call dein#add('jiangmiao/auto-pairs', {
+      \ 'hook_add': "let g:AutoPairs = {'{':'}'}"
+      \})
 
 " lean & mean status/tabline for vim that's light as air
-call dein#add('bling/vim-airline')
 call dein#add('vim-airline/vim-airline-themes')
-  let g:airline_powerline_fonts = 1
-  let g:airline#extensions#tabline#enabled = 1
-  let g:airline#extensions#tabline#left_sep = ' '
-  let g:airline#extensions#tabline#left_alt_sep = '¦'
-  let g:airline#extensions#tabline#buffer_idx_mode = 1
-  nmap <leader>1 <Plug>AirlineSelectTab1
-  nmap <leader>2 <Plug>AirlineSelectTab2
-  nmap <leader>3 <Plug>AirlineSelectTab3
-  nmap <leader>4 <Plug>AirlineSelectTab4
-  nmap <leader>5 <Plug>AirlineSelectTab5
-  nmap <leader>6 <Plug>AirlineSelectTab6
-  nmap <leader>7 <Plug>AirlineSelectTab7
-  nmap <leader>8 <Plug>AirlineSelectTab8
-  nmap <leader>9 <Plug>AirlineSelectTab9
+call dein#add('bling/vim-airline', {
+      \ 'depends': 'vim-airline-themes',
+      \ 'hook_source': 'source ~/.dotfile/vim/vim-airline.vim'
+      \})
 
 " fugitive.vim: a Git wrapper so awesome, it should be illegal
 call dein#add('tpope/vim-fugitive')
@@ -228,7 +222,7 @@ call dein#add('derekwyatt/vim-fswitch')
 call dein#add('Shougo/unite.vim')
   call dein#add('thinca/vim-unite-history')
   call dein#add('Shougo/neomru.vim')
-  call dein#add('Shougo/neoyank.vim')
+  call dein#add('Shougo/neoyank.vim', {'on_if': 1}, {'on_event': 'TextYankPost'}, {'on_source': 'unite.vim'})
   call dein#add('Shougo/unite-outline')
   call unite#filters#matcher_default#use(['matcher_fuzzy'])
   call unite#filters#sorter_default#use(['sorter_rank'])
