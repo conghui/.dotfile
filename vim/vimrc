@@ -113,7 +113,7 @@ call dein#add('Shougo/vimproc.vim', {'build': 'make'})
 call dein#add('vim-scripts/wombat256.vim')
 
 " precision colorscheme for the vim text editor
-call dein#add('skwp/vim-colors-solarized')
+call dein#add('altercation/vim-colors-solarized')
   "let g:solarized_termcolors=256
   "let g:solarized_termtrans=1
 
