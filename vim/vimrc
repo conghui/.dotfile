@@ -90,7 +90,6 @@ call EnsureExists(&undodir)
 
 " ui configuration
 set background=dark
-colorscheme solarized
 set showmatch                                       "automatically highlight matching braces/brackets/etc.
 set matchtime=2                                     "tens of a second to show matching parentheses
 set number                                          "precede each line with its line number
@@ -139,8 +138,8 @@ call dein#add('haya14busa/incsearch.vim')
   map g/ <Plug>(incsearch-stay)
   nnoremap <Esc><Esc> :<C-u>nohlsearch<CR>
 
-" Vim plugin for intensely orgasmic commenting
-call dein#add('scrooloose/nerdcommenter')
+" comment stuff out
+call dein#add('tpope/vim-commentary')
 
 " True Sublime Text style multiple selections for Vim
 call dein#add('terryma/vim-multiple-cursors')
@@ -171,14 +170,9 @@ call dein#add('Shougo/neosnippet.vim', {
 
 " A simple, easy-to-use Vim alignment plugin.
 call dein#add('junegunn/vim-easy-align', {
+      \ 'on_if': 0,
       \ 'hook_add': 'vmap <Enter> <Plug>(EasyAlign)'
       \})
-
-" This vim plugin allows toggling bookmarks per line
-call dein#add('MattesGroeger/vim-bookmarks')
-  let g:bookmark_auto_close = 1
-  let g:bookmark_save_per_working_dir = 1
-  let g:bookmark_auto_save = 1
 
 " Enhanced LaTeX support for Vim
 call dein#add('jcf/vim-latex', {'on_ft': ['tex']})
@@ -191,39 +185,42 @@ call dein#add('jcf/vim-latex', {'on_ft': ['tex']})
     let g:Tex_ViewRule_pdf = 'Skim'
   endif
 
-" Insert or delete brackets, parens, quotes in pair.
-call dein#add('jiangmiao/auto-pairs', {
-      \ 'hook_add': "let g:AutoPairs = {'{':'}'}"
-      \})
-
 " lean & mean status/tabline for vim that's light as air
 call dein#add('vim-airline/vim-airline-themes')
-call dein#add('bling/vim-airline', {
-      \ 'depends': 'vim-airline-themes',
-      \ 'hook_source': 'source ~/.dotfile/vim/vim-airline.vim'
-      \})
+call dein#add('bling/vim-airline', {'depends': 'vim-airline-themes'})
+  let g:airline_powerline_fonts = 1
+  let g:airline#extensions#tabline#enabled = 1
+  let g:airline#extensions#tabline#left_sep = ' '
+  let g:airline#extensions#tabline#left_alt_sep = '¦'
+  let g:airline#extensions#tabline#buffer_idx_mode = 1
+  nmap <leader>1 <Plug>AirlineSelectTab1
+  nmap <leader>2 <Plug>AirlineSelectTab2
+  nmap <leader>3 <Plug>AirlineSelectTab3
+  nmap <leader>4 <Plug>AirlineSelectTab4
+  nmap <leader>5 <Plug>AirlineSelectTab5
+  nmap <leader>6 <Plug>AirlineSelectTab6
+  nmap <leader>7 <Plug>AirlineSelectTab7
+  nmap <leader>8 <Plug>AirlineSelectTab8
+  nmap <leader>9 <Plug>AirlineSelectTab9
 
 " fugitive.vim: a Git wrapper so awesome, it should be illegal
-call dein#add('tpope/vim-fugitive')
-  autocmd BufReadPost fugitive://* set bufhidden=delete
+call dein#add('tpope/vim-fugitive', {'on_cmd' : ['Gstatus', 'Gdiff', 'Gedit']})
 
 " gitk for Vim.
-call dein#add ('gregsexton/gitv', {'on_cmd':'Gitv'})
+call dein#add ('gregsexton/gitv', {'on_cmd': 'Gitv'})
 
 " Vim plug for switching between companion source files (e.g. ".h" and ".cpp")
-call dein#add('derekwyatt/vim-fswitch')
-  nmap <silent> <Leader>of :FSHere<cr>
-  nmap <silent> <Leader>oh :FSSplitLeft<cr>
-  nmap <silent> <Leader>ol :FSSplitRight<cr>
-  nmap <silent> <Leader>ok :FSSplitAbove<cr>
-  nmap <silent> <Leader>oj :FSSplitBelow<cr>
+call dein#add('derekwyatt/vim-fswitch', {
+      \ 'on_ft': ['c', 'cpp'],
+      \ 'on_cmd': ['FSHere', 'FSSplitLeft', 'FSSplitRight', 'FSSplitAbove', 'FSSplitBelow'],
+      \})
 
 " Unite and create user interfaces
 call dein#add('Shougo/unite.vim')
-  call dein#add('thinca/vim-unite-history')
-  call dein#add('Shougo/neomru.vim')
-  call dein#add('Shougo/neoyank.vim', {'on_if': 1}, {'on_event': 'TextYankPost'}, {'on_source': 'unite.vim'})
-  call dein#add('Shougo/unite-outline')
+call dein#add('thinca/vim-unite-history')
+call dein#add('Shougo/neomru.vim')
+call dein#add('Shougo/neoyank.vim')
+call dein#add('Shougo/unite-outline')
   call unite#filters#matcher_default#use(['matcher_fuzzy'])
   call unite#filters#sorter_default#use(['sorter_rank'])
   call unite#custom#profile('default', 'context', {
@@ -231,7 +228,6 @@ call dein#add('Shougo/unite.vim')
         \ })
 
   let g:unite_data_directory=s:get_cache_dir('unite')
-  let g:unite_source_history_yank_enable=1
   let g:unite_source_rec_max_cache_files=200
 
   if executable('ag')
@@ -290,6 +286,8 @@ nnoremap    gJ      J
 nnoremap    -       _
 nnoremap    _       -
 
+inoremap {<CR> {<CR>}<ESC>O
+
 " [Spell checking]"
 map <leader>se :setlocal spell spelllang=en_us<cr>
 map <leader>sn :setlocal nospell<cr>
@@ -311,10 +309,9 @@ autocmd FilterWritePre * if &diff | setlocal wrap< | endif
 " file types
 autocmd BufRead,BufNewFile SConstruct   set filetype=python
 autocmd BufRead,BufNewFile SConscript   set filetype=python
-au BufRead,BufNewFile *.cu,*.cuda       set filetype=cpp
+autocmd BufRead,BufNewFile *.cu,*.cuda  set filetype=cpp
 autocmd BufRead,BufNewFile *.maxj       set filetype=java
 autocmd BufRead,BufNewFile gitconfig    set filetype=gitconfig
-
 " remove (strip) whitespace at the end of lines when saving
 autocmd! BufWritePre <buffer> :call StripTrailingWhitespace()
 
@@ -329,3 +326,7 @@ endif
 "call map(dein#check_clean(), "delete(v:val, 'rf')")
 
 call dein#end()
+call dein#save_state()
+
+" set colorscheme after loeaded
+colorscheme solarized
