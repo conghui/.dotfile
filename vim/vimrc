@@ -1,8 +1,5 @@
 " vim: fdm=marker ts=2 sts=2 sw=2 fdl=0
 
-" where vim is cached
-let s:cache_dir                    = "~/.cache/vim"
-
 "==================================================
 " Dein: setup
 "==================================================
@@ -13,36 +10,6 @@ endif
 set runtimepath^=${HOME}/.dotfile/bundle/repos/github.com/Shougo/dein.vim
 call dein#begin(expand('~/.dotfile/bundle'))
 filetype plugin indent on
-call dein#add('Shougo/dein.vim')
-
-"==================================================
-" Functions:
-"==================================================
-function! s:get_cache_dir(suffix)
-  return resolve(expand(s:cache_dir . '/' . a:suffix))
-endfunction
-
-function! EnsureExists(path)
-  if !isdirectory(expand(a:path))
-    call mkdir(expand(a:path))
-  endif
-endfunction
-
-function! Preserve(command)
-  " preparation: save last search, and cursor position.
-  let _s=@/
-  let l = line(".")
-  let c = col(".")
-  " do the business:
-  execute a:command
-  " clean up: restore previous search history, and cursor position
-  let @/=_s
-  call cursor(l, c)
-endfunction
-
-function! StripTrailingWhitespace()
-  call Preserve("%s/\\s\\+$//e")
-endfunction
 
 "==================================================
 " Options:
@@ -82,14 +49,6 @@ set noerrorbells                                    "disable bell
 set visualbell                                      "enable visual bell and set t_vb to nothing
 set t_vb=                                           "disable bell
 
-" persistent undo
-if exists('+undofile')
-  set undofile
-  let &undodir = s:get_cache_dir('undo')
-endif
-call EnsureExists(s:cache_dir)
-call EnsureExists(&undodir)
-
 " ui options
 set background=dark
 set showmatch                                       "automatically highlight matching braces/brackets/etc.
@@ -100,10 +59,19 @@ set noshowmode
 set foldenable                                      "enable folds by default
 set foldlevelstart=99                               "open all folds by default
 
+" persistant undo
+set undofile
+let &undodir = expand("~/.cache/vim/undo")
+if !isdirectory(&undodir)
+  call mkdir(expand(&undodir), 'p')
+endif
 
 "==================================================
 " Plugins:
 "==================================================
+" the plugin manager itself
+call dein#add('Shougo/dein.vim')
+
 " Interactive command execution in Vim.
 call dein#add('Shougo/vimproc.vim', {'build': 'make'}, {'on_source': 'unite.vim'})
 
@@ -139,6 +107,11 @@ call dein#add('terryma/vim-multiple-cursors')
 
 " vim-interestingwords allows you to highlight and navigate through (multiple) different words in a buffer
 call dein#add('lfv89/vim-interestingwords')
+
+" Better whitespace highlighting for Vim
+call dein#add('ntpeters/vim-better-whitespace')
+  autocmd BufEnter * EnableStripWhitespaceOnSave
+  autocmd BufEnter * DisableWhitespace
 
 " awesome Python autocompletion with VIM
 call dein#add('davidhalter/jedi-vim',
@@ -215,11 +188,10 @@ call dein#add('Shougo/neoyank.vim')
 call dein#add('Shougo/unite-outline')
 
   let g:unite_enable_auto_select = 0
+  let g:unite_source_rec_max_cache_files=100
   call unite#custom#profile('default', 'context', {
         \ 'start_insert' : 1
         \ })
-
-  " Custom filters.
   call unite#custom#source(
         \ 'buffer,file/async,file_rec,file_rec/async,file_rec/git', 'matchers',
         \ ['converter_relative_word', 'matcher_fuzzy'])
@@ -235,9 +207,6 @@ call dein#add('Shougo/unite-outline')
         \ ['converter_uniq_word','converter_word_abbr'])
   call unite#filters#sorter_default#use(['sorter_rank'])
   call unite#filters#matcher_default#use(['matcher_fuzzy'])
-
-  let g:unite_data_directory=s:get_cache_dir('unite')
-  let g:unite_source_rec_max_cache_files=100
 
   if executable('ag')
     let g:unite_source_grep_command = 'ag'
@@ -319,9 +288,6 @@ autocmd BufRead,BufNewFile SConscript   set filetype=python
 autocmd BufRead,BufNewFile *.cu,*.cuda  set filetype=cpp
 autocmd BufRead,BufNewFile *.maxj       set filetype=java
 autocmd BufRead,BufNewFile gitconfig    set filetype=gitconfig
-
-" remove (strip) whitespace at the end of lines when saving
-autocmd! BufWritePre <buffer> :call StripTrailingWhitespace()
 
 "==================================================
 " DeinEnd: install & remove & end

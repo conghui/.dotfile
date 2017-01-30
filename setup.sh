@@ -1,6 +1,9 @@
 #!/bin/bash
 
-DOTFILEDIR=${HOME}/.dotfile
+if [[ -z $DOTFILEDIR ]]; then
+  echo "Please set DOTFILEDIR. e.g. export DOTFILEDIR=`pwd`"
+  exit 1
+fi
 
 mkdir -p ${DOTFILEDIR}/bundle
 
