@@ -86,9 +86,6 @@ endif
 " the plugin manager itself
 call dein#add('Shougo/dein.vim')
 
-" Interactive command execution in Vim.
-call dein#add('Shougo/vimproc.vim', {'build': 'make'}, {'on_source': 'unite.vim'})
-
 " precision colorscheme for the vim text editor
 call dein#add('altercation/vim-colors-solarized')
   "let g:solarized_termcolors=256
@@ -187,12 +184,6 @@ call dein#add('tpope/vim-fugitive')
 
 " gitk for Vim.
 call dein#add ('gregsexton/gitv', {'on_cmd': 'Gitv'})
-
-" Vim plug for switching between companion source files (e.g. ".h" and ".cpp")
-call dein#add('derekwyatt/vim-fswitch', {
-      \ 'on_ft': ['c', 'cpp'],
-      \ 'on_cmd': ['FSHere', 'FSSplitLeft', 'FSSplitRight', 'FSSplitAbove', 'FSSplitBelow'],
-      \})
 
 " Unite and create user interfaces
 call dein#add('Shougo/unite.vim')
