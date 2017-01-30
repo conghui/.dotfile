@@ -18,10 +18,6 @@ git clone --recursive https://github.com/bssthu/tunet_py.git
 git clone --recursive https://github.com/powerline/fonts.git
 popd
 
-# dein
-curl https://raw.githubusercontent.com/Shougo/dein.vim/master/bin/installer.sh > installer.sh
-sh ./installer.sh ${DOTFILEDIR}/bundle && rm -rf installer.sh
-
 # link configurations to $HOME
 for f in ${DOTFILEDIR}/config/.[!.]*; do
   lnk=${HOME}/${f##*/}

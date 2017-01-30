@@ -7,14 +7,27 @@ if &compatible
   set nocompatible               " Be iMproved
 endif
 
-set runtimepath^=${HOME}/.dotfile/bundle/repos/github.com/Shougo/dein.vim
-call dein#begin(expand('~/.dotfile/bundle'))
-filetype plugin indent on
+" Load dein.
+let $CACHE = expand('~/.dotfile/bundle')
+let s:dein_dir = finddir('dein.vim', '.;')
+if s:dein_dir != '' || &runtimepath !~ '/dein.vim'
+  if s:dein_dir == '' && &runtimepath !~ '/dein.vim'
+    let s:dein_dir = expand('$CACHE/dein')
+          \. '/repos/github.com/Shougo/dein.vim'
+    if !isdirectory(s:dein_dir)
+      execute '!git clone https://github.com/Shougo/dein.vim' s:dein_dir
+    endif
+  endif
+  execute 'set runtimepath^=' . substitute(
+        \ fnamemodify(s:dein_dir, ':p') , '/$', '', '')
+endif
+call dein#begin(expand('$CACHE/dein'), expand('<sfile>'))
 
 "==================================================
 " Options:
 "==================================================
 syntax on
+filetype plugin indent on
 let mapleader = ","
 let g:mapleader = ","
 set mouse=r                                         "enable mouse
@@ -69,6 +82,7 @@ endif
 "==================================================
 " Plugins:
 "==================================================
+
 " the plugin manager itself
 call dein#add('Shougo/dein.vim')
 
@@ -186,7 +200,6 @@ call dein#add('thinca/vim-unite-history')
 call dein#add('Shougo/neomru.vim')
 call dein#add('Shougo/neoyank.vim')
 call dein#add('Shougo/unite-outline')
-
   let g:unite_enable_auto_select = 0
   let g:unite_source_rec_max_cache_files=100
   call unite#custom#profile('default', 'context', {
@@ -233,7 +246,7 @@ call dein#add('Shougo/unite-outline')
   nnoremap <silent> [unite]y :<C-u>Unite -toggle -auto-resize -buffer-name=yanks    history/yank<cr>
   nnoremap <silent> [unite]/ :<C-u>Unite -toggle -auto-resize -buffer-name=search   grep:.<cr>
   nnoremap <silent> [unite]o :<C-u>Unite -toggle -auto-resize -buffer-name=outline  outline<cr>
-  nnoremap <silent> [unite]c :<C-u>Unite -buffer-name=commands -default-action=execute history/command<CR>
+  nnoremap <silent> [unite]c :<C-u>Unite -default-action=execute -buffer-name=commands  history/command<CR>
 
 "==================================================
  " Mappings:
@@ -271,6 +284,7 @@ map <leader>sn :setlocal nospell<cr>
 "==================================================
 " Autocmd:
 "==================================================
+
 " go back to previous position of cursor if any
 autocmd BufReadPost *
   \ if line("'\"") > 0 && line("'\"") <= line("$") |
