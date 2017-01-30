@@ -196,7 +196,7 @@ call dein#add('bling/vim-airline', {'depends': 'vim-airline-themes'})
   nmap <leader>9 <Plug>AirlineSelectTab9
 
 " fugitive.vim: a Git wrapper so awesome, it should be illegal
-call dein#add('tpope/vim-fugitive', {'on_cmd' : ['Gstatus', 'Gdiff', 'Gedit']})
+call dein#add('tpope/vim-fugitive')
 
 " gitk for Vim.
 call dein#add ('gregsexton/gitv', {'on_cmd': 'Gitv'})
@@ -273,9 +273,9 @@ if exists(':tnoremap')
   tnoremap <Esc> <C-\><C-n>
 endif
 
-" windows-like copy and paste
-inoremap    <c-v>   <c-o>:set paste<cr><c-r>+<c-o>:set nopaste<cr>
-xnoremap    <c-c>   "+y
+" copy and paste globally
+vnoremap    "+Y  :!xclip -f -sel clip<cr>
+noremap     "+P :r!xclip -o -sel clip<cr>
 
 " [Easy indent in visual mode]
 xnoremap    <   <gv
