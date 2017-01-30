@@ -86,9 +86,6 @@ endif
 " the plugin manager itself
 call dein#add('Shougo/dein.vim')
 
-" Interactive command execution in Vim.
-call dein#add('Shougo/vimproc.vim', {'build': 'make'}, {'on_source': 'unite.vim'})
-
 " precision colorscheme for the vim text editor
 call dein#add('altercation/vim-colors-solarized')
   "let g:solarized_termcolors=256
@@ -96,15 +93,6 @@ call dein#add('altercation/vim-colors-solarized')
 
 " A solid language pack for Vim.
 call dein#add('sheerun/vim-polyglot')
-
-" extended % matching for HTML, LaTeX, and many other languages
-call dein#add('tmhedberg/matchit')
-
-" wisely add "end" in ruby, endfunction/endif/more in vim script, etc
-call dein#add('tpope/vim-endwise')
-
-" A Vim plugin which shows a git diff in the gutter (sign column) and stages/undoes hunks.
-call dein#add('airblade/vim-gitgutter')
 
 " incrementally highlights ALL pattern matches unlike default 'incsearch'.
 call dein#add('haya14busa/incsearch.vim')
@@ -116,55 +104,11 @@ call dein#add('haya14busa/incsearch.vim')
 " comment stuff out
 call dein#add('tpope/vim-commentary')
 
-" True Sublime Text style multiple selections for Vim
-call dein#add('terryma/vim-multiple-cursors')
-
-" vim-interestingwords allows you to highlight and navigate through (multiple) different words in a buffer
-call dein#add('lfv89/vim-interestingwords')
-
-" Better whitespace highlighting for Vim
-call dein#add('ntpeters/vim-better-whitespace')
-  autocmd BufEnter * EnableStripWhitespaceOnSave
-  autocmd BufEnter * DisableWhitespace
-
-" awesome Python autocompletion with VIM
-call dein#add('davidhalter/jedi-vim', {
-      \ 'on_if': 1,
-      \ 'if': "!has('nvim')",
-      \ 'on_ft': 'python'
-      \ })
-
 call dein#add('Shougo/neocomplete.vim', {
       \ 'if': "has('lua')",
       \ 'on_event': 'InsertEnter',
       \ 'hook_source': 'let g:neocomplete#enable_at_startup = 1'
       \ })
-
-" neo-snippet plugin contains neocomplete snippets source
-call dein#add('Shougo/neosnippet-snippets')
-call dein#add('Shougo/neosnippet.vim', {
-      \ 'depends': ['neosnippet-snippets'],
-      \ 'on_event': 'InsertCharPre',
-      \ 'on_ft': 'snippet',
-      \ 'hook_source': 'imap <silent>L  <Plug>(neosnippet_expand_or_jump)'
-      \})
-
-" A simple, easy-to-use Vim alignment plugin.
-call dein#add('junegunn/vim-easy-align', {
-      \ 'on_if': 0,
-      \ 'hook_add': 'vmap <Enter> <Plug>(EasyAlign)'
-      \})
-
-" Enhanced LaTeX support for Vim
-call dein#add('jcf/vim-latex', {'on_ft': ['tex']})
-  set shellslash
-  let g:tex_flavor                 = 'latex'
-  let g:Tex_DefaultTargetFormat    = 'pdf'
-  let g:Tex_CompileRule_pdf        = 'xelatex --interaction=nonstopmode $*'
-  let g:Tex_MultipleCompileFormats = 'pdf,bib,pdf'
-  if has("unix") && match(system("uname"),'Darwin') != -1
-    let g:Tex_ViewRule_pdf = 'Skim'
-  endif
 
 " lean & mean status/tabline for vim that's light as air
 call dein#add('vim-airline/vim-airline-themes')
@@ -183,12 +127,6 @@ call dein#add('bling/vim-airline', {'depends': 'vim-airline-themes'})
   nmap <leader>7 <Plug>AirlineSelectTab7
   nmap <leader>8 <Plug>AirlineSelectTab8
   nmap <leader>9 <Plug>AirlineSelectTab9
-
-" fugitive.vim: a Git wrapper so awesome, it should be illegal
-call dein#add('tpope/vim-fugitive')
-
-" gitk for Vim.
-call dein#add ('gregsexton/gitv', {'on_cmd': 'Gitv'})
 
 " Unite and create user interfaces
 call dein#add('Shougo/unite.vim')
@@ -235,8 +173,7 @@ call dein#add('Shougo/unite-outline')
 
   nmap <space> [unite]
   nnoremap [unite] <nop>
-  nnoremap <silent> [unite]r :<C-u>Unite -toggle -auto-resize -buffer-name=files    file_rec/async:!<cr><c-u>
-  nnoremap <silent> [unite]f :<C-u>Unite -toggle -auto-resize -buffer-name=files    file/async:!<cr><c-u>
+  nnoremap <silent> [unite]f :<C-u>Unite -toggle -auto-resize -buffer-name=files    file<cr><c-u>
   nnoremap <silent> [unite]b :<C-u>Unite -toggle -auto-resize -buffer-name=buffers  buffer file_mru<cr>
   nnoremap <silent> [unite]l :<C-u>Unite -toggle -auto-resize -buffer-name=line     line<cr>
   nnoremap <silent> [unite]y :<C-u>Unite -toggle -auto-resize -buffer-name=yanks    history/yank<cr>
@@ -298,6 +235,13 @@ autocmd BufRead,BufNewFile SConscript   set filetype=python
 autocmd BufRead,BufNewFile *.cu,*.cuda  set filetype=cpp
 autocmd BufRead,BufNewFile *.maxj       set filetype=java
 autocmd BufRead,BufNewFile gitconfig    set filetype=gitconfig
+
+"==================================================
+" LocalPlugins: load local plugins
+"==================================================
+if filereadable(expand('$DOTFILEDIR/vim/local-plugins.vim'))
+  execute 'source' expand('$DOTFILEDIR/vim/local-plugins.vim')
+endif
 
 "==================================================
 " DeinEnd: install & remove & end
