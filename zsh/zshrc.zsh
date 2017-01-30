@@ -45,7 +45,7 @@ source ${DOTFILEDIR}/bundle/antigen/bin/antigen.zsh
 
 antigen use oh-my-zsh # use oh-my-zsh as library
 antigen bundles << EOBUNDLES
-  mafredri/zsh-async
+  mafredri/zsh-async                        # required by other plugins
   zsh-users/zsh-syntax-highlighting
   zsh-users/zsh-completions
   zlsun/solarized-man
