@@ -45,19 +45,18 @@ function! StripTrailingWhitespace()
 endfunction
 
 "==================================================
-" Configuration:
+" Options:
 "==================================================
 syntax on
 let mapleader = ","
 let g:mapleader = ","
 set mouse=r                                         "enable mouse
-set history=1000                                    "number of command lines to remember
 set ttyfast                                         "assume fast terminal connection
 set lazyredraw
 set viewoptions=folds,options,cursor,unix,slash     "unix/windows compatibility
 set encoding=utf-8                                  "set encoding for text
-set fencs=utf-8,gbk
-set clipboard=autoselectplus
+set fileencodings=utf-8,gbk                         "file encoding
+set clipboard=unnamed
 set showcmd
 set completeopt-=preview
 set backspace=indent,eol,start                      "allow backspacing everything in insert mode
@@ -71,14 +70,17 @@ set shiftround                                      "round indent to multiple of
 set linebreak                                       "wrap long lines
 set display+=lastline                               "as much as possible of the last line will be displayed
 set wildmenu                                        "show list for autocomplete
-set wildmode=list:full                              "when more than one match, list all matches and complete first match
+set wildmode=list:longest                           "when more than one match, list all matches and complete first match
 set wildignorecase                                  "case is ignored when completing file names and directories
-set textwidth=0                                     " set text width
+set textwidth=0                                     "set text width
 set hlsearch                                        "highlight searches
 set incsearch                                       "incremental searching
 set ignorecase                                      "ignore case for searching
 set smartcase                                       "do case-sensitive if there's a capital letter
-set noswapfile
+set noswapfile                                      "diable swap files
+set noerrorbells                                    "disable bell
+set visualbell                                      "enable visual bell and set t_vb to nothing
+set t_vb=                                           "disable bell
 
 " persistent undo
 if exists('+undofile')
@@ -88,7 +90,7 @@ endif
 call EnsureExists(s:cache_dir)
 call EnsureExists(&undodir)
 
-" ui configuration
+" ui options
 set background=dark
 set showmatch                                       "automatically highlight matching braces/brackets/etc.
 set matchtime=2                                     "tens of a second to show matching parentheses
@@ -97,22 +99,13 @@ set laststatus=2                                    "always shows the status lin
 set noshowmode
 set foldenable                                      "enable folds by default
 set foldlevelstart=99                               "open all folds by default
-set cursorline                                      " highlight current line
-autocmd WinLeave * setlocal nocursorline
-autocmd WinEnter * setlocal cursorline
 
 
 "==================================================
 " Plugins:
 "==================================================
-" Context filetype library for Vim script
-call dein#add('Shougo/context_filetype.vim')
-
 " Interactive command execution in Vim.
 call dein#add('Shougo/vimproc.vim', {'build': 'make'}, {'on_source': 'unite.vim'})
-
-" Wombat for 256 color xterms
-call dein#add('vim-scripts/wombat256.vim')
 
 " precision colorscheme for the vim text editor
 call dein#add('altercation/vim-colors-solarized')
@@ -153,7 +146,6 @@ call dein#add('davidhalter/jedi-vim',
       \ {'on_ft': 'python'})
 
 call dein#add('Shougo/neocomplete.vim', {
-      \ 'depends': 'context_filetype.vim',
       \ 'if': "has('lua')",
       \ 'on_event': 'InsertEnter',
       \ 'hook_source': 'let g:neocomplete#enable_at_startup = 1'
@@ -162,7 +154,7 @@ call dein#add('Shougo/neocomplete.vim', {
 " neo-snippet plugin contains neocomplete snippets source
 call dein#add('Shougo/neosnippet-snippets')
 call dein#add('Shougo/neosnippet.vim', {
-      \ 'depends': ['neosnippet-snippets', 'context_filetype.vim'],
+      \ 'depends': ['neosnippet-snippets'],
       \ 'on_event': 'InsertCharPre',
       \ 'on_ft': 'snippet',
       \ 'hook_source': 'imap <silent>L  <Plug>(neosnippet_expand_or_jump)'
@@ -221,14 +213,31 @@ call dein#add('thinca/vim-unite-history')
 call dein#add('Shougo/neomru.vim')
 call dein#add('Shougo/neoyank.vim')
 call dein#add('Shougo/unite-outline')
-  call unite#filters#matcher_default#use(['matcher_fuzzy'])
-  call unite#filters#sorter_default#use(['sorter_rank'])
+
+  let g:unite_enable_auto_select = 0
   call unite#custom#profile('default', 'context', {
-        \ 'start_insert': 1
+        \ 'start_insert' : 1
         \ })
 
+  " Custom filters.
+  call unite#custom#source(
+        \ 'buffer,file/async,file_rec,file_rec/async,file_rec/git', 'matchers',
+        \ ['converter_relative_word', 'matcher_fuzzy'])
+  call unite#custom#source(
+        \ 'file_mru', 'matchers',
+        \ ['matcher_project_files', 'matcher_fuzzy',
+        \  'matcher_hide_hidden_files', 'matcher_hide_current_file'])
+  call unite#custom#source(
+        \ 'file_rec,file_rec/async,file_rec/git,file_mru', 'converters',
+        \ ['converter_uniq_word'])
+  call unite#custom#source(
+        \ 'buffer', 'converters',
+        \ ['converter_uniq_word','converter_word_abbr'])
+  call unite#filters#sorter_default#use(['sorter_rank'])
+  call unite#filters#matcher_default#use(['matcher_fuzzy'])
+
   let g:unite_data_directory=s:get_cache_dir('unite')
-  let g:unite_source_rec_max_cache_files=200
+  let g:unite_source_rec_max_cache_files=100
 
   if executable('ag')
     let g:unite_source_grep_command = 'ag'
@@ -238,7 +247,7 @@ call dein#add('Shougo/unite-outline')
     let g:unite_source_grep_recursive_opt = ''
   endif
 
-  function! s:unite_settings()
+  function! s:unite_settings() abort
     nmap <buffer> <esc> <plug>(unite_exit)
     imap <buffer> <esc> <plug>(unite_exit)
     imap <buffer> <C-j> <Plug>(unite_select_next_line)
@@ -248,16 +257,14 @@ call dein#add('Shougo/unite-outline')
 
   nmap <space> [unite]
   nnoremap [unite] <nop>
-  nnoremap <silent> [unite]r :<C-u>Unite -toggle -auto-resize -buffer-name=files file_rec/async:!<cr><c-u>
-  nnoremap <silent> [unite]f :<C-u>Unite -toggle -auto-resize -buffer-name=files file/async:!<cr><c-u>
-  nnoremap <silent> [unite]e :<C-u>Unite -buffer-name=recent file_mru<cr>
-  nnoremap <silent> [unite]y :<C-u>Unite -buffer-name=yanks history/yank<cr>
-  nnoremap <silent> [unite]l :<C-u>Unite -auto-resize -buffer-name=line line<cr>
-  nnoremap <silent> [unite]b :<C-u>Unite -auto-resize -buffer-name=buffers buffer file_mru<cr>
-  nnoremap <silent> [unite]/ :<C-u>Unite -auto-resize -buffer-name=search grep:.<cr>
-  nnoremap <silent> [unite]s :<C-u>Unite -quick-match buffer<cr>
+  nnoremap <silent> [unite]r :<C-u>Unite -toggle -auto-resize -buffer-name=files    file_rec/async:!<cr><c-u>
+  nnoremap <silent> [unite]f :<C-u>Unite -toggle -auto-resize -buffer-name=files    file/async:!<cr><c-u>
+  nnoremap <silent> [unite]b :<C-u>Unite -toggle -auto-resize -buffer-name=buffers  buffer file_mru<cr>
+  nnoremap <silent> [unite]l :<C-u>Unite -toggle -auto-resize -buffer-name=line     line<cr>
+  nnoremap <silent> [unite]y :<C-u>Unite -toggle -auto-resize -buffer-name=yanks    history/yank<cr>
+  nnoremap <silent> [unite]/ :<C-u>Unite -toggle -auto-resize -buffer-name=search   grep:.<cr>
+  nnoremap <silent> [unite]o :<C-u>Unite -toggle -auto-resize -buffer-name=outline  outline<cr>
   nnoremap <silent> [unite]c :<C-u>Unite -buffer-name=commands -default-action=execute history/command<CR>
-  nnoremap <silent> [unite]o :<C-u>Unite -auto-resize -buffer-name=outline outline<cr>
 
 "==================================================
  " Mappings:
@@ -312,6 +319,7 @@ autocmd BufRead,BufNewFile SConscript   set filetype=python
 autocmd BufRead,BufNewFile *.cu,*.cuda  set filetype=cpp
 autocmd BufRead,BufNewFile *.maxj       set filetype=java
 autocmd BufRead,BufNewFile gitconfig    set filetype=gitconfig
+
 " remove (strip) whitespace at the end of lines when saving
 autocmd! BufWritePre <buffer> :call StripTrailingWhitespace()
 
