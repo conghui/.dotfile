@@ -11,7 +11,8 @@ fi
 # }}}
 
 # variables
-export EDITOR="vim -u $HOME/.dotfile/vim/vimrc"
+[[ -f ~/.linuxbrew/bin/vim ]] && VIM=~/.linuxbrew/bin/vim  || VIM=vim
+export EDITOR="$VIM -u $HOME/.dotfile/vim/vimrc"
 export GIT_EDITOR=${EDITOR}
 export TERM="xterm-256color"
 export PAGER="less"
