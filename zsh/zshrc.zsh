@@ -12,6 +12,7 @@ fi
 
 # variables
 [[ -f ~/.linuxbrew/bin/vim ]] && VIM=~/.linuxbrew/bin/vim  || VIM=vim
+export LANG=en_US.UTF-8
 export EDITOR="$VIM -u $HOME/.dotfile/vim/vimrc"
 export GIT_EDITOR=${EDITOR}
 export TERM="xterm-256color"
@@ -55,6 +56,7 @@ antigen bundles << EOBUNDLES
   docker
   fasd
   history-substring-search
+  derekdreery/zsh-ag
   ${DOTFILEDIR}/zsh/plugin
 EOBUNDLES
 
