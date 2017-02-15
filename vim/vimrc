@@ -132,7 +132,6 @@ call dein#add('bling/vim-airline', {'depends': 'vim-airline-themes'})
 call dein#add('Shougo/unite.vim')
 call dein#add('thinca/vim-unite-history')
 call dein#add('Shougo/neomru.vim')
-call dein#add('Shougo/neoyank.vim')
 call dein#add('Shougo/unite-outline')
   let g:unite_enable_auto_select = 0
   let g:unite_source_rec_max_cache_files=100
@@ -176,7 +175,6 @@ call dein#add('Shougo/unite-outline')
   nnoremap <silent> [unite]f :<C-u>Unite -toggle -auto-resize -buffer-name=files    file<cr><c-u>
   nnoremap <silent> [unite]b :<C-u>Unite -toggle -auto-resize -buffer-name=buffers  buffer file_mru<cr>
   nnoremap <silent> [unite]l :<C-u>Unite -toggle -auto-resize -buffer-name=line     line<cr>
-  nnoremap <silent> [unite]y :<C-u>Unite -toggle -auto-resize -buffer-name=yanks    history/yank<cr>
   nnoremap <silent> [unite]/ :<C-u>Unite -toggle -auto-resize -buffer-name=search   grep:.<cr>
   nnoremap <silent> [unite]o :<C-u>Unite -toggle -auto-resize -buffer-name=outline  outline<cr>
   nnoremap <silent> [unite]c :<C-u>Unite -default-action=execute -buffer-name=commands  history/command<CR>

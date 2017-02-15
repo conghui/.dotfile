@@ -45,7 +45,7 @@ call dein#add('Shougo/neosnippet.vim', {
       \ 'depends': ['neosnippet-snippets'],
       \ 'on_event': 'InsertCharPre',
       \ 'on_ft': 'snippet',
-      \ 'hook_source': 'imap <silent>L  <Plug>(neosnippet_expand_or_jump)'
+      \ 'hook_source': 'imap <C-k>  <Plug>(neosnippet_expand_or_jump)'
       \})
 
 " A simple, easy-to-use Vim alignment plugin.
@@ -63,3 +63,7 @@ call dein#add('jcf/vim-latex', {'on_ft': ['tex']})
   if has("unix") && match(system("uname"),'Darwin') != -1
     let g:Tex_ViewRule_pdf = 'Skim'
   endif
+
+" unite yank
+call dein#add('Shougo/neoyank.vim')
+  nnoremap <silent> [unite]y :<C-u>Unite -toggle -auto-resize -buffer-name=yanks    history/yank<cr>
