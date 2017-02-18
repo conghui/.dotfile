@@ -72,6 +72,10 @@ set noshowmode
 set foldenable                                      "enable folds by default
 set foldlevelstart=99                               "open all folds by default
 
+if has('termguicolors')
+  set termguicolors                                 " if you want to run vim in a terminal
+endif
+
 " persistant undo
 set undofile
 let &undodir = expand("~/.cache/vim/undo")
@@ -85,11 +89,6 @@ endif
 
 " the plugin manager itself
 call dein#add('Shougo/dein.vim')
-
-" precision colorscheme for the vim text editor
-call dein#add('altercation/vim-colors-solarized')
-  "let g:solarized_termcolors=256
-  "let g:solarized_termtrans=1
 
 " A solid language pack for Vim.
 call dein#add('sheerun/vim-polyglot')
@@ -113,7 +112,6 @@ call dein#add('Shougo/neocomplete.vim', {
 " lean & mean status/tabline for vim that's light as air
 call dein#add('vim-airline/vim-airline-themes')
 call dein#add('bling/vim-airline', {'depends': 'vim-airline-themes'})
-  let g:airline_powerline_fonts = 1
   let g:airline#extensions#tabline#enabled = 1
   let g:airline#extensions#tabline#left_sep = ' '
   let g:airline#extensions#tabline#left_alt_sep = '¦'
@@ -253,6 +251,3 @@ endif
 
 call dein#end()
 call dein#save_state()
-
-" set colorscheme after loeaded
-colorscheme solarized
