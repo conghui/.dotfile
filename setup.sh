@@ -1,5 +1,17 @@
 #!/bin/bash
 
+set -e
+
+plugins="
+  zsh-users/antigen
+  conghui/snazzy
+  coolwanglu/guake-colors-solarized
+  conghui/iterm2-color-solarized
+  Anthony25/gnome-terminal-colors-solarized
+  ghuntley/terminator-solarized
+  bssthu/tunet_py
+"
+
 if [[ -z $DOTFILEDIR ]]; then
   echo "Please set DOTFILEDIR. e.g. export DOTFILEDIR=`pwd`"
   exit 1
@@ -7,22 +19,25 @@ fi
 
 mkdir -p ${DOTFILEDIR}/bundle
 
-# clone repos into ${DOTFILEDIR}/bundle
-pushd ${DOTFILEDIR}/bundle
-git clone --recursive https://github.com/zsh-users/antigen.git
-git clone --recursive https://github.com/coolwanglu/guake-colors-solarized.git
-git clone --recursive https://github.com/conghui/iterm2-color-solarized.git
-git clone --recursive https://github.com/Anthony25/gnome-terminal-colors-solarized.git
-git clone --recursive https://github.com/ghuntley/terminator-solarized.git
-git clone --recursive https://github.com/bssthu/tunet_py.git
-git clone --recursive https://github.com/powerline/fonts.git
-popd
+# clone a repo into ${DOTFILEDIR}/bundle if it does not exist. Otherwise, update it.
+for repo in $plugins; do
+  url="https://github.com/${repo}.git"
+  local_dir="${DOTFILEDIR}/bundle/${repo##*/}"
+
+  if [[ ! -d $local_dir ]]; then
+    git clone --recursive --depth 1 $url $local_dir
+  else
+    pushd $local_dir; git pull; popd
+  fi
+done
+
+# install Menlo fonts
+curl -L https://github.com/hbin/top-programming-fonts/raw/master/install.sh | bash
 
 # link configurations to $HOME
 for f in ${DOTFILEDIR}/config/.[!.]*; do
   lnk=${HOME}/${f##*/}
-  rm -f $lnk
-  ln -s $f $lnk
+  rm -f $lnk; ln -s $f $lnk
   echo "linking $lnk ==> $f"
 done
 
