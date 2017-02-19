@@ -43,23 +43,23 @@ fi
 # }}}
 # set true to improve performance, but need to run `antigen-reset` after any changes
 export _ANTIGEN_CACHE_ENABLED=${_ANTIGEN_CACHE_ENABLED:-false}
-source ${DOTFILEDIR}/bundle/antigen/bin/antigen.zsh
+source ${DOTFILEDIR}/bundle/antigen/antigen.zsh
 
 antigen use oh-my-zsh # use oh-my-zsh as library
 antigen bundles << EOBUNDLES
   mafredri/zsh-async                        # required by other plugins
-  zsh-users/zsh-syntax-highlighting
   zsh-users/zsh-completions
-  zlsun/solarized-man
-  joel-porquet/zsh-dircolors-solarized
   git
   docker
   fasd
   history-substring-search
   derekdreery/zsh-ag
+  joel-porquet/zsh-dircolors-solarized
+  zsh-users/zsh-syntax-highlighting
+  colored-man-pages
+  sindresorhus/pure
   ${DOTFILEDIR}/zsh/plugin
 EOBUNDLES
 
 #antigen theme evan # a skinny, topless prompt, use it if your computer is really slow
-antigen bundle sindresorhus/pure # nice looking theme
 antigen apply
