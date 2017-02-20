@@ -4,11 +4,7 @@ set -e
 
 plugins="
   zsh-users/antigen
-  conghui/snazzy
-  coolwanglu/guake-colors-solarized
-  conghui/iterm2-color-solarized
-  Anthony25/gnome-terminal-colors-solarized
-  ghuntley/terminator-solarized
+  conghui/terminal-colors
   bssthu/tunet_py
 "
 

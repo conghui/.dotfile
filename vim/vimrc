@@ -72,10 +72,6 @@ set noshowmode
 set foldenable                                      "enable folds by default
 set foldlevelstart=99                               "open all folds by default
 
-if has('termguicolors')
-  set termguicolors                                 " if you want to run vim in a terminal
-endif
-
 " persistant undo
 set undofile
 let &undodir = expand("~/.cache/vim/undo")
