@@ -67,3 +67,6 @@ call dein#add('jcf/vim-latex', {'on_ft': ['tex']})
 " unite yank
 call dein#add('Shougo/neoyank.vim')
   nnoremap <silent> [unite]y :<C-u>Unite -toggle -auto-resize -buffer-name=yanks    history/yank<cr>
+
+" Efficient way to edit remote files on multiple environments with Vim.
+call dein#add('zenbro/mirror.vim')
