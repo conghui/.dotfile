@@ -106,8 +106,7 @@ call dein#add('Shougo/neocomplete.vim', {
       \ })
 
 " lean & mean status/tabline for vim that's light as air
-call dein#add('vim-airline/vim-airline-themes')
-call dein#add('bling/vim-airline', {'depends': 'vim-airline-themes'})
+call dein#add('bling/vim-airline')
   let g:airline#extensions#tabline#enabled = 1
   let g:airline#extensions#tabline#left_sep = ' '
   let g:airline#extensions#tabline#left_alt_sep = '¦'
