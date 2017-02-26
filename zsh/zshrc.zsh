@@ -63,3 +63,6 @@ EOBUNDLES
 
 #antigen theme evan # a skinny, topless prompt, use it if your computer is really slow
 antigen apply
+
+# activate the zsh-dircolors-solarized plugin while completing stuffs
+zstyle ':completion:*' list-colors "${(@s.:.)LS_COLORS}"
