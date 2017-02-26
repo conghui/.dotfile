@@ -353,33 +353,33 @@ EXEC 01;31  # Unix
 .psd 31
 
 # Archives, compressed
-.7z   1;35
-.apk  1;35
-.arj  1;35
-.bin  1;35
-.bz   1;35
-.bz2  1;35
-.cab  1;35  # Win
-.deb  1;35
-.dmg  1;35  # OSX
-.gem  1;35
-.gz   1;35
-.iso  1;35
-.jar  1;35
-.msi  1;35  # Win
-.rar  1;35
-.rpm  1;35
-.tar  1;35
-.tbz  1;35
-.tbz2 1;35
-.tgz  1;35
-.tx   1;35
-.war  1;35
-.xpi  1;35
-.xz   1;35
-.z    1;35
-.Z    1;35
-.zip  1;35
+.7z   0;31
+.apk  0;31
+.arj  0;31
+.bin  0;31
+.bz   0;31
+.bz2  0;31
+.cab  0;31  # Win
+.deb  0;31
+.dmg  0;31  # OSX
+.gem  0;31
+.gz   0;31
+.iso  0;31
+.jar  0;31
+.msi  0;31  # Win
+.rar  0;31
+.rpm  0;31
+.tar  0;31
+.tbz  0;31
+.tbz2 0;31
+.tgz  0;31
+.tx   0;31
+.war  0;31
+.xpi  0;31
+.xz   0;31
+.z    0;31
+.Z    0;31
+.zip  0;31
 
 # For testing
 .ANSI-30-black 30
