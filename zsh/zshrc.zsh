@@ -54,7 +54,6 @@ antigen bundles << EOBUNDLES
   fasd
   history-substring-search
   derekdreery/zsh-ag
-  joel-porquet/zsh-dircolors-solarized
   zsh-users/zsh-syntax-highlighting
   colored-man-pages
   sindresorhus/pure
@@ -64,5 +63,6 @@ EOBUNDLES
 #antigen theme evan # a skinny, topless prompt, use it if your computer is really slow
 antigen apply
 
-# activate the zsh-dircolors-solarized plugin while completing stuffs
+# color different file types and file extensions
+eval `dircolors ~/.dircolors`
 zstyle ':completion:*' list-colors "${(@s.:.)LS_COLORS}"
