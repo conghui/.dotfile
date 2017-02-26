@@ -63,3 +63,8 @@ Session.vim
 *.o
 *.d
 .envrc
+
+# eclipse
+.project
+.cproject
+.settings/

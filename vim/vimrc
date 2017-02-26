@@ -86,6 +86,12 @@ endif
 " the plugin manager itself
 call dein#add('Shougo/dein.vim')
 
+" base16 colorscheme
+call dein#add('chriskempson/base16-vim', {
+  \ 'hook_add': "colorscheme base16-onedark \n
+  \              highlight Pmenu ctermbg=red ctermfg=0f111111"
+  \ })
+
 " A solid language pack for Vim.
 call dein#add('sheerun/vim-polyglot')
 
@@ -242,7 +248,7 @@ if dein#check_install()
 endif
 
 " remove unused plugins
-"call map(dein#check_clean(), "delete(v:val, 'rf')")
+" call map(dein#check_clean(), "delete(v:val, 'rf')")
 
 call dein#end()
 call dein#save_state()
