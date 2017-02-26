@@ -71,6 +71,7 @@ set laststatus=2                                    "always shows the status lin
 set noshowmode
 set foldenable                                      "enable folds by default
 set foldlevelstart=99                               "open all folds by default
+set termguicolors
 
 " persistant undo
 set undofile
@@ -87,9 +88,8 @@ endif
 call dein#add('Shougo/dein.vim')
 
 " base16 colorscheme
-call dein#add('chriskempson/base16-vim', {
-  \ 'hook_add': "colorscheme base16-onedark \n
-  \              highlight Pmenu ctermbg=red ctermfg=0f111111"
+call dein#add('lifepillar/vim-solarized8', {
+  \ 'hook_add': 'colorscheme solarized8_dark'
   \ })
 
 " A solid language pack for Vim.

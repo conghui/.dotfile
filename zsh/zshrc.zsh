@@ -52,6 +52,7 @@ antigen bundles << EOBUNDLES
   git
   docker
   fasd
+  joel-porquet/zsh-dircolors-solarized
   history-substring-search
   derekdreery/zsh-ag
   zsh-users/zsh-syntax-highlighting
@@ -64,5 +65,4 @@ EOBUNDLES
 antigen apply
 
 # color different file types and file extensions
-eval `dircolors ~/.dircolors`
 zstyle ':completion:*' list-colors "${(@s.:.)LS_COLORS}"
