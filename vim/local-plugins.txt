@@ -72,11 +72,12 @@ call dein#add('Shougo/neoyank.vim')
 call dein#add('zenbro/mirror.vim')
 
 " set makeprgs based on different projects (Makefile, SConstruct)
-call dein#add('johnsyweb/vim-makeshift')
+call dein#add('vim-scripts/makeprgs')
 
 " solarized theme
 call dein#add('vim-airline/vim-airline-themes')
   let g:airline_theme='solarized'
+  let g:airline_powerline_fonts=1
 
 call dein#add('rhysd/vim-clang-format')
   let g:clang_format#code_style='google'
