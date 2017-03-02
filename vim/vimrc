@@ -160,6 +160,26 @@ call dein#add('Shougo/unite-outline')
     let g:unite_source_grep_recursive_opt = ''
   endif
 
+  " Source rec.
+  let s:source_file_rec = {
+      \ 'name' : 'file_rec',
+      \ 'description' : 'candidates from directory by recursive',
+      \ 'hooks' : {},
+      \ 'default_kind' : 'file',
+      \ 'max_candidates' : 50,
+      \ 'ignore_globs' : [
+      \         '.', '*~', '*.o', '*.exe', '*.bak',
+      \         'DS_Store', '*.pyc', '*.sw[po]', '*.class',
+      \         '.hg/**', '.git/**', '.bzr/**', '.svn/**',
+      \         'tags', 'tags-*'
+      \ ],
+      \ 'matchers' : [ 'converter_relative_word',
+      \                'matcher_default', 'matcher_hide_hidden_files' ],
+      \ }
+
+  call unite#custom#source('file_rec,file_rec/async', 'matchers',
+      \ ['converter_relative_word', 'matcher_project_ignore_files', 'matcher_default'])
+
   function! s:unite_settings() abort
     nmap <buffer> <esc> <plug>(unite_exit)
     imap <buffer> <esc> <plug>(unite_exit)
@@ -170,6 +190,7 @@ call dein#add('Shougo/unite-outline')
 
   nmap <space> [unite]
   nnoremap [unite] <nop>
+  nnoremap <silent> [unite]r :<C-u>Unite -toggle -auto-resize -buffer-name=files    file_rec/async<cr><c-u>
   nnoremap <silent> [unite]f :<C-u>Unite -toggle -auto-resize -buffer-name=files    file<cr><c-u>
   nnoremap <silent> [unite]b :<C-u>Unite -toggle -auto-resize -buffer-name=buffers  buffer file_mru<cr>
   nnoremap <silent> [unite]l :<C-u>Unite -toggle -auto-resize -buffer-name=line     line<cr>
