@@ -86,7 +86,7 @@ endif
 " the plugin manager itself
 call dein#add('Shougo/dein.vim')
 
-" base16 colorscheme
+" solarized colorscheme
 call dein#add('lifepillar/vim-solarized8', {
   \ 'hook_add': 'colorscheme solarized8_dark'
   \ })

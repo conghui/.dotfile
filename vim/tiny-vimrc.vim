@@ -30,7 +30,6 @@ set linebreak                                       "wrap long lines
 set display+=lastline                               "as much as possible of the last line will be displayed
 set wildmenu                                        "show list for autocomplete
 set wildmode=list:longest                           "when more than one match, list all matches and complete first match
-set wildignorecase                                  "case is ignored when completing file names and directories
 set textwidth=0                                     "set text width
 set hlsearch                                        "highlight searches
 set incsearch                                       "incremental searching
