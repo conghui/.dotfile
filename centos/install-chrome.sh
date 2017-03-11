@@ -49,7 +49,7 @@ Syntax: ./install_chrome.sh [-b] [-d] [-f [-f [-f]]] [-h] [-n] [-q] [-r] [-s]
 }
 
 # Current version of this script
-version="7.50"
+version="7.51"
 
 # This script will download/install the following for an installation:
 
@@ -83,6 +83,13 @@ version="7.50"
 # Note that you can't run Google Chrome as root - it stops you from doing so.
 
 # Revision history:
+
+# 7.51 - 22nd December 2016
+# - Superuser now required to run cleanup code in error() function.
+# - A checksum and size has been added to version.dat and this is checked
+#   (against the uncompressed version) when an upgraded script is downloaded.
+# - A new gcc 6.3.0 release meant a fresh build of the libstdc++ library
+#   and a version bump of the chrome-deps RPM.
 
 # 7.50 - 26th August 2016
 # - If the script is upgraded and re-run, pass a new -r option to avoid a
@@ -669,15 +676,19 @@ error()
       echo >&2
    fi
 
-   # A failure means we have to uninstall Google Chrome
-   # if it got on the system and we were installing, but only
-   # if we got past the check that it was running
-   if [ $do_install -eq 1 -a $past_run_check -eq 1 ]
+   # Only uninstall/clean up if the superuser
+   if [ `id -u` -eq 0 ]
    then
-      uninstall_google_chrome
-   fi
+      # A failure means we have to uninstall Google Chrome
+      # if it got on the system and we were installing, but only
+      # if we got past the check that it was running
+      if [ $do_install -eq 1 -a $past_run_check -eq 1 ]
+      then
+         uninstall_google_chrome
+      fi
 
-   clean_up
+      clean_up
+   fi
 
    exit 1
 }
@@ -859,7 +870,7 @@ init_vars()
    chrome_repo="/etc/yum.repos.d/google-chrome.repo"
    app_tree="/usr/share/applications"
    chrome_desktop="$app_tree/google-chrome.desktop"
-   deps_version="3.14"
+   deps_version="3.15"
    download_lib="libstdc++.so.6"
    download_lib_xz="$download_lib.xz"
 
@@ -1139,8 +1150,10 @@ check_version()
       return
    fi
 
-   newversion="`cat \"$checkfile\"`"
-   newversion="`echo $newversion`"
+   newversionstr="`cat \"$checkfile\"`"
+   newversion="`echo $newversionstr | awk '{ print $1; }'`"
+   newcksum="`echo $newversionstr | awk '{ print $2; }'`"
+   newsize="`echo $newversionstr | awk '{ print $3; }'`"
    rm -f "$checkfile"
 
    if [ "$newversion" = "$version" ]
@@ -1155,12 +1168,22 @@ check_version()
          xzcat -f "$dlbase" >$scriptname 2>/dev/null
          if [ $? -ne 0 -o ! -s $scriptname ]
          then
-            # Corrupted compressed download, try uncompressed one
+            # Corrupted compressed download, delete it and try uncompressed one
+            rm -f "$dlbase" "$scriptname"
             download_file "$upgradeurl"
          fi
-      else
+      else 
          # If compressed version didn't download, try uncompressed one
          download_file "$upgradeurl"
+      fi
+
+      if [ "$newcksum" != "" -a "$newsize" != "" ]
+      then
+         if [ "`cksum \"$scriptname\"`" != "$newcksum $newsize $scriptname" ]
+         then 
+            rm -f "$scriptname"
+            error "Download of $scriptname $newversion failed (bad checksum)"
+         fi
       fi
 
       if [ "$scriptname" -ef "$script" ]
@@ -1741,7 +1764,7 @@ install_prebuilt_library()
       fi
    fi
 
-   download_file "$checksite$download_lib_xz" "$download_lib_xz" "1068373812 347324 $download_lib_xz" 1
+   download_file "$checksite$download_lib_xz" "$download_lib_xz" "3945412655 348212 $download_lib_xz" 1
 
    destlib="$libdir/$download_lib"
    xzcat -f "$download_lib_xz" >$destlib
@@ -1911,6 +1934,8 @@ rm -rf %{buildroot}
 
 # Changelog, with annoyingly "wrong" US date format
 %changelog
+* Thu Dec 22 2016 Richard K. Lloyd <rklloyd@gmail.com> - 3.15-1
+- New libstdc++ library release.
 * Fri Aug 26 2016 Richard K. Lloyd <rklloyd@gmail.com> - 3.14-1
 - New libstdc++ library release.
 * Fri Apr 29 2016 Richard K. Lloyd <rklloyd@gmail.com> - 3.13-1
@@ -2248,7 +2273,7 @@ main_code()
       then
          rpm_extra_packages="$rpm_extra_packages selinux-policy"
       fi
-
+      
       # Make sure google-chrome-stable and chrome-deps-* dependencies are present
       # but prompt for their download/install if any aren't 
       yum_install prompt redhat-lsb xdg-utils GConf2 libXScrnSaver libX11 gnome-keyring nss PackageKit libexif dbus $rpm_extra_packages
