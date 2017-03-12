@@ -68,3 +68,6 @@ Session.vim
 .project
 .cproject
 .settings/
+
+# sunway
+.tune_err
