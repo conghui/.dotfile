@@ -52,6 +52,7 @@ antigen bundles << EOBUNDLES
   git
   docker
   fasd
+  pip
   joel-porquet/zsh-dircolors-solarized
   history-substring-search
   derekdreery/zsh-ag
