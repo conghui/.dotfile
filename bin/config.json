@@ -1,8 +1,0 @@
-{
-    "server":["104.131.137.137"],
-    "server_port":13313,
-    "local_port":1080,
-    "password":"xinwuguaai2009",
-    "timeout":300,
-	"method":"aes-256-cfb"
-}

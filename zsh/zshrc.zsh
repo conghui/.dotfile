@@ -47,7 +47,7 @@ source ${DOTFILEDIR}/bundle/antigen/antigen.zsh
 
 antigen use oh-my-zsh # use oh-my-zsh as library
 antigen bundles << EOBUNDLES
-  mafredri/zsh-async                        # required by other plugins
+  mafredri/zsh-async
   zsh-users/zsh-completions
   git
   docker
@@ -58,12 +58,9 @@ antigen bundles << EOBUNDLES
   derekdreery/zsh-ag
   zsh-users/zsh-syntax-highlighting
   colored-man-pages
-  sindresorhus/pure
   ${DOTFILEDIR}/zsh/plugin
 EOBUNDLES
 
 #antigen theme evan # a skinny, topless prompt, use it if your computer is really slow
+antigen theme ys
 antigen apply
-
-# color different file types and file extensions
-zstyle ':completion:*' list-colors "${(@s.:.)LS_COLORS}"

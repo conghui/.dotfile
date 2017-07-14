@@ -1,8 +1,12 @@
 #! /bin/bash
 
 # Google Chrome Installer/Uninstaller for 64-bit RHEL/CentOS 6 or 7
-# (C) Richard K. Lloyd 2016 <rklloyd@gmail.com>
+# (C) Richard K. Lloyd 2017 <rklloyd@gmail.com>
 # See https://chrome.richardlloyd.org.uk/ for further details.
+
+# Barring bug fixes, this is the final version of the script!
+# Google Chrome 59+ will *not* work on RHEL/CentOS 6, so users
+# on that platform should not upgrade beyond version 58.
 
 # This script is in the public domain and has no warranty.
 # It needs to be run as root because it installs/uninstalls RPMs.
@@ -49,7 +53,7 @@ Syntax: ./install_chrome.sh [-b] [-d] [-f [-f [-f]]] [-h] [-n] [-q] [-r] [-s]
 }
 
 # Current version of this script
-version="7.51"
+version="8.00"
 
 # This script will download/install the following for an installation:
 
@@ -83,6 +87,19 @@ version="7.51"
 # Note that you can't run Google Chrome as root - it stops you from doing so.
 
 # Revision history:
+
+# 8.00 - 4th May 2017
+# - Barring bug fixes, this is the final release of the script because
+#   Google Chrome 59+ will no longer work on RHEL/CentOS 6.
+# - Changed all 2016 references to 2017.
+# - Moved to gcc 7.1.0 for libstdc++ and bumped chrome-deps version
+#   to 4.00 because of that.
+# - If Google Chrome 58 is installed on RHEL/CentOS 6, warn that it's the
+#   last major release that works on RHEL/CentOS 6 and that it will be an
+#   increasing security risk to run it in the long term.
+# - If version 59+ of Google Chrome is downloadable/installable on RHEL/CentOS 6,
+#   refuse to download/install it and delete the Chrome repo file to
+#   prevent "yum update" downloading it.
 
 # 7.51 - 22nd December 2016
 # - Superuser now required to run cleanup code in error() function.
@@ -870,9 +887,16 @@ init_vars()
    chrome_repo="/etc/yum.repos.d/google-chrome.repo"
    app_tree="/usr/share/applications"
    chrome_desktop="$app_tree/google-chrome.desktop"
-   deps_version="3.15"
+   deps_version="4.00"
    download_lib="libstdc++.so.6"
    download_lib_xz="$download_lib.xz"
+
+   # Don't get clever and increase good_version to try to install a
+   # version 59+ Google Chrome - you'll just break the browser and
+   # it'll all end in tears with no way to downgrade again!
+   good_version=58 # Last good version - do NOT edit this
+   let bad_version=$good_version+1
+   bad_version="$chrome_name ${bad_version}+"
 
    # Find the most stable installed Google Chrome and use that
    # as the default for the rest of the script (override with -b, -s or -U)
@@ -1035,7 +1059,7 @@ install_custom_lib()
    fi
      
    cat <<@EOF >"$customsrc"
-/* missing_functions.c 3.00 (C) Richard K. Lloyd 2016 <rklloyd@gmail.com>
+/* missing_functions.c 3.00 (C) Richard K. Lloyd 2017 <rklloyd@gmail.com>
 
    Provides a gnome_keyring_attribute_list_new() function (was
    a macro in CentOS 6 causing a missing symbol error when Google Chrome
@@ -1262,7 +1286,38 @@ find_latest_chrome_version()
       warning "Unable to determine latest $chrome_name version number" "n"
    else
       message "Latest $rpm_name version number is $chrome_latest" "n"
+      if [ $centos -eq 6 ]
+      then
+         case "$chrome_latest" in
+         ${good_version}.*)
+            warning "$chrome_name $good_version is the last major release that will work on RHEL/CentOS $centos" ;;
+         *) for eachrepo in google-chrome google-chrome-beta google-chrome-unstable
+            do
+               fullrepo=/etc/yum.repos.d/$eachrepo.repo
+               if [ -s $fullrepo ]
+               then
+                  rm -f $fullrepo
+                  message "Deleted $fullrepo to prevent future updates" "n"
+               fi
+            done
+            error "Sorry, but $bad_version won't work on RHEL/CentOS $centos" ;;
+         esac
+      fi
       chrome_name="$chrome_name $chrome_latest"
+   fi
+}
+
+final_warning()
+# On RHEL/CentOS 6, warn that Google Chrome 58 is the end of the road
+# and running it long term isn't a good idea for security reasons
+{
+   if [ "$chrome_installed" != "" -a $centos -eq 6 ]
+   then
+      case "$chrome_installed" in
+      ${good_version}.*)
+         warning "Google Chrome $good_version is the last major version that will work on RHEL/CentOS $centos" "n"
+         warning "Running it long term will become an increasing security risk!" "n" ;;
+      esac
    fi
 }
 
@@ -1287,6 +1342,7 @@ get_installed_version()
       chrome_installed="`\"$chrome_wrapper\" --version 2>/dev/null | awk '{ print $3; }'`"
    fi
 
+   final_warning
 }
 
 get_downloaded_version()
@@ -1403,7 +1459,7 @@ install_chrome_rpm()
       then
          message "$chrome_name was installed successfully"
          install_message="installed successfully"
-
+         final_warning
       else
          error "Newly-installed Google Chrome version ($chrome_installed) not the latest one ($chrome_latest)"
       fi
@@ -1764,7 +1820,7 @@ install_prebuilt_library()
       fi
    fi
 
-   download_file "$checksite$download_lib_xz" "$download_lib_xz" "3945412655 348212 $download_lib_xz" 1
+   download_file "$checksite$download_lib_xz" "$download_lib_xz" "3060059325 350920 $download_lib_xz" 1
 
    destlib="$libdir/$download_lib"
    xzcat -f "$download_lib_xz" >$destlib
@@ -1814,6 +1870,7 @@ final_messages()
 
    echo "$chrome_name $fedlibs $install_message."
    echo "Please run the browser via the '`basename $chrome_wrapper`' command as a non-root user."
+   final_warning
    echo
 
    echo "To update Google Chrome, run \"yum update $rpm_name\" or"
@@ -1934,6 +1991,8 @@ rm -rf %{buildroot}
 
 # Changelog, with annoyingly "wrong" US date format
 %changelog
+* Thu May  4 2017 Richard K. Lloyd <rklloyd@gmail.com> - 4.00-1
+- New libstdc++ library release.
 * Thu Dec 22 2016 Richard K. Lloyd <rklloyd@gmail.com> - 3.15-1
 - New libstdc++ library release.
 * Fri Aug 26 2016 Richard K. Lloyd <rklloyd@gmail.com> - 3.14-1
@@ -2107,7 +2166,7 @@ adjust_chrome_defaults()
 
    ( cat <<@EOF
 #! /bin/bash
-# @MODIFY_WRAPPER@ @WRAPPER_MOD_VERSION@ (C) Richard K. Lloyd 2016 <rklloyd@gmail.com>
+# @MODIFY_WRAPPER@ @WRAPPER_MOD_VERSION@ (C) Richard K. Lloyd 2017 <rklloyd@gmail.com>
 # Created by @SCRIPTNAME@ and included in the @DEPS_NAME@ RPM
 # to modify @CHROME_DEFAULTS@ in the following ways:
 # - Remove any existing setting of repo_add_once
