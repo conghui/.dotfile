@@ -1,0 +1,1 @@
+setopt magic_equal_subst
