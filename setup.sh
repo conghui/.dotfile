@@ -6,6 +6,7 @@ plugins="
   zsh-users/antigen
   conghui/terminal-colors
   bssthu/tunet_py
+  powerline/fonts
 "
 
 if [[ -z $DOTFILEDIR ]]; then
@@ -26,9 +27,6 @@ for repo in $plugins; do
     pushd $local_dir; git pull; popd
   fi
 done
-
-# install Menlo fonts
-curl -L https://github.com/hbin/top-programming-fonts/raw/master/install.sh | bash
 
 # link configurations to $HOME
 for f in ${DOTFILEDIR}/config/.[!.]*; do

@@ -1,24 +1,41 @@
 # vim: fdm=marker fdl=0 ft=zsh
 # keep this file as simple & clean as possible
+
+#########################################################################
+## TWO IMPORTANT SWITCHES
+## 1. set LINUXBREW_HOME to where the linuxbrew is installed
+## 2. set _ANTIGEN_CACHE_ENABLED to true if you don't modify this file
+#########################################################################
+#
+# independent variables
+export LANG=en_US.UTF-8
+export TERM="xterm-256color"
+export PAGER="less"
+export DOTFILEDIR=${HOME}/.dotfile
+export INSTALL_ROOT=${HOME}/softs/install
+# source zsh/custom at first # {{{
+if ls $DOTFILEDIR/zsh/custom/ | grep -q '.zsh'; then
+  for f in $DOTFILEDIR/zsh/custom/*.zsh; do
+    source $f
+  done
+fi
+# }}}
+
 # setup PATH for linuxbrew/homebrew # {{{
+LINUXBREW_HOME=${LINUXBREW_HOME:-$HOME/.linuxbrew}
 if [[ "$OSTYPE" == "linux-gnu" ]]; then # only set for Linux
-  export PATH="$HOME/.linuxbrew/bin":"$HOME/.linuxbrew/sbin":$PATH
-  export MANPATH="$HOME/.linuxbrew/share/man":$MANPATH
-  export INFOPATH="$HOME/.linuxbrew/share/info":$INFOPATH
+  export PATH="$LINUXBREW_HOME/bin":"$LINUXBREW_HOME/sbin":$PATH
+  export MANPATH="$LINUXBREW_HOME/share/man":$MANPATH
+  export INFOPATH="$LINUXBREW_HOME/share/info":$INFOPATH
 elif [[ "$OSTYPE" == "darwin"* ]]; then # only set for MAC
   export PATH="$(brew --prefix coreutils)/libexec/gnubin":$PATH
 fi
 # }}}
 
-# variables
-[[ -f ~/.linuxbrew/bin/vim ]] && VIM=~/.linuxbrew/bin/vim  || VIM=vim
-export LANG=en_US.UTF-8
+# vim editor
+[[ -f $LINUXBREW_HOME/bin/vim ]] && VIM=$LINUXBREW_HOME/bin/vim  || VIM=vim
 export EDITOR="$VIM -u $HOME/.dotfile/vim/vimrc"
 export GIT_EDITOR=${EDITOR}
-export TERM="xterm-256color"
-export PAGER="less"
-export DOTFILEDIR=${HOME}/.dotfile
-export INSTALL_ROOT=${HOME}/softs/install
 
 # aliases
 alias e=$EDITOR
@@ -32,13 +49,6 @@ if ! readlink ${HOME}/.antigen | grep 'dotfile/bundle' -q; then
 
   echo "linking ${HOME}/.antigen to ${DOTFILEDIR}/bundle/antigen/.antigen"
   rm -rf ${HOME}/.antigen && ln -s ${DOTFILEDIR}/bundle/antigen/.antigen ${HOME}/.antigen || exit
-fi
-# }}}
-# source config before antigen# {{{
-if ls $DOTFILEDIR/zsh/custom/ | grep -q '.zsh'; then
-  for f in $DOTFILEDIR/zsh/custom/*.zsh; do
-    source $f
-  done
 fi
 # }}}
 # set true to improve performance, but need to run `antigen-reset` after any changes
