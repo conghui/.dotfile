@@ -38,6 +38,7 @@ export TERM="xterm-256color"
 export PAGER="less"
 export DOTFILEDIR=${HOME}/.dotfile
 export INSTALL_ROOT=${HOME}/softs/install
+export SOLARIZED_THEME=light
 
 # aliases
 alias ssh='ssh -Y'
@@ -73,7 +74,7 @@ antigen bundles << EOBUNDLES
 EOBUNDLES
 
 #antigen theme evan # a skinny, topless prompt, use it if your computer is really slow
-antigen theme ys
+antigen theme blinks
 antigen apply
 
 # config after antigen
