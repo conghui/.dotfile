@@ -32,13 +32,14 @@ elif [[ "$OSTYPE" == "darwin"* ]]; then # only set for MAC
 fi
 # }}}
 
-# vim editor
-[[ -f $LINUXBREW_HOME/bin/vim ]] && VIM=$LINUXBREW_HOME/bin/vim  || VIM=vim
-export EDITOR="$VIM -u $HOME/.dotfile/vim/vimrc"
-export GIT_EDITOR=${EDITOR}
+# variables
+export LANG=en_US.UTF-8
+export TERM="xterm-256color"
+export PAGER="less"
+export DOTFILEDIR=${HOME}/.dotfile
+export INSTALL_ROOT=${HOME}/softs/install
 
 # aliases
-alias e=$EDITOR
 alias ssh='ssh -Y'
 
 # make ~/.antigen inside dotfile# {{{
@@ -74,3 +75,11 @@ EOBUNDLES
 #antigen theme evan # a skinny, topless prompt, use it if your computer is really slow
 antigen theme ys
 antigen apply
+
+# config after antigen
+if [[ -z ${EDITOR+x} ]]; then
+  echo "EDITOR is not set!"
+else
+  export GIT_EDITOR=${EDITOR}
+  alias e=$EDITOR
+fi

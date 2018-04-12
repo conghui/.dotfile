@@ -63,7 +63,7 @@ set visualbell                                      "enable visual bell and set 
 set t_vb=                                           "disable bell
 
 " ui options
-set background=dark
+set background=light
 set showmatch                                       "automatically highlight matching braces/brackets/etc.
 set matchtime=2                                     "tens of a second to show matching parentheses
 set number                                          "precede each line with its line number
@@ -87,8 +87,8 @@ endif
 call dein#add('Shougo/dein.vim')
 
 " solarized colorscheme
-call dein#add('lifepillar/vim-solarized8', {
-  \ 'hook_add': 'colorscheme solarized8_dark'
+call dein#add('altercation/vim-colors-solarized', {
+  \ 'hook_add': 'colorscheme solarized'
   \ })
 
 " A solid language pack for Vim.
@@ -103,6 +103,11 @@ call dein#add('haya14busa/incsearch.vim')
 
 " comment stuff out
 call dein#add('tpope/vim-commentary')
+
+" solarized theme
+call dein#add('vim-airline/vim-airline-themes')
+  let g:airline_theme='solarized'
+  let g:airline_powerline_fonts=1
 
 call dein#add('Shougo/neocomplete.vim', {
       \ 'if': "has('lua')",
@@ -258,6 +263,14 @@ autocmd BufRead,BufNewFile gitconfig    set filetype=gitconfig
 "==================================================
 if filereadable(expand('$DOTFILEDIR/vim/local-plugins.vim'))
   execute 'source' expand('$DOTFILEDIR/vim/local-plugins.vim')
+endif
+
+"==================================================
+" GUIConfig: GUI configuration
+"==================================================
+if has("gui_macvim")
+    " set macvim specific stuff
+    set guifont=Meslo\ LG\ S\ DZ\ Regular\ for\ Powerline:h14
 endif
 
 "==================================================
