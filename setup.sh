@@ -7,6 +7,8 @@ plugins="
   conghui/terminal-colors
   bssthu/tunet_py
   powerline/fonts
+  seebi/tmux-colors-solarized
+  tmux-plugins/tpm
 "
 
 if [[ -z $DOTFILEDIR ]]; then

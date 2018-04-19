@@ -41,7 +41,7 @@ set visualbell                                      "enable visual bell and set 
 set t_vb=                                           "disable bell
 
 " ui options
-set background=dark
+set background=light
 set showmatch                                       "automatically highlight matching braces/brackets/etc.
 set matchtime=2                                     "tens of a second to show matching parentheses
 set number                                          "precede each line with its line number
