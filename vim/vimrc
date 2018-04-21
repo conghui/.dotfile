@@ -8,7 +8,7 @@ if &compatible
 endif
 
 " Load dein.
-let $CACHE = expand('~/.dotfile/bundle')
+let $CACHE = expand('$DOTFILEDIR/bundle')
 let s:dein_dir = finddir('dein.vim', '.;')
 if s:dein_dir != '' || &runtimepath !~ '/dein.vim'
   if s:dein_dir == '' && &runtimepath !~ '/dein.vim'
@@ -80,6 +80,70 @@ if !isdirectory(&undodir)
 endif
 
 "==================================================
+" GUIConfig: GUI configuration
+"==================================================
+if has("gui_macvim")
+    " set macvim specific stuff
+    set guifont=Meslo\ LG\ S\ DZ\ Regular\ for\ Powerline:h14
+endif
+
+
+"==================================================
+ " Mappings:
+"==================================================
+if exists(':tnoremap')
+  tnoremap <Esc> <C-\><C-n>
+endif
+
+" copy and paste globally
+vnoremap    "+Y  :!xclip -f -sel clip<cr>
+noremap     "+P :r!xclip -o -sel clip<cr>
+
+" [Easy indent in visual mode]
+xnoremap    <   <gv
+xnoremap    >   >gv
+
+" [Up down move]
+nnoremap    j       gj
+nnoremap    k       gk
+nnoremap    gj      j
+nnoremap    gk      k
+
+" [Misc]
+nnoremap    J       gJ
+nnoremap    gJ      J
+nnoremap    -       _
+nnoremap    _       -
+
+inoremap {<CR> {<CR>}<ESC>O
+
+" [Spell checking]"
+map <leader>se :setlocal spell spelllang=en_us<cr>
+map <leader>sn :setlocal nospell<cr>
+
+"==================================================
+" Autocmd:
+"==================================================
+
+" go back to previous position of cursor if any
+autocmd BufReadPost *
+  \ if line("'\"") > 0 && line("'\"") <= line("$") |
+  \  exe 'normal! g`"zvzz' |
+  \ endif
+
+autocmd FileType markdown setlocal nolist
+autocmd FileType vim setlocal fdm=indent keywordprg=:help
+autocmd FileType python set shiftwidth=2 softtabstop=2 tabstop=2 expandtab
+autocmd FilterWritePre * if &diff | setlocal wrap< | endif
+
+" file types
+autocmd BufRead,BufNewFile SConstruct   set filetype=python
+autocmd BufRead,BufNewFile SConscript   set filetype=python
+autocmd BufRead,BufNewFile *.cu,*.cuda  set filetype=cpp
+autocmd BufRead,BufNewFile *.maxj       set filetype=java
+autocmd BufRead,BufNewFile gitconfig    set filetype=gitconfig
+
+"==================================================
 " Plugins:
 "==================================================
 
@@ -93,6 +157,14 @@ call dein#add('altercation/vim-colors-solarized', {
 
 " A solid language pack for Vim.
 call dein#add('sheerun/vim-polyglot')
+
+" deoplete
+call dein#add('Shougo/deoplete.nvim')
+if !has('nvim')
+  call dein#add('roxma/nvim-yarp')
+  call dein#add('roxma/vim-hug-neovim-rpc')
+endif
+let g:deoplete#enable_at_startup = 1
 
 " incrementally highlights ALL pattern matches unlike default 'incsearch'.
 call dein#add('haya14busa/incsearch.vim')
@@ -108,12 +180,6 @@ call dein#add('tpope/vim-commentary')
 call dein#add('vim-airline/vim-airline-themes')
   let g:airline_theme='solarized'
   let g:airline_powerline_fonts=1
-
-call dein#add('Shougo/neocomplete.vim', {
-      \ 'if': "has('lua')",
-      \ 'on_event': 'InsertEnter',
-      \ 'hook_source': 'let g:neocomplete#enable_at_startup = 1'
-      \ })
 
 " lean & mean status/tabline for vim that's light as air
 call dein#add('bling/vim-airline')
@@ -136,6 +202,8 @@ call dein#add('Shougo/unite.vim')
 call dein#add('thinca/vim-unite-history')
 call dein#add('Shougo/neomru.vim')
 call dein#add('Shougo/unite-outline')
+call dein#add('Shougo/neoyank.vim')
+  nnoremap <silent> [unite]y :<C-u>Unite -toggle -auto-resize -buffer-name=yanks    history/yank<cr>
   let g:unite_enable_auto_select = 0
   let g:unite_source_rec_max_cache_files=100
   call unite#custom#profile('default', 'context', {
@@ -203,75 +271,49 @@ call dein#add('Shougo/unite-outline')
   nnoremap <silent> [unite]o :<C-u>Unite -toggle -auto-resize -buffer-name=outline  outline<cr>
   nnoremap <silent> [unite]c :<C-u>Unite -default-action=execute -buffer-name=commands  history/command<CR>
 
-"==================================================
- " Mappings:
-"==================================================
-if exists(':tnoremap')
-  tnoremap <Esc> <C-\><C-n>
-endif
+" Interactive command execution in Vim.
+call dein#add('Shougo/vimproc.vim', {'build': 'make'}, {'on_source': 'unite.vim'})
 
-" copy and paste globally
-vnoremap    "+Y  :!xclip -f -sel clip<cr>
-noremap     "+P :r!xclip -o -sel clip<cr>
+" True Sublime Text style multiple selections for Vim
+call dein#add('terryma/vim-multiple-cursors')
 
-" [Easy indent in visual mode]
-xnoremap    <   <gv
-xnoremap    >   >gv
+" fugitive.vim: a Git wrapper so awesome, it should be illegal
+call dein#add('tpope/vim-fugitive')
 
-" [Up down move]
-nnoremap    j       gj
-nnoremap    k       gk
-nnoremap    gj      j
-nnoremap    gk      k
+" gitk for Vim.
+call dein#add ('gregsexton/gitv', {'on_cmd': 'Gitv'})
 
-" [Misc]
-nnoremap    J       gJ
-nnoremap    gJ      J
-nnoremap    -       _
-nnoremap    _       -
+" A Vim plugin which shows a git diff in the gutter (sign column) and stages/undoes hunks.
+call dein#add('airblade/vim-gitgutter')
 
-inoremap {<CR> {<CR>}<ESC>O
+" extended % matching for HTML, LaTeX, and many other languages
+call dein#add('tmhedberg/matchit')
 
-" [Spell checking]"
-map <leader>se :setlocal spell spelllang=en_us<cr>
-map <leader>sn :setlocal nospell<cr>
+" wisely add "end" in ruby, endfunction/endif/more in vim script, etc
+call dein#add('tpope/vim-endwise')
 
-"==================================================
-" Autocmd:
-"==================================================
+" Better whitespace highlighting for Vim
+call dein#add('ntpeters/vim-better-whitespace')
+  autocmd BufEnter * EnableStripWhitespaceOnSave
+  autocmd BufEnter * DisableWhitespace
 
-" go back to previous position of cursor if any
-autocmd BufReadPost *
-  \ if line("'\"") > 0 && line("'\"") <= line("$") |
-  \  exe 'normal! g`"zvzz' |
-  \ endif
+" vim-interestingwords allows you to highlight and navigate through (multiple) different words in a buffer
+call dein#add('lfv89/vim-interestingwords')
 
-autocmd FileType markdown setlocal nolist
-autocmd FileType vim setlocal fdm=indent keywordprg=:help
-autocmd FileType python set shiftwidth=2 softtabstop=2 tabstop=2 expandtab
-autocmd FilterWritePre * if &diff | setlocal wrap< | endif
+" A simple, easy-to-use Vim alignment plugin.
+call dein#add('junegunn/vim-easy-align', {
+      \ 'hook_add': 'vmap <Enter> <Plug>(EasyAlign)'
+      \})
 
-" file types
-autocmd BufRead,BufNewFile SConstruct   set filetype=python
-autocmd BufRead,BufNewFile SConscript   set filetype=python
-autocmd BufRead,BufNewFile *.cu,*.cuda  set filetype=cpp
-autocmd BufRead,BufNewFile *.maxj       set filetype=java
-autocmd BufRead,BufNewFile gitconfig    set filetype=gitconfig
+" set makeprgs based on different projects (Makefile, SConstruct)
+call dein#add('vim-scripts/makeprgs')
 
 "==================================================
 " LocalPlugins: load local plugins
 "==================================================
-if filereadable(expand('$DOTFILEDIR/vim/local-plugins.vim'))
-  execute 'source' expand('$DOTFILEDIR/vim/local-plugins.vim')
-endif
-
-"==================================================
-" GUIConfig: GUI configuration
-"==================================================
-if has("gui_macvim")
-    " set macvim specific stuff
-    set guifont=Meslo\ LG\ S\ DZ\ Regular\ for\ Powerline:h14
-endif
+for f in split(glob('$DOTFILEDIR/vim/custom/*.vim'), '\n')
+    exe 'source' f
+endfor
 
 "==================================================
 " DeinEnd: install & remove & end

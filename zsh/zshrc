@@ -1,0 +1,48 @@
+# vim: fdm=marker fdl=0 ft=zsh
+# keep this file as simple & clean as possible
+
+#########################################################################
+# - Customizd scripts are stored in $DOTFILEDIR/zsh/custom
+# - Scripts for all users are stored in $DOTFILEDIR/zsh/plugin
+#########################################################################
+
+export MYHOME=${MYHOME:-$HOME}
+export DOTFILEDIR=${MYHOME}/.dotfile
+export INSTALL_ROOT=${MYHOME}/softs/install
+export ADOTDIR=${MYHOME}/.antigen
+
+# source zsh/custom at first
+if ls $DOTFILEDIR/zsh/custom/ | grep -q '.zsh'; then
+  for f in $DOTFILEDIR/zsh/custom/*.zsh; do source $f; done
+fi
+
+# make ~/.antigen inside dotfile
+if ! readlink ${MYHOME}/.antigen | grep 'dotfile/bundle' -q; then
+  echo "${MYHOME}/.antigen is not inside dotfile"
+  echo "create a directory (if not exist) in ${DOTFILEDIR} to save zsh plugins"
+  mkdir -p ${DOTFILEDIR}/bundle/antigen/.antigen
+
+  echo "linking ${MYHOME}/.antigen to ${DOTFILEDIR}/bundle/antigen/.antigen"
+  rm -rf ${MYHOME}/.antigen && ln -s ${DOTFILEDIR}/bundle/antigen/.antigen ${MYHOME}/.antigen || exit
+fi
+
+source ${DOTFILEDIR}/bundle/antigen/antigen.zsh
+antigen use oh-my-zsh # use oh-my-zsh as library
+antigen bundles << EOBUNDLES
+  mafredri/zsh-async
+  zsh-users/zsh-completions
+  git
+  docker
+  fasd
+  pip
+  joel-porquet/zsh-dircolors-solarized
+  history-substring-search
+  derekdreery/zsh-ag
+  zsh-users/zsh-syntax-highlighting
+  colored-man-pages
+  ${DOTFILEDIR}/zsh/plugin
+EOBUNDLES
+
+#antigen theme evan # a skinny, topless prompt, use it if your computer is really slow
+antigen theme blinks
+SOLARIZED_THEME=light antigen apply

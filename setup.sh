@@ -8,7 +8,6 @@ plugins="
   bssthu/tunet_py
   powerline/fonts
   seebi/tmux-colors-solarized
-  tmux-plugins/tpm
 "
 
 if [[ -z $DOTFILEDIR ]]; then
@@ -33,8 +32,8 @@ done
 # link configurations to $HOME
 for f in ${DOTFILEDIR}/config/.[!.]*; do
   lnk=${HOME}/${f##*/}
-  rm -f $lnk; ln -s $f $lnk
-  echo "linking $lnk ==> $f"
+  # rm -f $lnk; ln -s $f $lnk
+  echo "please make links manualy: $lnk ==> $f"
 done
 
 echo "installtion complete"

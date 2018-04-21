@@ -1,0 +1,2 @@
+# set true to improve performance, but need to run `antigen-reset` after any changes
+export _ANTIGEN_CACHE_ENABLED=false

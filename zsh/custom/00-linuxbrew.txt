@@ -1,0 +1,5 @@
+LINUXBREW_HOME=$MYHOME/.linuxbrew
+
+export PATH="$LINUXBREW_HOME/bin":"$LINUXBREW_HOME/sbin":$PATH
+export MANPATH="$LINUXBREW_HOME/share/man":$MANPATH
+export INFOPATH="$LINUXBREW_HOME/share/info":$INFOPATH

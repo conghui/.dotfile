@@ -1,0 +1,5 @@
+export EDITOR="$MYHOME/.linuxbrew/bin/vim -u $DOTFILEDIR/vim/vimrc"
+export GIT_EDITOR=${EDITOR}
+
+alias vim="vim -u $DOTFILEDIR/vim/tiny-vimrc.vim"
+alias e=$EDITOR
