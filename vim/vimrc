@@ -71,6 +71,7 @@ set laststatus=2                                    "always shows the status lin
 set noshowmode
 set foldenable                                      "enable folds by default
 set foldlevelstart=99                               "open all folds by default
+set hidden
 
 " persistant undo
 set undofile
