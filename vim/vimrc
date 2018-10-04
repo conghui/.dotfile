@@ -1,9 +1,6 @@
-"==================================================
-" Dein: setup
-"==================================================
+" dein setup{{{
 if &compatible | set nocompatible | endif
 
-" Load dein.
 let $CACHE = expand('$DOTFILEDIR/bundle')
 let s:dein_dir = finddir('dein.vim', '.;')
 if s:dein_dir != '' || &runtimepath !~ '/dein.vim'
@@ -15,205 +12,87 @@ if s:dein_dir != '' || &runtimepath !~ '/dein.vim'
   endif
   execute 'set runtimepath^=' . substitute(fnamemodify(s:dein_dir, ':p') , '/$', '', '')
 endif
-
+"}}}
 if dein#load_state(expand('$CACHE/dein'), expand('<sfile>'))
-call dein#begin(expand('$CACHE/dein'), expand('<sfile>'))
+  call dein#begin(expand('$CACHE/dein'), expand('<sfile>'))
+  call dein#add('Shougo/dein.vim')                                                    " the plugin manager itself
+  call dein#add('sheerun/vim-polyglot')                                               " A solid language pack for Vim.
+  call dein#add('tpope/vim-commentary')                                               " comment stuff out
+  call dein#add('SirVer/ultisnips')                                                   " snippet engine
+  call dein#add('honza/vim-snippets')                                                 " different snippets
+  call dein#add('terryma/vim-multiple-cursors')                                       " multiple selections for Vim
+  call dein#add('majutsushi/tagbar', {'on_cmd': 'Tagbar'})                            " displays tags in a window, ordered by scope
+  call dein#add('tpope/vim-fugitive')                                                 " Git wrapper
+  call dein#add('lfv89/vim-interestingwords')                                         " highlight/navigate through (multiple) different words
+  call dein#add('vim-scripts/makeprgs')                                               " set makeprgs based on different projects
+  call dein#add('altercation/vim-colors-solarized', {'hook_add': 'colorscheme solarized'})
+  call dein#add('itchyny/lightline.vim', {"hook_add": "let g:lightline = {'colorscheme': 'solarized'}"})  " statusline for Vim
+  call dein#add('Shougo/deoplete.nvim', {'hook_add': 'let g:deoplete#enable_at_startup = 1'})             " completion engine
 
-"==================================================
-" Options:
-"==================================================
+  call dein#add('ntpeters/vim-better-whitespace', {
+        \ 'hook_add': join(["let g:better_whitespace_enabled=1",
+        \                   "let g:strip_whitespace_on_save=1"], "\n")})
+
+  call dein#add('zchee/deoplete-jedi', {'on_ft': ['python']})
+  call dein#add('davidhalter/jedi-vim', {'on_ft': ['python'],
+        \ 'hook_add': join(["let g:jedi#auto_vim_configuration = 0",
+        \                   "let g:jedi#goto_assignments_command = ''",
+        \                   "let g:jedi#goto_definitions_command = ''",
+        \                   "let g:jedi#completions_enabled = 0"], "\n")})
+
+  call dein#add('junegunn/fzf', {'build': './install --bin'})
+  call dein#add('junegunn/fzf.vim', {
+        \ 'hook_add': join(["nmap <space>f :Files<cr>",
+        \                   "nmap <space>l :Lines<cr>",
+        \                   "nmap <space>r :Rg!<cr>",
+        \                   "nmap <space>b :Buffers<cr>",
+        \                   "nmap <space>m :Marks<cr>",
+        \                   "nmap <space>h :History<cr>",
+        \                   "nmap <space>c :History:<cr>",
+        \                   "nmap <space>/ :History/<cr>",
+        \                   "imap <c-x><c-f> <plug>(fzf-complete-path)",
+        \                   "imap <c-x><c-j> <plug>(fzf-complete-file-ag)",
+        \                   "imap <c-x><c-l> <plug>(fzf-complete-line)",
+        \                   "autocmd FileType fzf set laststatus=0 noshowmode noruler | autocmd BufLeave <buffer> set laststatus=2 noshowmode ruler",
+        \                   "command! -bang -nargs=? -complete=dir Files call fzf#vim#files(<q-args>, fzf#vim#with_preview(), <bang>0)",
+        \                   "command! -bang -nargs=* Rg call fzf#vim#grep('rg --column --line-number --no-heading --color=always --smart-case '.shellescape(<q-args>), 1, <bang>0 ? fzf#vim#with_preview('up:60%') : fzf#vim#with_preview('right:50%:hidden', '?'), <bang>0)"], "\n")})
+
+  " end of dein
+  if dein#check_install() | call dein#install() | endif
+  " call map(dein#check_clean(), "delete(v:val, 'rf')") "remove unused plugins
+  call dein#end()
+  call dein#save_state()
+endif
+
+" Options
 syntax on
 filetype plugin indent on
 let mapleader = ","
 let g:mapleader = ","
-set mouse=r                                         "enable mouse
-set ttyfast                                         "assume fast terminal connection
-set lazyredraw
-set viewoptions=folds,options,cursor,unix,slash     "unix/windows compatibility
-set encoding=utf-8                                  "set encoding for text
-set fileencodings=utf-8,gbk                         "file encoding
-set clipboard=unnamed
-set showcmd
-set completeopt-=preview
-set backspace=indent,eol,start                      "allow backspacing everything in insert mode
-set autoindent                                      "automatically indent to match adjacent lines
-set expandtab                                       "spaces instead of tabs
-set smarttab                                        "use shiftwidth to enter tabs
-set tabstop=2                                       "number of spaces per tab for display
-set softtabstop=2                                   "number of spaces per tab in insert mode
-set shiftwidth=2                                    "number of spaces when indenting
-set shiftround                                      "round indent to multiple of 'shiftwidth'
-set linebreak                                       "wrap long lines
-set display+=lastline                               "as much as possible of the last line will be displayed
-set wildmenu                                        "show list for autocomplete
-set wildmode=list:longest                           "when more than one match, list all matches and complete first match
-set wildignorecase                                  "case is ignored when completing file names and directories
-set textwidth=0                                     "set text width
-set hlsearch                                        "highlight searches
-set incsearch                                       "incremental searching
-set ignorecase                                      "ignore case for searching
-set smartcase                                       "do case-sensitive if there's a capital letter
-set noswapfile                                      "diable swap files
-set noerrorbells                                    "disable bell
-set visualbell                                      "enable visual bell and set t_vb to nothing
-set t_vb=                                           "disable bell
+set encoding=utf-8 fileencodings=utf-8,gbk                                          " encoding
+set autoindent expandtab smarttab shiftround tabstop=2 softtabstop=2 shiftwidth=2   " indentation
+set wildmenu wildignorecase completeopt-=preview wildmode=list:full                 " completion
+set hlsearch incsearch ignorecase smartcase showmatch                               " searching
+set noshowmode laststatus=2 display+=lastline                                       " status line
+set lazyredraw number linebreak textwidth=0 background=light                        " ui
+set noerrorbells visualbell t_vb=                                                   " bells
+set noswapfile hidden undofile mouse=a                                              " misc
+if !isdirectory(expand("~/.cache/vim/undo")) | call mkdir(expand("~/.cache/vim/undo"), 'p') | endif
 
-" ui options
-set background=light
-set showmatch                                       "automatically highlight matching braces/brackets/etc.
-set matchtime=2                                     "tens of a second to show matching parentheses
-set number                                          "precede each line with its line number
-set laststatus=2                                    "always shows the status line
-set noshowmode
-set foldenable                                      "enable folds by default
-set foldlevelstart=99                               "open all folds by default
-set hidden
-
-" persistant undo
-set undofile
-let &undodir = expand("~/.cache/vim/undo")
-if !isdirectory(&undodir) | call mkdir(expand(&undodir), 'p') | endif
-
-"==================================================
- " Mappings:
-"==================================================
-if exists(':tnoremap') | tnoremap <Esc> <C-\><C-n> | endif
-
-xnoremap    <   <gv
-xnoremap    >   >gv
-nnoremap    j       gj
-nnoremap    k       gk
-nnoremap    gj      j
-nnoremap    gk      k
+" Mappings
+if exists(':tnoremap') | tnoremap <Esc> <C-\><C-n> | endif                          " for neovim
+map <ESC><ESC> :noh<cr>                                                             " diable highlight search
 inoremap {<CR> {<CR>}<ESC>O
-map <leader>se :setlocal spell spelllang=en_us<cr>
-map <leader>sn :setlocal nospell<cr>
 
-"==================================================
-" Autocmd:
-"==================================================
-" go back to previous position of cursor if any
-autocmd BufReadPost * if line("'\"") > 0 && line("'\"") <= line("$") | exe 'normal! g`"zvzz' | endif
-
-autocmd FileType markdown setlocal nolist
-autocmd FileType vim setlocal fdm=indent keywordprg=:help
-autocmd FileType python set shiftwidth=2 softtabstop=2 tabstop=2 expandtab
-autocmd FilterWritePre * if &diff | setlocal wrap< | endif
-
-" file types
-autocmd BufRead,BufNewFile SConstruct   set filetype=python
-autocmd BufRead,BufNewFile SConscript   set filetype=python
-autocmd BufRead,BufNewFile *.cu,*.cuda  set filetype=cpp
-autocmd BufRead,BufNewFile *.maxj       set filetype=java
-autocmd BufRead,BufNewFile gitconfig    set filetype=gitconfig
-
-"==================================================
-" Plugins:
-"==================================================
-" the plugin manager itself
-call dein#add('Shougo/dein.vim')
-
-" A solid language pack for Vim.
-call dein#add('sheerun/vim-polyglot')
-
-" comment stuff out
-call dein#add('tpope/vim-commentary')
-
-" Track the engine.
-call dein#add('SirVer/ultisnips')
-
-" Snippets are separated from the engine. Add this if you want them:
-call dein#add('honza/vim-snippets')
-
-" True Sublime Text style multiple selections for Vim
-call dein#add('terryma/vim-multiple-cursors')
-
-call dein#add('majutsushi/tagbar', {'on_cmd': 'Tagbar'})
-
-" fugitive.vim: a Git wrapper so awesome, it should be illegal
-call dein#add('tpope/vim-fugitive')
-
-" gitk for Vim.
-call dein#add ('gregsexton/gitv', {'on_cmd': 'Gitv'})
-
-" A Vim plugin which shows a git diff in the gutter (sign column) and stages/undoes hunks.
-call dein#add('airblade/vim-gitgutter')
-
-" extended % matching for HTML, LaTeX, and many other languages
-call dein#add('tmhedberg/matchit')
-
-" wisely add "end" in ruby, endfunction/endif/more in vim script, etc
-call dein#add('tpope/vim-endwise')
-
-" vim-interestingwords allows you to highlight and navigate through (multiple) different words in a buffer
-call dein#add('lfv89/vim-interestingwords')
-
-" A simple, easy-to-use Vim alignment plugin.
-call dein#add('junegunn/vim-easy-align', {'hook_add': 'vmap <Enter> <Plug>(EasyAlign)'})
-
-" set makeprgs based on different projects (Makefile, SConstruct)
-call dein#add('vim-scripts/makeprgs')
-
-" solarized colorscheme
-call dein#add('altercation/vim-colors-solarized', {'hook_add': 'colorscheme solarized'})
-
-" deoplete
-call dein#add('Shougo/deoplete.nvim', {'hook_add': 'let g:deoplete#enable_at_startup = 1'})
-
-" Better whitespace highlighting for Vim
-call dein#add('ntpeters/vim-better-whitespace', {
-      \ 'hook_add': join(["let g:better_whitespace_enabled=1",
-      \                   "let g:strip_whitespace_on_save=1"], "\n")
-      \})
-
-" jedi-vim together with deoplete
-call dein#add('zchee/deoplete-jedi', {'on_ft': ['python']})
-call dein#add('davidhalter/jedi-vim', {'on_ft': ['python'],
-      \ 'hook_add': join(["let g:jedi#auto_vim_configuration = 0",
-      \                   "let g:jedi#goto_assignments_command = ''",
-      \                   "let g:jedi#goto_definitions_command = ''",
-      \                   "let g:jedi#use_tabs_not_buffers = 0",
-      \                   "let g:jedi#rename_command = '<Leader>gR'",
-      \                   "let g:jedi#usages_command = '<Leader>gu'",
-      \                   "let g:jedi#completions_enabled = 0",
-      \                   "let g:jedi#smart_auto_mappings = 1"], "\n")
-      \ })
-
-call dein#add('vim-airline/vim-airline-themes')
-call dein#add('bling/vim-airline', {
-      \ 'hook_add': join(["let g:airline#extensions#tabline#formatter = 'unique_tail'",
-      \                   "let g:airline#extensions#tabline#enabled = 1",
-      \                   "let g:airline#extensions#tabline#buffer_idx_mode = 1",
-      \                   "nmap <leader>1 <Plug>AirlineSelectTab1",
-      \                   "nmap <leader>2 <Plug>AirlineSelectTab2",
-      \                   "nmap <leader>3 <Plug>AirlineSelectTab3",
-      \                   "nmap <leader>4 <Plug>AirlineSelectTab4",
-      \                   "nmap <leader>5 <Plug>AirlineSelectTab5",
-      \                   "nmap <leader>6 <Plug>AirlineSelectTab6",
-      \                   "nmap <leader>7 <Plug>AirlineSelectTab7",
-      \                   "nmap <leader>8 <Plug>AirlineSelectTab8",
-      \                   "nmap <leader>9 <Plug>AirlineSelectTab9"], "\n")
-      \})
-
-call dein#add('junegunn/fzf', {'build': './install --bin'})
-call dein#add('junegunn/fzf.vim', {
-      \ 'hook_add': join(["imap <c-x><c-f> <plug>(fzf-complete-path)",
-      \                   "imap <c-x><c-j> <plug>(fzf-complete-file-ag)",
-      \                   "imap <c-x><c-l> <plug>(fzf-complete-line)",
-      \                   "autocmd FileType fzf set laststatus=0 noshowmode noruler",
-      \                   "autocmd BufLeave <buffer> set laststatus=2 showmode ruler",
-      \                   "command! -bang -nargs=? -complete=dir Files call fzf#vim#files(<q-args>, fzf#vim#with_preview(), <bang>0)",
-      \                   "command! -bang -nargs=* Ag call fzf#vim#ag(<q-args>, <bang>0 ? fzf#vim#with_preview('up:60%') : fzf#vim#with_preview('right:50%:hidden', '?'), <bang>0)",
-      \                   "command! -bang -nargs=* Rg call fzf#vim#grep( 'rg --column --line-number --no-heading --color=always --smart-case '.shellescape(<q-args>), 1, <bang>0 ? fzf#vim#with_preview('up:60%') : fzf#vim#with_preview('right:50%:hidden', '?'), <bang>0)"], "\n")
-      \})
-
-"==================================================
-" DeinEnd: install & remove & end
-"==================================================
-if dein#check_install() | call dein#install() | endif
-" call map(dein#check_clean(), "delete(v:val, 'rf')") "remove unused plugins
-call dein#end()
-call dein#save_state()
-endif
+" Autocmd
+au BufReadPost * if line("'\"") > 0 && line("'\"") <= line("$") | exe 'normal! g`"zvzz' | endif " back to previous position
+au FileType markdown setlocal nolist
+au FileType vim setlocal fdm=indent keywordprg=:help
+au FileType python set shiftwidth=2 softtabstop=2 tabstop=2 expandtab
+au FilterWritePre * if &diff | setlocal wrap< | endif
+au BufRead,BufNewFile SConstruct,SConscript   set filetype=python
+au BufRead,BufNewFile *.cu,*.cuda  set filetype=cpp
+au BufRead,BufNewFile *.maxj       set filetype=java
+au BufRead,BufNewFile gitconfig    set filetype=gitconfig
 
 " vim: fdm=marker ts=2 sts=2 sw=2 fdl=0

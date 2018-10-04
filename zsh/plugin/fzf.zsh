@@ -16,14 +16,14 @@ _gen_fzf_default_opts() {
   local cyan="37"
   local green="64"
 
-  # make sure fzf and fd exits
+  # make sure fzf and rg exits
   [[ -f ~/.fzf.zsh ]] && \
     which fzf &> /dev/null && \
-    which fd &> /dev/null && \
+    which rg &> /dev/null && \
     source ~/.fzf.zsh
 
-  # Setting fd as the default source for fzf
-  export FZF_DEFAULT_COMMAND="fd --type file --color=always"
+  # Setting rg as the default source for fzf
+  export FZF_DEFAULT_COMMAND="rg  --files --color=always"
 
   # Solarized Light color scheme for fzf
   export FZF_DEFAULT_OPTS="
@@ -41,8 +41,5 @@ _gen_fzf_default_opts() {
 
   # To apply the command to CTRL-T as well
   export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
-
-  # Alternatively, you might like to follow symbolic links and include hidden files (but exclude .git folders):
-  # export FZF_DEFAULT_COMMAND='fd --type file --follow --hidden --exclude .git'
 }
 _gen_fzf_default_opts
