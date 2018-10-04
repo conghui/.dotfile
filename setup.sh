@@ -5,9 +5,7 @@ set -e
 plugins="
   zsh-users/antigen
   conghui/terminal-colors
-  bssthu/tunet_py
   powerline/fonts
-  seebi/tmux-colors-solarized
 "
 
 if [[ -z $DOTFILEDIR ]]; then

@@ -1,1 +1,0 @@
-call dein#add('zchee/deoplete-jedi', {'on_ft': ['python']})
