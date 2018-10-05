@@ -1,15 +1,17 @@
-# vim: fdm=marker fdl=0 ft=zsh
-# keep this file as simple & clean as possible
-
 #########################################################################
-# - Customizd scripts are stored in $DOTFILEDIR/zsh/custom
-# - Scripts for all users are stored in $DOTFILEDIR/zsh/plugin
+# keep this file as simple & clean as possible
+# source script in the following order:
+# - $DOTFILEDIR/zsh/custom/
+# - $DOTFILEDIR/zsh/plugin/
+# - $DOTFILEDIR/zsh/post/
 #########################################################################
 
 export MYHOME=${MYHOME:-$HOME}
 export DOTFILEDIR=${MYHOME}/.dotfile
 export INSTALL_ROOT=${MYHOME}/softs/install
 export ADOTDIR=${MYHOME}/.antigen
+export LANG=en_US.UTF-8
+export LC_CTYPE=en_US.UTF-8
 
 # source zsh/custom at first
 if ls $DOTFILEDIR/zsh/custom/ | grep -q '.zsh'; then
@@ -37,12 +39,18 @@ antigen bundles << EOBUNDLES
   pip
   joel-porquet/zsh-dircolors-solarized
   history-substring-search
-  derekdreery/zsh-ag
   zsh-users/zsh-syntax-highlighting
   colored-man-pages
   ${DOTFILEDIR}/zsh/plugin
 EOBUNDLES
 
+# source zsh/post at last
+if ls $DOTFILEDIR/zsh/post/ | grep -q '.zsh'; then
+  for f in $DOTFILEDIR/zsh/post/*.zsh; do source $f; done
+fi
+
 #antigen theme evan # a skinny, topless prompt, use it if your computer is really slow
 antigen theme blinks
 SOLARIZED_THEME=light antigen apply
+
+# vim: fdm=marker fdl=0 ft=zsh
