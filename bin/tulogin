@@ -1,3 +1,0 @@
-#!/bin/bash
-
-python ~/.dotfile/bundle/tunet_py/tunet_login.py
