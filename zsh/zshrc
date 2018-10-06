@@ -5,7 +5,7 @@
 # - $DOTFILEDIR/zsh/plugin/
 # - $DOTFILEDIR/zsh/post/
 #########################################################################
-
+setopt +o nomatch
 export MYHOME=${MYHOME:-$HOME}
 export DOTFILEDIR=${MYHOME}/.dotfile
 export INSTALL_ROOT=${MYHOME}/softs/install
@@ -14,7 +14,7 @@ export LANG=en_US.UTF-8
 export LC_CTYPE=en_US.UTF-8
 
 # source zsh/custom at first
-if ls $DOTFILEDIR/zsh/custom/ | grep -q '.zsh'; then
+if [[ `ls -1 $DOTFILEDIR/zsh/custom/*.zsh 2>/dev/null | wc -l`  != 0 ]]; then
   for f in $DOTFILEDIR/zsh/custom/*.zsh; do source $f; done
 fi
 
