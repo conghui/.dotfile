@@ -17,6 +17,7 @@ if dein#load_state(expand('$CACHE/dein'), expand('<sfile>'))
   call dein#begin(expand('$CACHE/dein'), expand('<sfile>'))
   call dein#add('Shougo/dein.vim')                                                    " the plugin manager itself
   call dein#add('sheerun/vim-polyglot')                                               " A solid language pack for Vim.
+  call dein#add('derekwyatt/vim-fswitch')                                             " switch between companion source files
   call dein#add('tpope/vim-commentary')                                               " comment stuff out
   call dein#add('SirVer/ultisnips')                                                   " snippet engine
   call dein#add('honza/vim-snippets')                                                 " different snippets
@@ -50,8 +51,7 @@ if dein#load_state(expand('$CACHE/dein'), expand('<sfile>'))
         \                   "nmap <space>h :History<cr>",
         \                   "nmap <space>c :History:<cr>",
         \                   "nmap <space>/ :History/<cr>",
-        \                   "imap <c-x><c-f> <plug>(fzf-complete-path)",
-        \                   "imap <c-x><c-j> <plug>(fzf-complete-file-ag)",
+        \                   "imap <c-x><c-j> <plug>(fzf-complete-path)",
         \                   "imap <c-x><c-l> <plug>(fzf-complete-line)",
         \                   "autocmd FileType fzf set laststatus=0 noshowmode noruler | autocmd BufLeave <buffer> set laststatus=2 noshowmode ruler",
         \                   "command! -bang -nargs=? -complete=dir Files call fzf#vim#files(<q-args>, fzf#vim#with_preview(), <bang>0)",
