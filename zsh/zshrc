@@ -45,7 +45,7 @@ antigen bundles << EOBUNDLES
 EOBUNDLES
 
 # source zsh/post at last
-if ls $DOTFILEDIR/zsh/post/ | grep -q '.zsh'; then
+if [[ `ls -1 $DOTFILEDIR/zsh/post/*.zsh 2>/dev/null | wc -l`  != 0 ]]; then
   for f in $DOTFILEDIR/zsh/post/*.zsh; do source $f; done
 fi
 
