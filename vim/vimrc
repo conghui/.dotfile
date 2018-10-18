@@ -18,7 +18,6 @@ if dein#load_state(expand('$CACHE/dein'), expand('<sfile>'))
   call dein#add('Shougo/dein.vim')                                                    " the plugin manager itself
   call dein#add('sheerun/vim-polyglot')                                               " A solid language pack for Vim.
   call dein#add('derekwyatt/vim-fswitch')                                             " switch between companion source files
-  call dein#add('tpope/vim-commentary')                                               " comment stuff out
   call dein#add('SirVer/ultisnips')                                                   " snippet engine
   call dein#add('honza/vim-snippets')                                                 " different snippets
   call dein#add('terryma/vim-multiple-cursors')                                       " multiple selections for Vim
@@ -29,6 +28,7 @@ if dein#load_state(expand('$CACHE/dein'), expand('<sfile>'))
   call dein#add('altercation/vim-colors-solarized', {'hook_add': 'colorscheme solarized'})
   call dein#add('itchyny/lightline.vim', {"hook_add": "let g:lightline = {'colorscheme': 'solarized'}"})  " statusline for Vim
   call dein#add('Shougo/deoplete.nvim', {'hook_add': 'let g:deoplete#enable_at_startup = 1'})             " completion engine
+  call dein#add('tpope/vim-commentary', {"hook_add": 'autocmd FileType c,cpp,cs,java setlocal commentstring=//\ %s'})
 
   call dein#add('ntpeters/vim-better-whitespace', {
         \ 'hook_add': join(["let g:better_whitespace_enabled=1",
