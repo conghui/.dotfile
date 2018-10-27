@@ -15,21 +15,23 @@ endif
 "}}}
 if dein#load_state(expand('$CACHE/dein'), expand('<sfile>'))
   call dein#begin(expand('$CACHE/dein'), expand('<sfile>'))
-  call dein#add('Shougo/dein.vim')                                                    " the plugin manager itself
-  call dein#add('sheerun/vim-polyglot')                                               " A solid language pack for Vim.
-  call dein#add('derekwyatt/vim-fswitch')                                             " switch between companion source files
-  call dein#add('SirVer/ultisnips')                                                   " snippet engine
-  call dein#add('honza/vim-snippets')                                                 " different snippets
-  call dein#add('terryma/vim-multiple-cursors')                                       " multiple selections for Vim
-  call dein#add('majutsushi/tagbar', {'on_cmd': 'Tagbar'})                            " displays tags in a window, ordered by scope
-  call dein#add('tpope/vim-fugitive')                                                 " Git wrapper
-  call dein#add('lfv89/vim-interestingwords')                                         " highlight/navigate through (multiple) different words
-  call dein#add('vim-scripts/makeprgs')                                               " set makeprgs based on different projects
-  call dein#add('altercation/vim-colors-solarized', {'hook_add': 'colorscheme solarized'})
+  call dein#add('Shougo/dein.vim')
+  call dein#add('sheerun/vim-polyglot')
+  call dein#add('derekwyatt/vim-fswitch')
+  call dein#add('SirVer/ultisnips')
+  call dein#add('honza/vim-snippets')
+  call dein#add('terryma/vim-multiple-cursors')
+  call dein#add('majutsushi/tagbar', {'on_cmd': 'Tagbar'})
+  call dein#add('tpope/vim-fugitive')
+  call dein#add('lfv89/vim-interestingwords')
+  call dein#add('vim-scripts/makeprgs')
   call dein#add('scrooloose/nerdtree')
+  call dein#add('derekwyatt/vim-fswitch')
+  call dein#add('mhinz/vim-startify')
+  call dein#add('altercation/vim-colors-solarized', {'hook_add': 'colorscheme solarized'})
   call dein#add('junegunn/vim-easy-align', {'hook_add': 'vmap <Enter> <Plug>(EasyAlign)'})
-  call dein#add('itchyny/lightline.vim', {"hook_add": "let g:lightline = {'colorscheme': 'solarized'}"})  " statusline for Vim
-  call dein#add('Shougo/deoplete.nvim', {'hook_add': 'let g:deoplete#enable_at_startup = 1'})             " completion engine
+  call dein#add('itchyny/lightline.vim', {"hook_add": "let g:lightline = {'colorscheme': 'solarized'}"})
+  call dein#add('Shougo/deoplete.nvim', {'hook_add': 'let g:deoplete#enable_at_startup = 1'})
   call dein#add('tpope/vim-commentary', {"hook_add": 'autocmd FileType c,cpp,cs,java setlocal commentstring=//\ %s'})
 
   call dein#add('ntpeters/vim-better-whitespace', {
@@ -76,7 +78,7 @@ set autoindent expandtab smarttab shiftround tabstop=2 softtabstop=2 shiftwidth=
 set wildmenu wildignorecase completeopt-=preview wildmode=list:full               " completion
 set hlsearch incsearch ignorecase smartcase showmatch                             " searching
 set noshowmode laststatus=2 display+=lastline                                     " status line
-set lazyredraw number linebreak textwidth=0 background=light                       " ui
+set lazyredraw number linebreak textwidth=0                                       " ui
 set noerrorbells visualbell t_vb=                                                 " bells
 set noswapfile hidden undofile mouse=a                                            " misc
 if !isdirectory(expand("~/.cache/vim/undo")) | call mkdir(expand("~/.cache/vim/undo"), 'p') | endif
