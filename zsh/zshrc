@@ -51,7 +51,7 @@ if [[ `ls -1 $DOTFILEDIR/zsh/post/*.zsh 2>/dev/null | wc -l`  != 0 ]]; then
 fi
 
 #antigen theme evan # a skinny, topless prompt, use it if your computer is really slow
-antigen theme blinks
-SOLARIZED_THEME=light antigen apply
+antigen theme tjkirch
+antigen apply
 
 # vim: fdm=marker fdl=0 ft=zsh
