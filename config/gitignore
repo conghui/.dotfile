@@ -74,3 +74,6 @@ Session.vim
 .tune_err
 .zcompdump
 .zshrc.zwc
+
+.exrc
+*.bundle
