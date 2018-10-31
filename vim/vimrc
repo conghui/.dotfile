@@ -28,6 +28,7 @@ if dein#load_state(expand('$CACHE/dein'), expand('<sfile>'))
   call dein#add('scrooloose/nerdtree')
   call dein#add('derekwyatt/vim-fswitch')
   call dein#add('mhinz/vim-startify')
+  call dein#add('rhysd/vim-clang-format')
   call dein#add('altercation/vim-colors-solarized', {'hook_add': 'colorscheme solarized'})
   call dein#add('junegunn/vim-easy-align', {'hook_add': 'vmap <Enter> <Plug>(EasyAlign)'})
   call dein#add('itchyny/lightline.vim', {"hook_add": "let g:lightline = {'colorscheme': 'solarized'}"})
@@ -74,11 +75,11 @@ filetype plugin indent on
 let mapleader = ","
 let g:mapleader = ","
 set encoding=utf-8 fileencodings=utf-8,gbk                                        " encoding
-set autoindent expandtab smarttab shiftround tabstop=4 softtabstop=4 shiftwidth=4 " indentation
+set autoindent expandtab smarttab shiftround tabstop=2 softtabstop=2 shiftwidth=2 " indentation
 set wildmenu wildignorecase completeopt-=preview wildmode=list:full               " completion
 set hlsearch incsearch ignorecase smartcase showmatch                             " searching
 set noshowmode laststatus=2 display+=lastline                                     " status line
-set lazyredraw number linebreak textwidth=0                                       " ui
+set lazyredraw number linebreak wrap textwidth=80                                       " ui
 set noerrorbells visualbell t_vb=                                                 " bells
 set noswapfile hidden undofile mouse=a                                            " misc
 if !isdirectory(expand("~/.cache/vim/undo")) | call mkdir(expand("~/.cache/vim/undo"), 'p') | endif
@@ -98,11 +99,9 @@ inoremap {<CR>      {<CR>}<ESC>O
 au BufReadPost * if line("'\"") > 0 && line("'\"") <= line("$") | exe 'normal! g`"zvzz' | endif " back to previous position
 au FileType markdown setlocal nolist
 au FileType vim setlocal fdm=indent keywordprg=:help
-au FileType python set shiftwidth=4 softtabstop=4 tabstop=4 expandtab
-au FilterWritePre * if &diff | setlocal wrap< | endif
 au BufRead,BufNewFile SConstruct,SConscript   set filetype=python
 au BufRead,BufNewFile *.cu,*.cuda  set filetype=cpp
 au BufRead,BufNewFile *.maxj       set filetype=java
 au BufRead,BufNewFile gitconfig    set filetype=gitconfig
 
-" vim: fdm=marker ts=4 sts=4 sw=4 fdl=0
+" vim: fdm=marker ts=2 sts=2 sw=2 fdl=0
