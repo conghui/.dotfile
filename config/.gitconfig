@@ -54,8 +54,8 @@
   # http://gitfu.wordpress.com/2008/04/20/git-rerere-rereremember-what-you-did-last-time/
   enabled = true
 [merge]
-	tool = vimdiff
+  tool = e -d
 [pull]
-	rebase = true
+  rebase = false
 [push]
-	default = current
+  default = current
