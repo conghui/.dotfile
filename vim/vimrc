@@ -99,7 +99,7 @@ set autoindent expandtab smarttab shiftround tabstop=2 softtabstop=2 shiftwidth=
 set wildmenu wildignorecase completeopt-=preview wildmode=list:full               " completion
 set hlsearch incsearch ignorecase smartcase showmatch                             " searching
 set noshowmode laststatus=2 display+=lastline                                     " status line
-set lazyredraw number linebreak wrap textwidth=80                                       " ui
+set lazyredraw number linebreak wrap textwidth=80 background=dark                 " ui
 set noerrorbells visualbell t_vb=                                                 " bells
 set noswapfile hidden undofile mouse=a                                            " misc
 if !isdirectory(expand("~/.cache/vim/undo")) | call mkdir(expand("~/.cache/vim/undo"), 'p') | endif

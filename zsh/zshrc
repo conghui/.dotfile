@@ -50,8 +50,7 @@ if [[ `ls -1 $DOTFILEDIR/zsh/post/*.zsh 2>/dev/null | wc -l`  != 0 ]]; then
   for f in $DOTFILEDIR/zsh/post/*.zsh; do source $f; done
 fi
 
-#antigen theme evan # a skinny, topless prompt, use it if your computer is really slow
-antigen theme tjkirch
+antigen theme ys
 antigen apply
 
 # vim: fdm=marker fdl=0 ft=zsh
